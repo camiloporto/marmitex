@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/camiloporto/StudioProjects/marmitex/app/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/home/camiloporto/StudioProjects/marmitex/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">Marmitex</string>
+    <string name="cardapio">Cardápios</string>
+    <string name="cardapio_grupo_opcao">Grupos de Opções</string>
+    <string name="cardapio_novo">Novo Cardapio</string>
+    <string name="cardapio_opcao">Opções de Grupo</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="marmitex_cardapio">Cardapios</string>
+    <string name="marmitex_nova">Criar Marmitaria</string>
+    <string name="novamarmitaria_btn_save">Salvar</string>
+    <string name="novamarmitaria_endereco">Endereço</string>
+    <string name="novamarmitaria_funcionamento">Horário Funcionamento</string>
+    <string name="novamarmitaria_id">CPF ou CNPJ</string>
+    <string name="novamarmitaria_login">login</string>
+    <string name="novamarmitaria_nome">Nome da Marmitaria</string>
+    <string name="novamarmitaria_phone">Telefone</string>
+    <string name="novamarmitaria_senha">senha</string>
+    <string name="opcao_cardapio_novo_item_hint">Informe nova opção</string>
+    <!-- From: file:/home/camiloporto/StudioProjects/marmitex/app/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+</resources>

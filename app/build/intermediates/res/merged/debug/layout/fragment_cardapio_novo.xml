@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <EditText
+        android:id="@+id/cardapio_novo_nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Nome do cardapio"/>
+
+    <Button
+        android:id="@+id/cardapio_novo_btn_novo_grupo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/cardapio_novo_nome"
+        android:text=" + Grupo de Opções" />
+    
+    <LinearLayout android:id="@+id/cardapio_novo_container_grupo_opcoes"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardapio_novo_btn_novo_grupo">
+        
+    </LinearLayout>
+    
+    <Button android:id="@+id/cardapio_novo_btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardapio_novo_container_grupo_opcoes"
+        android:text="Salvar"/>
+
+</RelativeLayout>
+<!-- From: file:/home/camiloporto/StudioProjects/marmitex/app/src/main/res/layout/fragment_cardapio_novo.xml -->
