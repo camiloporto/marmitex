@@ -1,6 +1,5 @@
 package br.com.camiloporto.marmitex.android;
 
-import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.provider.service.CardapioService;
 import android.app.Activity;
 import android.app.Fragment;
@@ -43,7 +42,7 @@ public class CardapioActivity extends Activity {
 				Fragment f = fm.findFragmentById(R.id.cardapio_fragmentContainer);
 				Fragment f2 = null;
 				if(f != null) {
-					f2 = GrupoOpcaoListFragment.newInstance(CardapioService.getInstance().list().get(0));
+					f2 = GrupoOpcaoListFragment.newInstance(CardapioService.getInstance(CardapioActivity.this).list().get(0));
 					fm.beginTransaction()
 						.replace(R.id.cardapio_fragmentContainer, f2)
 						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

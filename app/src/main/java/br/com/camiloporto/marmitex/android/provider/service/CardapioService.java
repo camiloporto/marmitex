@@ -7,6 +7,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.util.Log;
 import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoItems;
@@ -17,18 +18,22 @@ public class CardapioService {
 	private static final String TAG = "CardapioService";
 	
 	private static CardapioService cardapioService;
-	
+
+	private Context context;
 	private RestService restService;
 	private URL serverEndPoint;
 
-	private CardapioService(RestService restService) {
+	private CardapioService(Context context, RestService restService) {
 		super();
+		this.context = context;
 		this.restService = restService;
 	}
 	
-	public static CardapioService getInstance() {
+	public static CardapioService getInstance(Context context) {
 		if(cardapioService == null) {
-			cardapioService = new CardapioService(RestService.getInstance());
+			cardapioService = new CardapioService(
+					context.getApplicationContext(),
+					RestService.getInstance());
 		}
 		return cardapioService;
 	}
@@ -71,9 +76,9 @@ public class CardapioService {
 		i3.setDescricao("Hortalica");
 		i3.setId(3L);
 		
-		opcoes.adicionaItem(i1);
-		opcoes2.adicionaItem(i2);
-		opcoes3.adicionaItem(i3);
+		opcoes.newItem(i1);
+		opcoes2.newItem(i2);
+		opcoes3.newItem(i3);
 		
 		
 		//FIXME invocar via rest o servidor e construir cardapios

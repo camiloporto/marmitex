@@ -1,7 +1,10 @@
 package br.com.camiloporto.marmitex.android;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+
 import br.com.camiloporto.marmitex.android.model.GrupoItems;
 import br.com.camiloporto.marmitex.android.model.ItemCardapio;
 
@@ -24,6 +29,7 @@ public class OpcaoCardapioListFragment extends ListFragment {
 	private EditText inputItem;
 	private Button addButton;
 
+	@SuppressLint("ValidFragment")
 	private OpcaoCardapioListFragment() {
 	}
 
@@ -69,7 +75,10 @@ public class OpcaoCardapioListFragment extends ListFragment {
 	
 	private void newItemAdded(String itemDescricao) {
 		((OpcaoCardapioListFragmentListener) getActivity()).onNewItemAdded(itemDescricao);
-		((OpcaoListAdapter)getListAdapter()).notifyDataSetChanged();
+		ArrayAdapter listAdapter = (OpcaoListAdapter) getListAdapter();
+		listAdapter.clear();
+		listAdapter.addAll(grupoOpcao.getItems());
+		listAdapter.notifyDataSetChanged();
 	}
 	
 	public interface OpcaoCardapioListFragmentListener {
@@ -82,8 +91,8 @@ public class OpcaoCardapioListFragment extends ListFragment {
 	private class OpcaoListAdapter extends ArrayAdapter<ItemCardapio> {
 
 
-		public OpcaoListAdapter(List<ItemCardapio> items) {
-			super(getActivity(), 0, items);
+		public OpcaoListAdapter(Collection<ItemCardapio> items) {
+			super(getActivity(), 0, new ArrayList<ItemCardapio>(items));
 		}
 		
 		

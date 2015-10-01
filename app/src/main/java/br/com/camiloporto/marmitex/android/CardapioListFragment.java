@@ -19,7 +19,7 @@ public class CardapioListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		cardapios = CardapioService.getInstance().list();
+		cardapios = CardapioService.getInstance(getActivity()).list();
 		setListAdapter(new CardapioListAdapter(cardapios));
 	}
 	

@@ -1,23 +1,27 @@
 package br.com.camiloporto.marmitex.android.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ItemCardapio implements Serializable {
-	
+
+	@Deprecated
 	private Long id;
+
+	private UUID uuid;
 	private String descricao;
 	private GrupoItems parent;
 	
 	public ItemCardapio(GrupoItems parent) {
 		super();
 		this.parent = parent;
+		uuid = UUID.randomUUID();
 	}
-	public Long getId() {
-		return id;
-	}
+
+	@Deprecated
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -27,40 +31,39 @@ public class ItemCardapio implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
-	
-	@Override
-	public String toString() {
-		return "ItemCardapio [id=" + id + ", descricao=" + descricao + "]";
+
+	public UUID getUUID() {
+		return uuid;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		ItemCardapio that = (ItemCardapio) o;
+
+		return uuid.equals(that.uuid);
+
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return uuid.hashCode();
 	}
+
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ItemCardapio other = (ItemCardapio) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	public String toString() {
+		return "ItemCardapio{" +
+				"uuid=" + uuid +
+				", descricao='" + descricao + '\'' +
+				'}';
 	}
+
 	public JSONObject json() throws JSONException {
 		JSONObject json = new JSONObject();
-		json.put("id", id);
 		json.put("descricao", descricao);
+		json.put("uuid", uuid.toString());
 		return json;
 	}
 	

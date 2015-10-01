@@ -40,7 +40,8 @@ public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoLi
 //			if(resultCode == Activity.RESULT_OK) {
 				GrupoItems grupo = (GrupoItems) data.getExtras().get(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
 				cardapio.adicionaGrupo(grupo);
-				Log.i("GrupoOpcaoCardapioActivity", grupo.toString());
+
+				Log.i("GrupoOpcaoCardapioActiv", grupo.toString());
 //			}
 		}
 	}

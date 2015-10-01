@@ -44,13 +44,14 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 	
 	@Override
 	public void onNewItemAdded(String descricaoItem) {
-		ItemCardapio i = new ItemCardapio(grupoOpcao);
-		i.setDescricao(descricaoItem);
-		Log.i(TAG, "adicionando novo item: " + i);
+//		ItemCardapio i = new ItemCardapio(grupoOpcao);
+//		i.setDescricao(descricaoItem);
+
 		//TODO ver como salvar esse item. Salvar individualmente ou salvar o cardapio todo?
 		//FIXME item nao esta sendo persistido quando saimos e entramos na atividade de lista de opcoes. VERIFICAR
-		i.setId((long)Math.random() * 10000L);
-		grupoOpcao.adicionaItem(i);
+//		i.setId((long)Math.random() * 10000L);
+		ItemCardapio itemCardapio = grupoOpcao.newItem(descricaoItem);
+		Log.i(TAG, "adicionando novo item: " + itemCardapio);
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 	@Override
 	public void onItemDeleted(ItemCardapio item) {
 		Log.i(TAG, "removendo item: " + item);
-		grupoOpcao.removeItem(item);
+		grupoOpcao.removeItem(item.getUUID());
 	}
 
 	@Override

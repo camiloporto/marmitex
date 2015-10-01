@@ -41,7 +41,10 @@ public class GrupoOpcaoListFragment extends ListFragment {
 			setListAdapter(new OpcaoListAdapter(cardapio.getGruposItems()));
 		}
 	}
-	
+
+	//FIXME ajustar comunicacao entre fragment de listagem de grupos, sua atividade e a navegacao para detalhe do grupo com lista de opcoes.
+	//FIXME corrigir bug quando uma lista de opcoes eh alterada, e voltamos na tela denovo, a alteracao some.
+	// usar o Adapter para fazer clear(), addAll(novas Opcoes)
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		GrupoItems clicked = (GrupoItems) getListAdapter().getItem(position);
@@ -74,7 +77,10 @@ public class GrupoOpcaoListFragment extends ListFragment {
 //					Intent i = new Intent(getActivity(), OpcaoCardapioActivity.class);
 					GrupoItems item = getItem(position);
 					((GrupoOpcaoListFragmentListener) getActivity()).onEditGroupItemsRequested(item);
-					((OpcaoListAdapter)getListAdapter()).notifyDataSetChanged();
+					OpcaoListAdapter listAdapter = (OpcaoListAdapter) getListAdapter();
+					listAdapter.clear();
+					listAdapter.addAll(cardapio.getGruposItems());
+					listAdapter.notifyDataSetChanged();;
 //					i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, item);
 //					getActivity().startActivityForResult(i, 1);
 //					startActivityForResult(i, 1);
