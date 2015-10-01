@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
 import br.com.camiloporto.marmitex.android.OpcaoCardapioListFragment.OpcaoCardapioListFragmentListener;
 import br.com.camiloporto.marmitex.android.model.GrupoItems;
 import br.com.camiloporto.marmitex.android.model.ItemCardapio;
@@ -44,14 +45,7 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 	
 	@Override
 	public void onNewItemAdded(String descricaoItem) {
-//		ItemCardapio i = new ItemCardapio(grupoOpcao);
-//		i.setDescricao(descricaoItem);
-
-		//TODO ver como salvar esse item. Salvar individualmente ou salvar o cardapio todo?
-		//FIXME item nao esta sendo persistido quando saimos e entramos na atividade de lista de opcoes. VERIFICAR
-//		i.setId((long)Math.random() * 10000L);
 		ItemCardapio itemCardapio = grupoOpcao.newItem(descricaoItem);
-		Log.i(TAG, "adicionando novo item: " + itemCardapio);
 	}
 
 	@Override

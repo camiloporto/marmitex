@@ -1,9 +1,5 @@
 package br.com.camiloporto.marmitex.android;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -14,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import br.com.camiloporto.marmitex.android.model.GrupoItems;
 import br.com.camiloporto.marmitex.android.model.ItemCardapio;
@@ -108,27 +106,9 @@ public class OpcaoCardapioListFragment extends ListFragment {
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_opcao_item_list_descricao_input);
 			inputDescricao.setText(itemClicked.getDescricao());
-			
-//			final Button editButton = (Button) convertView
-//					.findViewById(R.id.cardapio_opcao_item_list_editButton);
-			
+
 			final Button deleteButton = (Button) convertView
 					.findViewById(R.id.cardapio_opcao_item_list_removeButton);
-			
-//			editButton.setOnClickListener(new View.OnClickListener() {
-//				
-//				@Override
-//				public void onClick(View v) {
-//					if(editButton.getText().equals("Edit")) {
-//						inputDescricao.setEnabled(true);
-//						editButton.setText("Save");
-//					} else {
-//						inputDescricao.setEnabled(false);
-//						editButton.setText("Edit");
-//						Log.i(TAG, "Salvando nova descricao: " + inputDescricao.getText().toString());
-//					}
-//				}
-//			});
 			
 			deleteButton.setOnClickListener(new View.OnClickListener() {
 				
