@@ -13,18 +13,19 @@ import br.com.camiloporto.marmitex.android.model.GrupoItems;
 public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoListFragmentListener {
 
 	private Cardapio cardapio;
+	private GrupoOpcaoListFragment grupoOpcaoListFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cardapio_grupo_opcao);
 		FragmentManager fm = getFragmentManager();
-		Fragment f = fm.findFragmentById(R.id.cardapio_novo_fragmentContainer);
+		grupoOpcaoListFragment = (GrupoOpcaoListFragment) fm.findFragmentById(R.id.cardapio_novo_fragmentContainer);
 
-		if (f == null) {
+		if (grupoOpcaoListFragment == null) {
 			cardapio = (Cardapio) getIntent().getSerializableExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
-			f = GrupoOpcaoListFragment.newInstance(cardapio);
-			fm.beginTransaction().add(R.id.cardapio_novo_fragmentContainer, f)
+			grupoOpcaoListFragment = GrupoOpcaoListFragment.newInstance(cardapio);
+			fm.beginTransaction().add(R.id.cardapio_novo_fragmentContainer, grupoOpcaoListFragment)
 					.commit();
 		}
 
@@ -38,10 +39,10 @@ public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoLi
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == 0) {
 //			if(resultCode == Activity.RESULT_OK) {
-				GrupoItems grupo = (GrupoItems) data.getExtras().get(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
-				cardapio.adicionaGrupo(grupo);
-
-				Log.i("GrupoOpcaoCardapioActiv", grupo.toString());
+			GrupoItems grupo = (GrupoItems) data.getExtras().get(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
+			cardapio.adicionaGrupo(grupo);
+			grupoOpcaoListFragment.notifyDataSetChanged();
+			Log.i("GrupoOpcaoCardapioActiv", grupo.toString());
 //			}
 		}
 	}

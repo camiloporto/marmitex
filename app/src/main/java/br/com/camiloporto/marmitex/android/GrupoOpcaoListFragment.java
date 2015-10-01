@@ -38,7 +38,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 		cardapio = (Cardapio) getArguments().getSerializable(ARG_NAME_CARDAPIO);
 		if(cardapio != null) {
 			getActivity().setTitle(cardapio.getDescricao());
-			setListAdapter(new OpcaoListAdapter(cardapio.getGruposItems()));
+			setListAdapter(new OpcaoListAdapter(cardapio));
 		}
 	}
 
@@ -52,13 +52,20 @@ public class GrupoOpcaoListFragment extends ListFragment {
 		i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, clicked);
 		startActivity(i);
 	}
-	
+
+	public void notifyDataSetChanged() {
+//		OpcaoListAdapter listAdapter = (OpcaoListAdapter) getListAdapter();
+//		listAdapter.notifyDataSetChanged();
+		setListAdapter(new OpcaoListAdapter(cardapio));
+	}
+
 	private class OpcaoListAdapter extends ArrayAdapter<GrupoItems> {
 		
-		public OpcaoListAdapter(List<GrupoItems> items) {
-			super(getActivity(), 0, items);
+		public OpcaoListAdapter(Cardapio cardapio) {
+
+			super(getActivity(), 0, cardapio.getGruposItems());
 		}
-		
+
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			if(convertView == null) {
@@ -77,10 +84,10 @@ public class GrupoOpcaoListFragment extends ListFragment {
 //					Intent i = new Intent(getActivity(), OpcaoCardapioActivity.class);
 					GrupoItems item = getItem(position);
 					((GrupoOpcaoListFragmentListener) getActivity()).onEditGroupItemsRequested(item);
-					OpcaoListAdapter listAdapter = (OpcaoListAdapter) getListAdapter();
-					listAdapter.clear();
-					listAdapter.addAll(cardapio.getGruposItems());
-					listAdapter.notifyDataSetChanged();;
+//					OpcaoListAdapter listAdapter = (OpcaoListAdapter) getListAdapter();
+//					listAdapter.clear();
+//					listAdapter.addAll(cardapio.getGruposItems());
+//					listAdapter.notifyDataSetChanged();;
 //					i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, item);
 //					getActivity().startActivityForResult(i, 1);
 //					startActivityForResult(i, 1);

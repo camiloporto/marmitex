@@ -150,7 +150,8 @@ public class OpcaoCardapioListFragment extends ListFragment {
 
 	public void setGrupoOpcoes(GrupoItems grupoOpcao) {
 		this.grupoOpcao = grupoOpcao;
-		
+		((OpcaoListAdapter) getListAdapter()).clear();
+		((OpcaoListAdapter) getListAdapter()).addAll(grupoOpcao.getItems());
 	}
 
 }
