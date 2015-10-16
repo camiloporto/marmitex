@@ -21,7 +21,7 @@ public class Marmitaria {
 	private String mId;
 	private String mFuncionamento;
 	
-	
+	//FIXME inserir um mapa de cardapios. Manter aqui.
 	
 	public Marmitaria(String mNome, String mTelefone, String mEndereco) {
 		super();

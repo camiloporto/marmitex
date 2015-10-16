@@ -25,10 +25,10 @@ public class Cardapio implements Serializable {
 		this.uuid = UUID.randomUUID();
 	}
 
-	public GrupoItems createGrupo(String descricao) {
+	public GrupoItems addGrupo(String descricao) {
 		GrupoItems grupoItems = new GrupoItems();
 		grupoItems.setDescricao(descricao);
-		return grupoItems;
+		return gruposItems.put(grupoItems.getUuid(), grupoItems);
 	}
 	
 	public GrupoItems adicionaGrupo(GrupoItems grupo) {

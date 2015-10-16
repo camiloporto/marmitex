@@ -28,6 +28,14 @@ public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoLi
 					.commit();
 		}
 	}
+
+	@Override
+	public void onBackPressed() {
+		Intent i = new Intent();
+		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, this.cardapio);
+		setResult(Activity.RESULT_OK, i);
+		super.onBackPressed();
+	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -43,6 +51,11 @@ public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoLi
 		Intent i = new Intent(this, OpcaoCardapioActivity.class);
 		i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, grupo);
 		startActivityForResult(i, 0);
+	}
+
+	@Override
+	public void onNewGroupAdded(String descricao) {
+		cardapio.addGrupo(descricao);
 	}
 
 }

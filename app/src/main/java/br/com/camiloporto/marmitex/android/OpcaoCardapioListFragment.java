@@ -115,6 +115,7 @@ public class OpcaoCardapioListFragment extends ListFragment {
 				@Override
 				public void onClick(View v) {
 					ItemCardapio itemClicked = getItem(position);
+					((OpcaoCardapioListFragmentListener) getActivity()).onItemDeleted(itemClicked);
 					remove(itemClicked);
 					notifyDataSetChanged();
 					Log.i(TAG, "removendo item " + itemClicked);

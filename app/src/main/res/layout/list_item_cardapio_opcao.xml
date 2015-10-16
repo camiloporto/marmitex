@@ -10,15 +10,8 @@
         android:drawableRight="@android:drawable/ic_menu_delete"
         android:layout_alignParentRight="true"
         android:text=""/>
-    <!-- 
-    <Button android:id="@+id/cardapio_opcao_item_list_editButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_toLeftOf="@id/cardapio_opcao_item_list_removeButton"
-        android:text="Edit"/>
-     -->
-     
+
+
 	<EditText android:id="@+id/cardapio_opcao_item_list_descricao_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
