@@ -12,30 +12,31 @@ import android.util.Log;
 import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoItems;
 import br.com.camiloporto.marmitex.android.model.ItemCardapio;
+import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
-public class CardapioService {
+public class MarmitaService {
 	
-	private static final String TAG = "CardapioService";
+	private static final String TAG = "MarmitaService";
 	
-	private static CardapioService cardapioService;
+	private static MarmitaService marmitaService;
 
 	private Context context;
 	private RestService restService;
 	private URL serverEndPoint;
 
-	private CardapioService(Context context, RestService restService) {
+	private MarmitaService(Context context, RestService restService) {
 		super();
 		this.context = context;
 		this.restService = restService;
 	}
 	
-	public static CardapioService getInstance(Context context) {
-		if(cardapioService == null) {
-			cardapioService = new CardapioService(
+	public static MarmitaService getInstance(Context context) {
+		if(marmitaService == null) {
+			marmitaService = new MarmitaService(
 					context.getApplicationContext(),
 					RestService.getInstance());
 		}
-		return cardapioService;
+		return marmitaService;
 	}
 
 	public String salvaCardapio(Cardapio cardapio) {
@@ -48,6 +49,16 @@ public class CardapioService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	//FIXME ver como recuperar marmitaria cadastrada no dispositivo. recuperar via REST ou Localmente
+	public Marmitaria getMarmitaria() {
+		Marmitaria m = new Marmitaria("Marmita 1", "32410-9343", "Jaguarari 123, Lagoa Nova");
+		List<Cardapio> cardapio  = list();
+		for (Cardapio c: cardapio) {
+			m.saveCardapio(c);
+		}
+		return m;
 	}
 	
 	public List<Cardapio> list() {

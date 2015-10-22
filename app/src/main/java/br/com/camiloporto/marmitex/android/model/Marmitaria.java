@@ -3,7 +3,14 @@ package br.com.camiloporto.marmitex.android.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Marmitaria {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+public class Marmitaria implements Serializable {
 
 	private static final String JSON_ENDERECO = "endereco";
 	private static final String JSON_TELEFONE = "telefone";
@@ -20,14 +27,32 @@ public class Marmitaria {
 	private String mSenha;
 	private String mId;
 	private String mFuncionamento;
-	
-	//FIXME inserir um mapa de cardapios. Manter aqui.
+
+	private Map<UUID, Cardapio> cardapios = new LinkedHashMap<UUID, Cardapio>();
 	
 	public Marmitaria(String mNome, String mTelefone, String mEndereco) {
 		super();
 		this.mNome = mNome;
 		this.mTelefone = mTelefone;
 		this.mEndereco = mEndereco;
+	}
+
+	public Cardapio createCardapio(String descricao) {
+		Cardapio cardapio = new Cardapio();
+		cardapio.setDescricao(descricao);
+		return cardapios.put(cardapio.getUuid(), cardapio);
+	}
+
+	public Cardapio saveCardapio(Cardapio cardapio) {
+		return cardapios.put(cardapio.getUuid(), cardapio);
+	}
+
+	public boolean deleteCardapio(Cardapio cardapio) {
+		return cardapios.remove(cardapio.getUuid()) != null;
+	}
+
+	public List<Cardapio> getCardapios() {
+		return new ArrayList<Cardapio>(cardapios.values());
 	}
 
 

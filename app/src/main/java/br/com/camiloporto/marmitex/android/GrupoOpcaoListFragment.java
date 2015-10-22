@@ -65,6 +65,8 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 		});
 
+		//FIXME adicionar comportamento do botao remover grupo
+
 		return v;
 	}
 
@@ -119,6 +121,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 				@Override
 				public void onClick(View v) {
 					GrupoItems item = getItem(position);
+					((GrupoOpcaoListFragmentListener)getActivity()).onItemDeleted(item);
 					remove(item);
 					notifyDataSetChanged();
 					Log.i(TAG, "removendo grupo " + item);
@@ -145,7 +148,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 		void onNewGroupAdded(String descricao);
 //		public void onItemUpdated(ItemCardapio item);
-//		public void onItemDeleted(ItemCardapio item);
+		public void onItemDeleted(GrupoItems grupo);
 //		public void onItemGroupUpdated(GrupoItems groupItems);
 	}
 	

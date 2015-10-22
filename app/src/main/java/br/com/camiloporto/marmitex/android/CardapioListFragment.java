@@ -9,19 +9,33 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
-import br.com.camiloporto.marmitex.android.provider.service.CardapioService;
+import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
 public class CardapioListFragment extends ListFragment {
 	
 	private static final String TAG = "CardapioListFragment";
+	public static final String ARG_NAME_MARMITARIA = "br.com.camiloporto.marmitex.android.CardapioListFragment.MARMITARIA";
+	private Marmitaria marmitaria;
+
+	@Deprecated
 	private List<Cardapio> cardapios;
+
+	public static CardapioListFragment newFragment(Marmitaria marmitaria) {
+		Bundle args = new Bundle();
+		args.putSerializable(ARG_NAME_MARMITARIA, marmitaria);
+		CardapioListFragment cardapioListFragment = new CardapioListFragment();
+		cardapioListFragment.setArguments(args);
+		return cardapioListFragment;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		cardapios = CardapioService.getInstance(getActivity()).list();
-		setListAdapter(new CardapioListAdapter(cardapios));
+		marmitaria = (Marmitaria) getArguments().getSerializable(ARG_NAME_MARMITARIA);
+		if(marmitaria != null) {
+			getActivity().setTitle(marmitaria.getNome());
+			setListAdapter(new CardapioListAdapter(marmitaria));
+		}
 	}
 	
 	@Override
@@ -36,17 +50,18 @@ public class CardapioListFragment extends ListFragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == 0) {
 			Cardapio cardapio = (Cardapio) data.getExtras().get(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
-			//TODO Criar um Objeto Marmitaria para manter Cardapios? Aqui faria algo como marmitaria.saveCardapio()
 			//FIXME colocar metodos de interacao entre Activities nas Activities (tira esse daqui e colocar am CardapioActivity)
-			cardapios.add(cardapio);
-			((CardapioListAdapter) getListAdapter()).notifyDataSetChanged();
+			marmitaria.saveCardapio(cardapio);
+			CardapioListAdapter listAdapter = (CardapioListAdapter) getListAdapter();
+			listAdapter.clear();
+			listAdapter.addAll(marmitaria.getCardapios());
 		}
 	}
 
 	private class CardapioListAdapter extends ArrayAdapter<Cardapio> {
 		
-		public CardapioListAdapter(List<Cardapio> cardapios) {
-			super(getActivity(), android.R.layout.simple_list_item_1, cardapios);
+		public CardapioListAdapter(Marmitaria marmitaria) {
+			super(getActivity(), android.R.layout.simple_list_item_1, marmitaria.getCardapios());
 		}
 		
 	}

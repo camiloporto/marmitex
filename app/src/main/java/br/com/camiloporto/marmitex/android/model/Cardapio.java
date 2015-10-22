@@ -56,6 +56,9 @@ public class Cardapio implements Serializable {
 		this.descricao = descricao;
 	}
 
+	public UUID getUuid() {
+		return uuid;
+	}
 
 	@Deprecated
 	public void setId(Long id) {

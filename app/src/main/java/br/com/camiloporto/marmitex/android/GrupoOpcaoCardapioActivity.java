@@ -58,4 +58,9 @@ public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoLi
 		cardapio.addGrupo(descricao);
 	}
 
+	@Override
+	public void onItemDeleted(GrupoItems grupo) {
+		cardapio.removeGrupo(grupo.getUuid());
+	}
+
 }
