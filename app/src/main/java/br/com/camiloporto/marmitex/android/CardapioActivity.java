@@ -1,5 +1,6 @@
 package br.com.camiloporto.marmitex.android;
 
+import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
 import android.app.Activity;
@@ -9,7 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class CardapioActivity extends Activity {
+public class CardapioActivity extends Activity implements CardapioListFragment.CardapioListFragmentListener {
 
 	private CardapioListFragment cardapioListFragment;
 	private Marmitaria marmitaria;
@@ -46,4 +47,29 @@ public class CardapioActivity extends Activity {
 		}
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == 0) {
+			Cardapio cardapio = (Cardapio) data.getExtras().get(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
+			marmitaria.saveCardapio(cardapio);
+			cardapioListFragment.notifyDataSetChanged();
+		}
+	}
+
+	@Override
+	public void onCardapioAdded(Cardapio c) {
+		//FIXME implementar metodo
+	}
+
+	@Override
+	public void onCardapioRequestForEdition(Cardapio c) {
+		Intent i = new Intent(this, GrupoOpcaoCardapioActivity.class);
+		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, c);
+		startActivityForResult(i, 0);
+	}
+
+	@Override
+	public void onCardapioDeleted(Cardapio c) {
+		marmitaria.deleteCardapio(c);
+	}
 }

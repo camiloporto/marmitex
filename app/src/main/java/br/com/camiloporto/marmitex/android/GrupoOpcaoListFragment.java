@@ -65,8 +65,6 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 		});
 
-		//FIXME adicionar comportamento do botao remover grupo
-
 		return v;
 	}
 
@@ -77,14 +75,6 @@ public class GrupoOpcaoListFragment extends ListFragment {
 		listAdapter.addAll(cardapio.getGruposItems());
 		listAdapter.notifyDataSetChanged();
 	}
-
-//	@Override
-//	public void onListItemClick(ListView l, View v, int position, long id) {
-//		GrupoItems clicked = (GrupoItems) getListAdapter().getItem(position);
-//		Intent i = new Intent(getActivity(), OpcaoCardapioActivity.class);
-//		i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, clicked);
-//		startActivity(i);
-//	}
 
 	public void notifyDataSetChanged() {
 		GrupoOpcaoListAdapter listAdapter = (GrupoOpcaoListAdapter) getListAdapter();

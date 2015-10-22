@@ -5,10 +5,15 @@ import java.util.List;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import br.com.camiloporto.marmitex.android.model.Cardapio;
+import br.com.camiloporto.marmitex.android.model.GrupoItems;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
 public class CardapioListFragment extends ListFragment {
@@ -37,33 +42,68 @@ public class CardapioListFragment extends ListFragment {
 			setListAdapter(new CardapioListAdapter(marmitaria));
 		}
 	}
-	
-	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		Cardapio itemClicked = (Cardapio) getListAdapter().getItem(position);
-		Intent i = new Intent(getActivity(), GrupoOpcaoCardapioActivity.class);
-		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, itemClicked);
-		startActivityForResult(i, 0);
+
+
+	public void notifyDataSetChanged() {
+		CardapioListAdapter listAdapter = (CardapioListAdapter) getListAdapter();
+		listAdapter.clear();
+		listAdapter.addAll(marmitaria.getCardapios());
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == 0) {
-			Cardapio cardapio = (Cardapio) data.getExtras().get(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
-			//FIXME colocar metodos de interacao entre Activities nas Activities (tira esse daqui e colocar am CardapioActivity)
-			marmitaria.saveCardapio(cardapio);
-			CardapioListAdapter listAdapter = (CardapioListAdapter) getListAdapter();
-			listAdapter.clear();
-			listAdapter.addAll(marmitaria.getCardapios());
-		}
-	}
 
 	private class CardapioListAdapter extends ArrayAdapter<Cardapio> {
 		
 		public CardapioListAdapter(Marmitaria marmitaria) {
-			super(getActivity(), android.R.layout.simple_list_item_1, marmitaria.getCardapios());
+			super(getActivity(), R.layout.list_item_cardapio, marmitaria.getCardapios());
 		}
-		
+
+		@Override
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			if(convertView == null) {
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_cardapio, null);
+			}
+
+			Cardapio item = getItem(position);
+			final EditText inputDescricao = (EditText) convertView
+					.findViewById(R.id.cardapio_item_list_descricao_input);
+			inputDescricao.setText(item.getDescricao());
+
+			final Button deleteButton = (Button) convertView
+					.findViewById(R.id.cardapio_item_list_removeButton);
+
+			final Button editButton = (Button) convertView
+					.findViewById(R.id.cardapio_item_list_editButton);
+
+			deleteButton.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Cardapio item = getItem(position);
+					((CardapioListFragmentListener)getActivity()).onCardapioDeleted(item);
+					remove(item);
+					CardapioListFragment.this.notifyDataSetChanged();
+					Log.i(TAG, "removendo cardapio " + item);
+				}
+
+			});
+
+			editButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Cardapio item = getItem(position);
+					((CardapioListFragmentListener) getActivity()).onCardapioRequestForEdition(item);
+
+				}
+			});
+
+			return convertView;
+		}
+	}
+
+	interface CardapioListFragmentListener {
+		public void onCardapioAdded(Cardapio c);
+		public void onCardapioRequestForEdition(Cardapio c);
+		public void onCardapioDeleted(Cardapio c);
 	}
 
 }
