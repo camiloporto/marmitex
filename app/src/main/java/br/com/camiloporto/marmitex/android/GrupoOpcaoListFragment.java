@@ -3,6 +3,8 @@ package br.com.camiloporto.marmitex.android;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,6 +101,16 @@ public class GrupoOpcaoListFragment extends ListFragment {
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_grupo_opcao_item_list_descricao_input);
 			inputDescricao.setText(item.getDescricao());
+			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View view, boolean hasFocus) {
+					if(!hasFocus) {
+						Editable newValue = ((EditText) view).getText();
+						getItem(position).setDescricao(newValue.toString());
+					}
+				}
+			});
+
 
 			final Button deleteButton = (Button) convertView
 					.findViewById(R.id.cardapio_grupo_opcao_item_list_removeButton);

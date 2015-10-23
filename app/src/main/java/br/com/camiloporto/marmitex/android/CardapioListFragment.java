@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,15 @@ public class CardapioListFragment extends ListFragment {
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_item_list_descricao_input);
 			inputDescricao.setText(item.getDescricao());
+			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View view, boolean hasFocus) {
+					if (!hasFocus) {
+						Editable newValue = ((EditText) view).getText();
+						getItem(position).setDescricao(newValue.toString());
+					}
+				}
+			});
 
 			final Button deleteButton = (Button) convertView
 					.findViewById(R.id.cardapio_item_list_removeButton);
