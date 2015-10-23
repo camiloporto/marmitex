@@ -52,7 +52,7 @@ public class MarmitaService {
 	}
 
 	//FIXME ver como recuperar marmitaria cadastrada no dispositivo. recuperar via REST ou Localmente
-	public Marmitaria getMarmitaria() {
+	public Marmitaria readMarmitaria() {
 		Marmitaria m = new Marmitaria("Marmita 1", "32410-9343", "Jaguarari 123, Lagoa Nova");
 		List<Cardapio> cardapio  = list();
 		for (Cardapio c: cardapio) {
@@ -118,4 +118,7 @@ public class MarmitaService {
 		
 	}
 
+	public void persist(Marmitaria m) {
+		Log.i(TAG, "persistingo marmitaria " + m.getId());
+	}
 }

@@ -24,13 +24,6 @@ public class CardapioActivity extends Activity implements CardapioListFragment.C
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Trocar forma como os grupos de opcoes sao editados.
-				// nao seria interessante criar um fragment para listar os grupos
-				// e permitir alterar/isnerir nome do cardaipio?
-				// essa tela seria o "modo edicao" de um cardapio
-				// renomera grupoOpcaoCardapioActiviti para:
-				//1 ou um CardapioEditFragment
-				//2. ou um CardapioEditActivity (primeira opcao mais adequada) 
 				Intent i = new Intent(CardapioActivity.this, GrupoOpcaoCardapioActivity.class);
 				startActivity(i);
 			}
@@ -54,6 +47,14 @@ public class CardapioActivity extends Activity implements CardapioListFragment.C
 			marmitaria.saveCardapio(cardapio);
 			cardapioListFragment.notifyDataSetChanged();
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		Intent i = new Intent();
+		i.putExtra(CardapioListFragment.ARG_NAME_MARMITARIA, this.marmitaria);
+		setResult(Activity.RESULT_OK, i);
+		super.onBackPressed();
 	}
 
 	@Override
