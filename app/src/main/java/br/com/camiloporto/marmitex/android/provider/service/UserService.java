@@ -17,20 +17,5 @@ public class UserService {
 	public UserService(RestService restService) {
 		this.restService = restService;
 	}
-	
-	public String novaMarmitaria(Marmitaria m) {
-		try {
-			JSONObject json = m.json();
-			Log.i(TAG, json.toString());
-			String response = restService.sendJSONPost(serverEndPoint, json);
-			return response;
-			//TODO enviar http POST para servidor via JSON
-			//TODO obter resposta.
-			//TODO notificar GUI
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 }

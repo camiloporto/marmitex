@@ -39,25 +39,19 @@ public class MarmitaService {
 		return marmitaService;
 	}
 
-	public String salvaCardapio(Cardapio cardapio) {
-		try {
-			JSONObject json = cardapio.json();
-			Log.i(TAG, json.toString());
-			String response = restService.sendJSONPost(serverEndPoint, json);
-			return response;
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public void save(Marmitaria m) {
+		new MarmitariaJSONHelper(context)
+				.persistMarmitaria(m);
 	}
 
 	//FIXME ver como recuperar marmitaria cadastrada no dispositivo. recuperar via REST ou Localmente
 	public Marmitaria readMarmitaria() {
-		Marmitaria m = new Marmitaria("Marmita 1", "32410-9343", "Jaguarari 123, Lagoa Nova");
-		List<Cardapio> cardapio  = list();
-		for (Cardapio c: cardapio) {
-			m.saveCardapio(c);
-		}
+
+		//FIXME recuperar usuario logado
+		String userId = getAuthenticatedUserId();
+		Marmitaria m = new MarmitariaJSONHelper(context)
+				.readMarmitaria(userId);
+
 		return m;
 	}
 	
@@ -119,6 +113,11 @@ public class MarmitaService {
 	}
 
 	public void persist(Marmitaria m) {
+		//FIXME Implementar persistencia (local e remota via JSON). ver como couchdb local pode rodar
 		Log.i(TAG, "persistingo marmitaria " + m.getId());
+	}
+
+	public String getAuthenticatedUserId() {
+		return "camiloporto";
 	}
 }

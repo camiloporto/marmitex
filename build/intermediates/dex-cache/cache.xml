@@ -8,5 +8,12 @@
         sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67">
         <dex dex="/home/camiloporto/StudioProjects/marmitex/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-648fba0bf74e1c612771198bc5e272c4264130dd.jar" />
     </item>
+    <item
+        jar="/home/camiloporto/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/home/camiloporto/StudioProjects/marmitex/app/build/intermediates/pre-dexed/debug/gson-2.3-41fd42784912ab2ae2ddf96010d279d61e9efd54.jar" />
+    </item>
 
 </items>

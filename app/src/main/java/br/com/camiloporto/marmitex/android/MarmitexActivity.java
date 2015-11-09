@@ -15,9 +15,20 @@ public class MarmitexActivity extends Activity {
 
 	private Marmitaria marmitaria;
 	private MarmitaService marmitariaService;
+	private Button cardapios;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
+		/*
+		 * FIXME
+		 * Iniciar essa atividade fazendo os seguinte:
+		 * 1. Autenticar usuario (tentar ver se credenciais estao persistidas ou solicitar login)
+		 * 2. Verificar se usuario autenticado ja criou uma Marmitaria
+		 * 3. Caso seja 1o acesso, enviar para uma Tela que o auxile a criar a marmitaria,
+		 * incluindo a criacao de cardapios
+		 * 4. Caso já tenha uma marmitaria criada, apresentar opção de Editar cardapios/marmitaria
+		 */
 
 		marmitariaService = MarmitaService.getInstance(MarmitexActivity.this);
 		marmitaria = marmitariaService.readMarmitaria();
@@ -25,18 +36,18 @@ public class MarmitexActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_marmitex);
 		Button novaMarmitaria = (Button) findViewById(R.id.btnNovaMarmitaria);
-		Button cardapios = (Button) findViewById(R.id.btnCardapios);
+		cardapios = (Button) findViewById(R.id.btnCardapios);
 		cardapios.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MarmitexActivity.this, CardapioActivity.class);
 				//FIXME colocar essa string numa constante
 				i.putExtra(CardapioListFragment.ARG_NAME_MARMITARIA, marmitaria);
-				//FIXME iniicar essa Activity for Result. NO retorno, persistir toda a Marmitaria com seus Cardapios (serializar Marmitaria e mandar para servidor/disco local/etc.
 				startActivityForResult(i, 0);
 			}
 		});
+		updateCardapiosButtonStatus();
 		
 		novaMarmitaria.setOnClickListener(new View.OnClickListener() {
 			
@@ -46,6 +57,10 @@ public class MarmitexActivity extends Activity {
 				startActivity(i);
 			}
 		});
+	}
+
+	private void updateCardapiosButtonStatus() {
+		cardapios.setEnabled(marmitaria != null);
 	}
 
 	@Override

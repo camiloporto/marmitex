@@ -29,6 +29,7 @@ public class NovaMarmitariaActivity extends Activity implements NovaMarmitariaFr
 
 	@Override
 	public void novaMarmitariaCreated(Marmitaria m) {
+		//FIXME melhorar essa interacao. Como passar a Marmitaria para a Task?
 		this.mNovaMarmitaria = m;
 		new NovaMarmitariaTask().execute(this);
 	}

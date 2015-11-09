@@ -15,26 +15,29 @@ public class Marmitaria implements Serializable {
 	private static final String JSON_ENDERECO = "endereco";
 	private static final String JSON_TELEFONE = "telefone";
 	private static final String JSON_NOME = "nome";
+	private static final String JSON_UUID = "uuid";
 	private static final String JSON_LOGIN = "login";
 	private static final String JSON_SENHA = "senha";
 	private static final String JSON_ID = "id";
 	private static final String JSON_FUNCIONAMENTO = "funcionamento";
 	
-	private String mNome;
-	private String mTelefone;
-	private String mEndereco;
-	private String mLogin;
-	private String mSenha;
-	private String mId;
-	private String mFuncionamento;
+	private String nome;
+	private String telefone;
+	private String endereco;
+	private String login;
+	private String senha;
+	private String id;
+	private final UUID uuid;
+	private String funcionamento;
 
 	private Map<UUID, Cardapio> cardapios = new LinkedHashMap<UUID, Cardapio>();
 	
-	public Marmitaria(String mNome, String mTelefone, String mEndereco) {
+	public Marmitaria(String mNome, String mTelefone, String endereco) {
 		super();
-		this.mNome = mNome;
-		this.mTelefone = mTelefone;
-		this.mEndereco = mEndereco;
+		this.uuid = UUID.randomUUID();
+		this.nome = mNome;
+		this.telefone = mTelefone;
+		this.endereco = endereco;
 	}
 
 	public Cardapio createCardapio(String descricao) {
@@ -56,87 +59,73 @@ public class Marmitaria implements Serializable {
 	}
 
 
-	public JSONObject json() throws JSONException {
-		JSONObject json = new JSONObject();
-		json.put(JSON_NOME, mNome);
-		json.put(JSON_TELEFONE, mTelefone);
-		json.put(JSON_ENDERECO, mEndereco);
-		json.put(JSON_FUNCIONAMENTO, mFuncionamento);
-		json.put(JSON_ID, mId);
-		json.put(JSON_LOGIN, mLogin);
-		json.put(JSON_SENHA, mSenha);
-		//TODO enviar localizacao GPS
-		return json;
-	}
-
-
 	public void setNome(String mNome) {
-		this.mNome = mNome;
+		this.nome = mNome;
 	}
 
 
 	public void setTelefone(String mTelefone) {
-		this.mTelefone = mTelefone;
+		this.telefone = mTelefone;
 	}
 
 
 	public void setEndereco(String mEndereco) {
-		this.mEndereco = mEndereco;
+		this.endereco = mEndereco;
 	}
 
 
 	public String getLogin() {
-		return mLogin;
+		return login;
 	}
 
 
 	public void setLogin(String mLogin) {
-		this.mLogin = mLogin;
+		this.login = mLogin;
 	}
 
 
 	public String getSenha() {
-		return mSenha;
+		return senha;
 	}
 
 
 	public void setSenha(String mSenha) {
-		this.mSenha = mSenha;
+		this.senha = mSenha;
 	}
 
 
 	public String getId() {
-		return mId;
+		return id;
 	}
 
 
 	public void setId(String mId) {
-		this.mId = mId;
+		this.id = mId;
 	}
 
 
 	public String getFuncionamento() {
-		return mFuncionamento;
+		return funcionamento;
 	}
 
 
 	public void setFuncionamento(String mFuncionamento) {
-		this.mFuncionamento = mFuncionamento;
+		this.funcionamento = mFuncionamento;
 	}
 
 
 	public String getNome() {
-		return mNome;
+		return nome;
 	}
 
 
 	public String getTelefone() {
-		return mTelefone;
+		return telefone;
 	}
 
 
 	public String getEndereco() {
-		return mEndereco;
+		return endereco;
 	}
 
 
