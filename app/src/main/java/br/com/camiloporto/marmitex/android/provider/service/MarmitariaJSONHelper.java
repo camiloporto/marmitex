@@ -1,16 +1,27 @@
 package br.com.camiloporto.marmitex.android.provider.service;
 
 import android.content.Context;
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
 
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
@@ -20,10 +31,37 @@ import br.com.camiloporto.marmitex.android.model.Marmitaria;
 public class MarmitariaJSONHelper {
     private Context context;
 
+    private final String key = "hengledungsheriallestopa";
+    private final String pass = "4771147dce8dae2abf30787367d38c4197a39af7";
+
     MarmitariaJSONHelper(Context context) {
 
         this.context = context;
     }
+
+    public String persistRemote(Marmitaria m) throws MalformedURLException {
+        final Gson gson = new Gson();
+        String json = gson.toJson(m);
+        URL endPOint = new URL("https://camiloporto.cloudant.com/marmitex-dev/" + m.getUuid());
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpBasicAuthentication httpBasicAuthentication = new HttpBasicAuthentication(key, pass);
+        httpHeaders.setAuthorization(httpBasicAuthentication);
+        HttpEntity<Marmitaria> entity = new HttpEntity<Marmitaria>(m, httpHeaders);
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                "https://camiloporto.cloudant.com/marmitex-dev/" + m.getUuid(),
+                HttpMethod.PUT,
+                entity,
+                String.class
+        );
+
+        return responseEntity.getBody();
+
+    }
+
 
     //FIXME tornar essas Operacoes Asincronas
     public void persistMarmitaria(Marmitaria m) {
@@ -39,7 +77,9 @@ public class MarmitariaJSONHelper {
             Log.e("MarmitariaJSONHelper", e.toString());
         } finally {
             try {
-                fos.close();
+                if(fos != null) {
+                    fos.close();
+                }
             } catch (IOException e) {
                 Log.e("MarmitariaJSONHelper", e.toString());
             }

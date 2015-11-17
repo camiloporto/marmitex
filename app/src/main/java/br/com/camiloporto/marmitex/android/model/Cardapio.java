@@ -28,7 +28,8 @@ public class Cardapio implements Serializable {
 	public GrupoItems addGrupo(String descricao) {
 		GrupoItems grupoItems = new GrupoItems();
 		grupoItems.setDescricao(descricao);
-		return gruposItems.put(grupoItems.getUuid(), grupoItems);
+		gruposItems.put(grupoItems.getUuid(), grupoItems);
+		return grupoItems;
 	}
 	
 	public GrupoItems adicionaGrupo(GrupoItems grupo) {

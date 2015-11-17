@@ -13,11 +13,11 @@ public class ItemCardapio implements Serializable {
 
 	private UUID uuid;
 	private String descricao;
-	private GrupoItems parent;
+//	private GrupoItems parent;
 	
-	public ItemCardapio(GrupoItems parent) {
+	public ItemCardapio() {
 		super();
-		this.parent = parent;
+//		this.parent = parent;
 		uuid = UUID.randomUUID();
 	}
 

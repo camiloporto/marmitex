@@ -69,15 +69,15 @@ public class MarmitaService {
 		opcoes3.setDescricao("saladas");
 		opcoes3.setId(3L);
 		
-		ItemCardapio i1 = new ItemCardapio(opcoes);
+		ItemCardapio i1 = new ItemCardapio();
 		i1.setDescricao("Filet de Frango");
 		i1.setId(1L);
 		
-		ItemCardapio i2 = new ItemCardapio(opcoes2);
+		ItemCardapio i2 = new ItemCardapio();
 		i2.setDescricao("Feijao preto");
 		i2.setId(2L);
 		
-		ItemCardapio i3 = new ItemCardapio(opcoes3);
+		ItemCardapio i3 = new ItemCardapio();
 		i3.setDescricao("Hortalica");
 		i3.setId(3L);
 		

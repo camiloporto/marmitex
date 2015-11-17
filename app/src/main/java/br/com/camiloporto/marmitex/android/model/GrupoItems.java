@@ -33,7 +33,7 @@ public class GrupoItems implements Serializable {
 
 
 	public ItemCardapio newItem(String descricao) {
-		ItemCardapio newItem = new ItemCardapio(this);
+		ItemCardapio newItem = new ItemCardapio();
 		newItem.setDescricao(descricao);
 		items.put(newItem.getUUID(), newItem);
 		return newItem;

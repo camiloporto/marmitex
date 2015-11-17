@@ -1,5 +1,7 @@
 package br.com.camiloporto.marmitex.android.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,6 +29,7 @@ public class Marmitaria implements Serializable {
 	private String login;
 	private String senha;
 	private String id;
+	@SerializedName("_id")
 	private final UUID uuid;
 	private String funcionamento;
 
@@ -43,7 +46,8 @@ public class Marmitaria implements Serializable {
 	public Cardapio createCardapio(String descricao) {
 		Cardapio cardapio = new Cardapio();
 		cardapio.setDescricao(descricao);
-		return cardapios.put(cardapio.getUuid(), cardapio);
+		cardapios.put(cardapio.getUuid(), cardapio);
+		return cardapio;
 	}
 
 	public Cardapio saveCardapio(Cardapio cardapio) {
@@ -98,6 +102,9 @@ public class Marmitaria implements Serializable {
 		return id;
 	}
 
+	public UUID getUuid() {
+		return uuid;
+	}
 
 	public void setId(String mId) {
 		this.id = mId;
