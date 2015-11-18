@@ -40,8 +40,6 @@ public class MarmitariaJSONHelper {
     }
 
     public String persistRemote(Marmitaria m) throws MalformedURLException {
-        final Gson gson = new Gson();
-        String json = gson.toJson(m);
         URL endPOint = new URL("https://camiloporto.cloudant.com/marmitex-dev/" + m.getUuid());
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();

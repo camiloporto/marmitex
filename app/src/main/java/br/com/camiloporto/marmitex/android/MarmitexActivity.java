@@ -30,6 +30,7 @@ public class MarmitexActivity extends Activity {
 		 * 4. Caso já tenha uma marmitaria criada, apresentar opção de Editar cardapios/marmitaria
 		 */
 
+		//FIXME tornar essa leitura assincrona. Mostar na UI uma Spin enquanto a leitura eh feita.
 		marmitariaService = MarmitaService.getInstance(MarmitexActivity.this);
 		marmitaria = marmitariaService.readMarmitaria();
 

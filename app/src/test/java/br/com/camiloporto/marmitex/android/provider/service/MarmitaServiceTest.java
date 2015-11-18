@@ -32,7 +32,6 @@ import static org.junit.Assert.*;
 @Config(constants = BuildConfig.class)
 public class MarmitaServiceTest {
 
-
     @Test
     public void devePersistirNovaMarmitaria() throws MalformedURLException {
 
@@ -46,7 +45,7 @@ public class MarmitaServiceTest {
         String result = new MarmitariaJSONHelper(null)
                 .persistRemote(m);
 
-        System.out.println(result);
+        Assert.assertTrue(result.contains("\"ok\":true"));
 
     }
 
