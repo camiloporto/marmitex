@@ -88,21 +88,21 @@ public class MarmitaService {
 		
 		//FIXME invocar via rest o servidor e construir cardapios
 		Cardapio c1 = new Cardapio();
-		c1.setId(1L);
+
 		c1.setDescricao("Segunda-Feira");
 		c1.adicionaGrupo(opcoes);
 		c1.adicionaGrupo(opcoes2);
 		c1.adicionaGrupo(opcoes3);
 		
 		Cardapio c2 = new Cardapio();
-		c2.setId(2L);
+
 		c2.setDescricao("Terça-Feira");
 		c2.adicionaGrupo(opcoes);
 		c2.adicionaGrupo(opcoes2);
 		c2.adicionaGrupo(opcoes3);
 		
 		Cardapio c3 = new Cardapio();
-		c3.setId(3L);
+
 		c3.setDescricao("Quarta-Feira");
 		c3.adicionaGrupo(opcoes);
 		c3.adicionaGrupo(opcoes2);

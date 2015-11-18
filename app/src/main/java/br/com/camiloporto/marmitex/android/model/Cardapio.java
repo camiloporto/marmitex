@@ -13,16 +13,16 @@ import org.json.JSONObject;
 
 public class Cardapio implements Serializable {
 
-	private final UUID uuid;
-
 	private String descricao;
 	
 	private boolean disponivel;
 	
 	private Map<UUID, GrupoItems> gruposItems = new LinkedHashMap<UUID, GrupoItems>();
 
+
+
 	public Cardapio() {
-		this.uuid = UUID.randomUUID();
+
 	}
 
 	public GrupoItems addGrupo(String descricao) {
@@ -57,14 +57,6 @@ public class Cardapio implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public UUID getUuid() {
-		return uuid;
-	}
-
-	@Deprecated
-	public void setId(Long id) {
-
-	}
 
 	public boolean isDisponivel() {
 		return disponivel;
@@ -75,21 +67,6 @@ public class Cardapio implements Serializable {
 		return new ArrayList<GrupoItems>(gruposItems.values());
 	}
 
-	public JSONObject json() throws JSONException {
-		
-		JSONObject json = new JSONObject();
-		json.put("uuid", uuid);
-		json.put("disponivel", disponivel);
-		
-		JSONArray gruposItemsJson = new JSONArray();
-		for (GrupoItems g : gruposItems.values()) {
-			gruposItemsJson.put(g.json());
-		}
-		json.put("gruposItems", gruposItemsJson);
-		
-		return json;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -97,22 +74,14 @@ public class Cardapio implements Serializable {
 
 		Cardapio cardapio = (Cardapio) o;
 
-		return uuid.equals(cardapio.uuid);
+		return descricao.equals(cardapio.descricao);
 
 	}
 
 	@Override
 	public int hashCode() {
-		return uuid.hashCode();
+		return descricao.hashCode();
 	}
 
-	@Override
-	public String toString() {
-		return "Cardapio{" +
-				"uuid=" + uuid +
-				", descricao='" + descricao + '\'' +
-				", disponivel=" + disponivel +
-				'}';
-	}
 }
 

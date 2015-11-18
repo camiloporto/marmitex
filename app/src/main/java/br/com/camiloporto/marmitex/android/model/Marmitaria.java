@@ -7,33 +7,28 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class Marmitaria implements Serializable {
 
-	private static final String JSON_ENDERECO = "endereco";
-	private static final String JSON_TELEFONE = "telefone";
-	private static final String JSON_NOME = "nome";
-	private static final String JSON_UUID = "uuid";
-	private static final String JSON_LOGIN = "login";
-	private static final String JSON_SENHA = "senha";
-	private static final String JSON_ID = "id";
-	private static final String JSON_FUNCIONAMENTO = "funcionamento";
-	
 	private String nome;
 	private String telefone;
 	private String endereco;
 	private String login;
 	private String senha;
 	private String id;
+
 	@SerializedName("_id")
 	private final UUID uuid;
 	private String funcionamento;
 
-	private Map<UUID, Cardapio> cardapios = new LinkedHashMap<UUID, Cardapio>();
+//	private Map<UUID, Cardapio> cardapios = new LinkedHashMap<UUID, Cardapio>();
+	private Set<Cardapio> cardapios = new HashSet<Cardapio>();
 	
 	public Marmitaria(String mNome, String mTelefone, String endereco) {
 		super();
@@ -46,20 +41,20 @@ public class Marmitaria implements Serializable {
 	public Cardapio createCardapio(String descricao) {
 		Cardapio cardapio = new Cardapio();
 		cardapio.setDescricao(descricao);
-		cardapios.put(cardapio.getUuid(), cardapio);
+		cardapios.add(cardapio);
 		return cardapio;
 	}
 
-	public Cardapio saveCardapio(Cardapio cardapio) {
-		return cardapios.put(cardapio.getUuid(), cardapio);
+	public void saveCardapio(Cardapio cardapio) {
+		cardapios.add(cardapio);
 	}
 
 	public boolean deleteCardapio(Cardapio cardapio) {
-		return cardapios.remove(cardapio.getUuid()) != null;
+		return cardapios.remove(cardapio);
 	}
 
 	public List<Cardapio> getCardapios() {
-		return new ArrayList<Cardapio>(cardapios.values());
+		return new ArrayList<Cardapio>(cardapios);
 	}
 
 
