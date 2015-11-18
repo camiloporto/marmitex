@@ -16,14 +16,12 @@ import org.json.JSONObject;
 public class GrupoItems implements Serializable {
 
 
-	private UUID uuid;
-	
 	private String descricao;
 	
 	private Map<UUID, ItemCardapio> items = new LinkedHashMap<UUID, ItemCardapio>();
 
 	public GrupoItems() {
-		uuid = UUID.randomUUID();
+
 	}
 
 	@Deprecated
@@ -43,9 +41,6 @@ public class GrupoItems implements Serializable {
 		return items.remove(id) != null;
 	}
 
-	public UUID getUuid() {
-		return uuid;
-	}
 
 	@Deprecated
 	public void setId(Long id) {
@@ -71,29 +66,12 @@ public class GrupoItems implements Serializable {
 
 		GrupoItems that = (GrupoItems) o;
 
-		return uuid.equals(that.uuid);
+		return descricao.equals(that.descricao);
 
 	}
 
 	@Override
 	public int hashCode() {
-		return uuid.hashCode();
+		return descricao.hashCode();
 	}
-
-	public JSONObject json() throws JSONException {
-		JSONObject json = new JSONObject();
-		json.put("uuid", uuid);
-		json.put("descricao", descricao);
-		
-		JSONArray itemsJson = new JSONArray();
-		for (ItemCardapio i : items.values()) {
-			itemsJson.put(i.json());
-		}
-		json.put("items", itemsJson);
-		
-		return json;
-	}
-	
-	
-
 }
