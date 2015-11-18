@@ -76,7 +76,45 @@ public class MarmitaServiceTest {
         Marmitaria retrieved = new MarmitariaJSONHelper(null)
                 .getMarmitaria(idMarmitaria);
 
-        Assert.assertEquals(m.getNome(), "camilo");
+        Assert.assertEquals(retrieved.getNome(), "camilo");
+        Assert.assertNotNull(retrieved.getRevision());
+    }
+
+    @Test
+    public void deveAtualizarMarmitariaPreviamenteCadastrada() throws MalformedURLException {
+        Marmitaria m = new MarmitariaBuilder()
+                .newMarmitaria("camilo", "12345", "tereza campos")
+                .criaCardapio("Segunda-Feira")
+                .adicioneGrupo("Carnes")
+                .comOpcao("Patinho")
+                .comOpcao("Frango Grelhado")
+                .ok()
+                .adicioneGrupo("Acompanhamentos")
+                .comOpcao("Feijao")
+                .comOpcao("Arroz")
+                .ok()
+                .adicioneGrupo("Salada")
+                .comOpcao("Hortaliças")
+                .comOpcao("Legumes no Vapor")
+                .ok()
+                .okCardapio()
+                .getMarmitaria();
+
+        new MarmitariaJSONHelper(null)
+                .persistRemote(m);
+
+        String idMarmitaria = m.getUuid().toString();
+        Marmitaria retrieved = new MarmitariaJSONHelper(null)
+                .getMarmitaria(idMarmitaria);
+
+        retrieved.setEndereco("Novo Endereco");
+        new MarmitariaJSONHelper(null)
+                .persistRemote(retrieved);
+
+        retrieved = new MarmitariaJSONHelper(null)
+                .getMarmitaria(idMarmitaria);
+
+        Assert.assertEquals("Novo Endereco", retrieved.getEndereco());
     }
 
 }

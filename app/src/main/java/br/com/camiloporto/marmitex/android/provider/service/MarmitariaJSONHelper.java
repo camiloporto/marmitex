@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.FileInputStream;
@@ -111,6 +112,7 @@ public class MarmitariaJSONHelper {
     public Marmitaria getMarmitaria(String idMarmitaria) {
         String url = "https://camiloporto.cloudant.com/marmitex-dev/" + idMarmitaria;
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpBasicAuthentication httpBasicAuthentication = new HttpBasicAuthentication(key, pass);

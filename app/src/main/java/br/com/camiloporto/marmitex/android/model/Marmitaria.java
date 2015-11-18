@@ -23,6 +23,9 @@ public class Marmitaria implements Serializable {
 	private String senha;
 	private String id;
 
+	@SerializedName("_rev")
+	private String revision;
+
 	@SerializedName("_id")
 	private final UUID uuid;
 	private String funcionamento;
@@ -130,5 +133,11 @@ public class Marmitaria implements Serializable {
 		return endereco;
 	}
 
+	public String getRevision() {
+		return revision;
+	}
 
+	public void setRevision(String revision) {
+		this.revision = revision;
+	}
 }
