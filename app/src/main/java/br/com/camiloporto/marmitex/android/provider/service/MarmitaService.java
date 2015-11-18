@@ -48,9 +48,12 @@ public class MarmitaService {
 	public Marmitaria readMarmitaria() {
 
 		//FIXME recuperar usuario logado
-		String userId = getAuthenticatedUserId();
+//		String userId = getAuthenticatedUserId();
+//		Marmitaria m = new MarmitariaJSONHelper(context)
+//				.readMarmitaria(userId);
+		String idMarmitaria = getAuthenticatedUserId();
 		Marmitaria m = new MarmitariaJSONHelper(context)
-				.readMarmitaria(userId);
+				.getMarmitaria(idMarmitaria);
 
 		return m;
 	}
@@ -118,6 +121,6 @@ public class MarmitaService {
 	}
 
 	public String getAuthenticatedUserId() {
-		return "camiloporto";
+		return "61f9fdea-0690-4b9c-a541-985a2a50be69";
 	}
 }

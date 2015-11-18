@@ -51,9 +51,33 @@ public class MarmitaServiceTest {
     }
 
     @Test
-    public void testFinaAall() {
-        String result = RestService.getInstance().get("https://camiloporto.cloudant.com/marmitex-dev/_all_docs");
-        System.out.println(result);
+    public void deveRecuperarMarmitariaPreviamenteCadastrada() throws MalformedURLException {
+        Marmitaria m = new MarmitariaBuilder()
+                .newMarmitaria("camilo", "12345", "tereza campos")
+                .criaCardapio("Segunda-Feira")
+                .adicioneGrupo("Carnes")
+                .comOpcao("Patinho")
+                .comOpcao("Frango Grelhado")
+                .ok()
+                .adicioneGrupo("Acompanhamentos")
+                .comOpcao("Feijao")
+                .comOpcao("Arroz")
+                .ok()
+                .adicioneGrupo("Salada")
+                .comOpcao("Hortaliças")
+                .comOpcao("Legumes no Vapor")
+                .ok()
+                .okCardapio()
+                .getMarmitaria();
+
+        String result = new MarmitariaJSONHelper(null)
+                .persistRemote(m);
+
+        String idMarmitaria = m.getUuid().toString();
+        Marmitaria retrieved = new MarmitariaJSONHelper(null)
+                .getMarmitaria(idMarmitaria);
+
+        Assert.assertEquals(m.getNome(), "camilo");
     }
 
 }

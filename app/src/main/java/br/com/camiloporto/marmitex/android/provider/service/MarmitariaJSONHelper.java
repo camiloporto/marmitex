@@ -110,4 +110,22 @@ public class MarmitariaJSONHelper {
         return m;
     }
 
+    public Marmitaria getMarmitaria(String idMarmitaria) {
+        String url = "https://camiloporto.cloudant.com/marmitex-dev/" + idMarmitaria;
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpBasicAuthentication httpBasicAuthentication = new HttpBasicAuthentication(key, pass);
+        httpHeaders.setAuthorization(httpBasicAuthentication);
+        HttpEntity<Marmitaria> entity = new HttpEntity<Marmitaria>(httpHeaders);
+
+        ResponseEntity<Marmitaria> responseEntity = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                Marmitaria.class
+        );
+
+        return responseEntity.getBody();
+    }
 }
