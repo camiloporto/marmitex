@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.json.JSONArray;
@@ -18,7 +20,7 @@ public class GrupoItems implements Serializable {
 
 	private String descricao;
 	
-	private Map<UUID, ItemCardapio> items = new LinkedHashMap<UUID, ItemCardapio>();
+	private Set<ItemCardapio> items = new HashSet<ItemCardapio>();
 
 	public GrupoItems() {
 
@@ -26,26 +28,21 @@ public class GrupoItems implements Serializable {
 
 	@Deprecated
 	public void newItem(ItemCardapio item) {
-		items.put(item.getUUID(), item);
+		items.add(item);
 	}
 
 
 	public ItemCardapio newItem(String descricao) {
 		ItemCardapio newItem = new ItemCardapio();
 		newItem.setDescricao(descricao);
-		items.put(newItem.getUUID(), newItem);
+		items.add(newItem);
 		return newItem;
 	}
 
-	public boolean removeItem(UUID id) {
-		return items.remove(id) != null;
+	public boolean removeItem(ItemCardapio item) {
+		return items.remove(item);
 	}
 
-
-	@Deprecated
-	public void setId(Long id) {
-
-	}
 
 	public String getDescricao() {
 		return descricao;
@@ -56,7 +53,7 @@ public class GrupoItems implements Serializable {
 	}
 
 	public Collection<ItemCardapio> getItems() {
-		return items.values();
+		return items;
 	}
 
 	@Override

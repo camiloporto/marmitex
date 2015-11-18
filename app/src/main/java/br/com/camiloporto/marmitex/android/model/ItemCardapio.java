@@ -8,23 +8,12 @@ import org.json.JSONObject;
 
 public class ItemCardapio implements Serializable {
 
-	@Deprecated
-	private Long id;
-
-	private UUID uuid;
 	private String descricao;
-//	private GrupoItems parent;
 	
 	public ItemCardapio() {
 		super();
-//		this.parent = parent;
-		uuid = UUID.randomUUID();
 	}
 
-	@Deprecated
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getDescricao() {
 		return descricao;
 	}
@@ -32,9 +21,6 @@ public class ItemCardapio implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public UUID getUUID() {
-		return uuid;
-	}
 
 	@Override
 	public boolean equals(Object o) {
@@ -43,30 +29,12 @@ public class ItemCardapio implements Serializable {
 
 		ItemCardapio that = (ItemCardapio) o;
 
-		return uuid.equals(that.uuid);
+		return descricao.equals(that.descricao);
 
 	}
 
 	@Override
 	public int hashCode() {
-		return uuid.hashCode();
+		return descricao.hashCode();
 	}
-
-	@Override
-	public String toString() {
-		return "ItemCardapio{" +
-				"uuid=" + uuid +
-				", descricao='" + descricao + '\'' +
-				'}';
-	}
-
-	public JSONObject json() throws JSONException {
-		JSONObject json = new JSONObject();
-		json.put("descricao", descricao);
-		json.put("uuid", uuid.toString());
-		return json;
-	}
-	
-	
-	
 }

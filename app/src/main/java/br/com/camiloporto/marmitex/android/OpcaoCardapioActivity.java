@@ -57,7 +57,7 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 	@Override
 	public void onItemDeleted(ItemCardapio item) {
 		Log.i(TAG, "removendo item: " + item);
-		grupoOpcao.removeItem(item.getUUID());
+		grupoOpcao.removeItem(item);
 	}
 
 	@Override

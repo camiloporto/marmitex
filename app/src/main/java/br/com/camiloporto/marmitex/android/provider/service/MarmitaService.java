@@ -59,27 +59,27 @@ public class MarmitaService {
 		
 		GrupoItems opcoes = new GrupoItems();
 		opcoes.setDescricao("carnes");
-		opcoes.setId(1L);
+
 		
 		GrupoItems opcoes2 = new GrupoItems();
 		opcoes2.setDescricao("acompanhamentos");
-		opcoes2.setId(2L);
+
 		
 		GrupoItems opcoes3 = new GrupoItems();
 		opcoes3.setDescricao("saladas");
-		opcoes3.setId(3L);
+
 		
 		ItemCardapio i1 = new ItemCardapio();
 		i1.setDescricao("Filet de Frango");
-		i1.setId(1L);
+
 		
 		ItemCardapio i2 = new ItemCardapio();
 		i2.setDescricao("Feijao preto");
-		i2.setId(2L);
+
 		
 		ItemCardapio i3 = new ItemCardapio();
 		i3.setDescricao("Hortalica");
-		i3.setId(3L);
+
 		
 		opcoes.newItem(i1);
 		opcoes2.newItem(i2);
