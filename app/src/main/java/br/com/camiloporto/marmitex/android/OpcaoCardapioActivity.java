@@ -17,6 +17,10 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 	private GrupoItems grupoOpcao;
 	private OpcaoCardapioListFragment opcoesFragment;
 
+	public OpcaoCardapioListFragment getOpcoesFragment() {
+		return opcoesFragment;
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.List;
+
 import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoItems;
 import br.com.camiloporto.marmitex.android.model.ItemCardapio;
@@ -81,14 +84,16 @@ public class GrupoOpcaoListFragment extends ListFragment {
 	public void notifyDataSetChanged() {
 		GrupoOpcaoListAdapter listAdapter = (GrupoOpcaoListAdapter) getListAdapter();
 		listAdapter.clear();
-		listAdapter.addAll(cardapio.getGruposItems());
+		List<GrupoItems> items = cardapio.getGruposItems();
+		listAdapter.addAll(items);
 	}
 
 	private class GrupoOpcaoListAdapter extends ArrayAdapter<GrupoItems> {
-		
+
 		public GrupoOpcaoListAdapter(Cardapio cardapio) {
 
 			super(getActivity(), 0, cardapio.getGruposItems());
+
 		}
 
 		@Override
@@ -106,7 +111,12 @@ public class GrupoOpcaoListFragment extends ListFragment {
 				public void onFocusChange(View view, boolean hasFocus) {
 					if(!hasFocus) {
 						Editable newValue = ((EditText) view).getText();
-						getItem(position).setDescricao(newValue.toString());
+						if(getCount() > 0) {
+							GrupoItems gItem = getItem(position);
+							if (gItem != null) {
+								gItem.setDescricao(newValue.toString());
+							}
+						}
 					}
 				}
 			});

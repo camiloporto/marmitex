@@ -40,7 +40,7 @@ public class MarmitariaJSONHelper {
         this.context = context;
     }
 
-    public String persistRemote(Marmitaria m) throws MalformedURLException {
+    public CouldantResponse persistRemote(Marmitaria m) throws MalformedURLException {
         URL endPOint = new URL("https://camiloporto.cloudant.com/marmitex-dev/" + m.getUuid());
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -50,11 +50,11 @@ public class MarmitariaJSONHelper {
         httpHeaders.setAuthorization(httpBasicAuthentication);
         HttpEntity<Marmitaria> entity = new HttpEntity<Marmitaria>(m, httpHeaders);
 
-        ResponseEntity<String> responseEntity = restTemplate.exchange(
+        ResponseEntity<CouldantResponse> responseEntity = restTemplate.exchange(
                 "https://camiloporto.cloudant.com/marmitex-dev/" + m.getUuid(),
                 HttpMethod.PUT,
                 entity,
-                String.class
+                CouldantResponse.class
         );
 
         return responseEntity.getBody();

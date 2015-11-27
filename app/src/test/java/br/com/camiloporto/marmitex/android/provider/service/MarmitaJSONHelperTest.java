@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class MarmitaServiceTest {
+public class MarmitaJSONHelperTest {
 
     @Test
     public void devePersistirNovaMarmitaria() throws MalformedURLException {
@@ -42,10 +42,10 @@ public class MarmitaServiceTest {
         carnes.newItem("Frango Grelhado");
 
 
-        String result = new MarmitariaJSONHelper(null)
+        CouldantResponse result = new MarmitariaJSONHelper(null)
                 .persistRemote(m);
 
-        Assert.assertTrue(result.contains("\"ok\":true"));
+        Assert.assertEquals(result.getStatus(), "ok");
 
     }
 
@@ -69,7 +69,7 @@ public class MarmitaServiceTest {
                 .okCardapio()
                 .getMarmitaria();
 
-        String result = new MarmitariaJSONHelper(null)
+        CouldantResponse result = new MarmitariaJSONHelper(null)
                 .persistRemote(m);
 
         String idMarmitaria = m.getUuid().toString();
@@ -108,13 +108,14 @@ public class MarmitaServiceTest {
                 .getMarmitaria(idMarmitaria);
 
         retrieved.setEndereco("Novo Endereco");
-        new MarmitariaJSONHelper(null)
+        CouldantResponse result = new MarmitariaJSONHelper(null)
                 .persistRemote(retrieved);
 
         retrieved = new MarmitariaJSONHelper(null)
                 .getMarmitaria(idMarmitaria);
 
         Assert.assertEquals("Novo Endereco", retrieved.getEndereco());
+
     }
 
 }

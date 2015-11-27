@@ -1,5 +1,6 @@
 package br.com.camiloporto.marmitex.android.provider.service;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
@@ -115,9 +116,18 @@ public class MarmitaService {
 		
 	}
 
-	public void persist(Marmitaria m) {
-		//FIXME Implementar persistencia (local e remota via JSON). ver como couchdb local pode rodar
-		Log.i(TAG, "persistingo marmitaria " + m.getId());
+	public Marmitaria persist(Marmitaria m) {
+		String idMarmitaria = getAuthenticatedUserId();
+		try {
+
+			CouldantResponse couldantResponse = new MarmitariaJSONHelper(context)
+					.persistRemote(m);
+			m.setRevision(couldantResponse.getRevId());
+			return m;
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	public String getAuthenticatedUserId() {
