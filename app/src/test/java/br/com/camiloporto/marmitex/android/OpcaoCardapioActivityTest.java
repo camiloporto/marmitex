@@ -12,12 +12,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.util.ActivityController;
 
 import java.util.ArrayList;
 
+import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoItems;
+import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.provider.service.MarmitariaBuilder;
 
 /**
  * Created by camiloporto on 26/11/15.
@@ -49,6 +53,41 @@ public class OpcaoCardapioActivityTest {
 
         Assert.assertEquals("Arroz", arroz.getText().toString());
         Assert.assertEquals("Feijao", feijao.getText().toString());
+
+    }
+
+    @Test
+    public void deveAtualizarEstadoListaItemsCardapio() {
+
+        Marmitaria m = new MarmitariaBuilder()
+                .newMarmitaria("camilo", "12345", "tereza campos")
+                .criaCardapio("Segunda-Feira")
+                .adicioneGrupo("Carnes")
+                .comOpcao("Patinho")
+                .comOpcao("Frango Grelhado")
+                .ok()
+                .adicioneGrupo("Acompanhamentos")
+                .comOpcao("Feijao")
+                .comOpcao("Arroz")
+                .ok()
+                .adicioneGrupo("Salada")
+                .comOpcao("Hortaliças")
+                .comOpcao("Legumes no Vapor")
+                .ok()
+                .okCardapio()
+                .getMarmitaria();
+
+        Intent i = new Intent(
+                RuntimeEnvironment.application, GrupoOpcaoCardapioActivity.class);
+        i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, m.getCardapios().get(0));
+
+        GrupoOpcaoCardapioActivity grupoOpcaoCardapioActivity = Robolectric.buildActivity(GrupoOpcaoCardapioActivity.class)
+                .withIntent(i)
+                .visible().get();
+
+
+
+        //FIXME terminar este teste
 
     }
 

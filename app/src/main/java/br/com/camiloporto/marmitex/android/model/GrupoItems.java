@@ -28,6 +28,7 @@ public class GrupoItems implements Serializable {
 
 	@Deprecated
 	public void newItem(ItemCardapio item) {
+
 		items.add(item);
 	}
 

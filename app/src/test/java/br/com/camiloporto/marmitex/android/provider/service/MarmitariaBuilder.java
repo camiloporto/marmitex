@@ -27,7 +27,7 @@ public class MarmitariaBuilder {
         return marmitaria;
     }
 
-    class CardapioBuilder {
+    public class CardapioBuilder {
 
         Cardapio cardapio;
 
@@ -52,7 +52,7 @@ public class MarmitariaBuilder {
         }
 
 
-        class GrupoItemsBuilder {
+        public class GrupoItemsBuilder {
 
             private GrupoItems grupoItems;
 

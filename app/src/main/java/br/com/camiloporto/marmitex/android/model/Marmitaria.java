@@ -49,6 +49,7 @@ public class Marmitaria implements Serializable {
 	}
 
 	public void saveCardapio(Cardapio cardapio) {
+		cardapios.remove(cardapio);
 		cardapios.add(cardapio);
 	}
 

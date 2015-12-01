@@ -34,6 +34,7 @@ public class Cardapio implements Serializable {
 	}
 	
 	public GrupoItems adicionaGrupo(GrupoItems grupo) {
+		gruposItems.remove(grupo);
 		gruposItems.add(grupo);
 		return grupo;
 	}

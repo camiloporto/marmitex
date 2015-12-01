@@ -3,6 +3,7 @@ package br.com.camiloporto.marmitex.android;
 import android.annotation.SuppressLint;
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -121,6 +122,24 @@ public class OpcaoCardapioListFragment extends ListFragment {
 					Log.i(TAG, "removendo item " + itemClicked);
 				}
 
+			});
+			//FIXME melhorar/simplificar essa implementacao de Edicao de itens. Ver como funciona Adapter e verificar pq a erros na remocao de items
+			// 1. a remocao esta desfazendo a edicao de items
+			// 2. Eh preciso fazer clear(); addAll() no GrupoOpcaoAcitivti apos encerrar essa atividade? A quantidade de grupos nao eh atlerada
+			// apenas seus items (que nao eh listado na GrupoActivity
+			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View view, boolean hasFocus) {
+					if (!hasFocus) {
+						Editable newValue = ((EditText) view).getText();
+						if (getCount() > 0) {
+							ItemCardapio item = getItem(position);
+							if (item != null) {
+								item.setDescricao(newValue.toString());
+							}
+						}
+					}
+				}
 			});
 			
 
