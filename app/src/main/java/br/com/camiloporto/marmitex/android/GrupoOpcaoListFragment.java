@@ -72,14 +72,14 @@ public class GrupoOpcaoListFragment extends ListFragment {
 		((GrupoOpcaoListFragmentListener) getActivity()).onNewGroupAdded(descricao);
 		ArrayAdapter listAdapter = (GrupoOpcaoListAdapter) getListAdapter();
 		listAdapter.clear();
-		listAdapter.addAll(cardapio.getGruposItems());
+		listAdapter.addAll(cardapio.getGruposDeOpcoes());
 		listAdapter.notifyDataSetChanged();
 	}
 
 	public void notifyDataSetChanged() {
 		GrupoOpcaoListAdapter listAdapter = (GrupoOpcaoListAdapter) getListAdapter();
 		listAdapter.clear();
-		List<GrupoAlimentar> items = cardapio.getGruposItems();
+		List<GrupoAlimentar> items = cardapio.getGruposDeOpcoes();
 		listAdapter.addAll(items);
 	}
 
@@ -87,7 +87,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 		public GrupoOpcaoListAdapter(Cardapio cardapio) {
 
-			super(getActivity(), 0, cardapio.getGruposItems());
+			super(getActivity(), 0, cardapio.getGruposDeOpcoes());
 
 		}
 

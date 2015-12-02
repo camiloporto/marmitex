@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
-import br.com.camiloporto.marmitex.android.model.ItemCardapio;
+import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
 
 public class OpcaoCardapioListFragment extends ListFragment {
 
@@ -82,16 +82,16 @@ public class OpcaoCardapioListFragment extends ListFragment {
 	
 	public interface OpcaoCardapioListFragmentListener {
 		public void onNewItemAdded(String itemDescricao);
-		public void onItemUpdated(ItemCardapio item);
-		public void onItemDeleted(ItemCardapio item);
+		public void onItemUpdated(OpcaoCardapio item);
+		public void onItemDeleted(OpcaoCardapio item);
 		public void onItemGroupUpdated(GrupoAlimentar groupItems);
 	}
 	
-	private class OpcaoListAdapter extends ArrayAdapter<ItemCardapio> {
+	private class OpcaoListAdapter extends ArrayAdapter<OpcaoCardapio> {
 
 
-		public OpcaoListAdapter(Collection<ItemCardapio> items) {
-			super(getActivity(), 0, new ArrayList<ItemCardapio>(items));
+		public OpcaoListAdapter(Collection<OpcaoCardapio> items) {
+			super(getActivity(), 0, new ArrayList<OpcaoCardapio>(items));
 		}
 		
 		
@@ -102,11 +102,11 @@ public class OpcaoCardapioListFragment extends ListFragment {
 						R.layout.list_item_cardapio_opcao, null);
 			}
 
-			ItemCardapio itemClicked = getItem(position);
+			OpcaoCardapio itemClicked = getItem(position);
 			
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_opcao_item_list_descricao_input);
-			inputDescricao.setText(itemClicked.getDescricao());
+			inputDescricao.setText(itemClicked.getNome());
 
 			final Button deleteButton = (Button) convertView
 					.findViewById(R.id.cardapio_opcao_item_list_removeButton);
@@ -115,7 +115,7 @@ public class OpcaoCardapioListFragment extends ListFragment {
 				
 				@Override
 				public void onClick(View v) {
-					ItemCardapio itemClicked = getItem(position);
+					OpcaoCardapio itemClicked = getItem(position);
 					((OpcaoCardapioListFragmentListener) getActivity()).onItemDeleted(itemClicked);
 					remove(itemClicked);
 					notifyDataSetChanged();
@@ -133,9 +133,9 @@ public class OpcaoCardapioListFragment extends ListFragment {
 					if (!hasFocus) {
 						Editable newValue = ((EditText) view).getText();
 						if (getCount() > 0) {
-							ItemCardapio item = getItem(position);
+							OpcaoCardapio item = getItem(position);
 							if (item != null) {
-								item.setDescricao(newValue.toString());
+								item.setNome(newValue.toString());
 							}
 						}
 					}

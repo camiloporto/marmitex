@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Cardapio implements Serializable {
 
@@ -12,14 +13,14 @@ public class Cardapio implements Serializable {
 	
 	private boolean disponivel;
 	
-	private Set<GrupoAlimentar> gruposItems = new HashSet<GrupoAlimentar>();
+	private Set<GrupoAlimentar> gruposItems = new TreeSet<GrupoAlimentar>();
 
 
 	public Cardapio() {
 
 	}
 
-	public GrupoAlimentar addGrupo(String descricao) {
+	public GrupoAlimentar adicioneGrupoDeOpcoes(String descricao) {
 		GrupoAlimentar grupoItems = new GrupoAlimentar();
 		grupoItems.setDescricao(descricao);
 		gruposItems.add(grupoItems);
@@ -57,7 +58,7 @@ public class Cardapio implements Serializable {
 		return disponivel;
 	}
 
-	public List<GrupoAlimentar> getGruposItems() {
+	public List<GrupoAlimentar> getGruposDeOpcoes() {
 		return new ArrayList<GrupoAlimentar>(gruposItems);
 	}
 

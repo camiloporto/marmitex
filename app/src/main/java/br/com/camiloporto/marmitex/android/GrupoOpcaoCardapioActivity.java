@@ -55,7 +55,7 @@ public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoLi
 
 	@Override
 	public void onNewGroupAdded(String descricao) {
-		cardapio.addGrupo(descricao);
+		cardapio.adicioneGrupoDeOpcoes(descricao);
 	}
 
 	@Override

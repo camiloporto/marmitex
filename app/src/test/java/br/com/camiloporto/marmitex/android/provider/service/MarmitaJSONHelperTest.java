@@ -27,7 +27,7 @@ public class MarmitaJSONHelperTest {
 
         Marmitaria m = new Marmitaria("camilo", "12345", "tereza campos");
         Cardapio cardapio = m.createCardapio("Segunda-Feira");
-        GrupoAlimentar carnes = cardapio.addGrupo("Carnes");
+        GrupoAlimentar carnes = cardapio.adicioneGrupoDeOpcoes("Carnes");
         carnes.adicioneOpcao("Patinho");
         carnes.adicioneOpcao("Frango Grelhado");
 

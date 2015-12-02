@@ -9,7 +9,7 @@ import android.content.Context;
 
 import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
-import br.com.camiloporto.marmitex.android.model.ItemCardapio;
+import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 import br.com.camiloporto.marmitex.android.repository.MarmitariaRepository;
 
@@ -69,63 +69,6 @@ public class MarmitaService {
 				.getMarmitaria(idMarmitaria);
 
 		return m;
-	}
-	@Deprecated
-	public List<Cardapio> list() {
-		
-		GrupoAlimentar opcoes = new GrupoAlimentar();
-		opcoes.setDescricao("carnes");
-
-		
-		GrupoAlimentar opcoes2 = new GrupoAlimentar();
-		opcoes2.setDescricao("acompanhamentos");
-
-		
-		GrupoAlimentar opcoes3 = new GrupoAlimentar();
-		opcoes3.setDescricao("saladas");
-
-		
-		ItemCardapio i1 = new ItemCardapio();
-		i1.setDescricao("Filet de Frango");
-
-		
-		ItemCardapio i2 = new ItemCardapio();
-		i2.setDescricao("Feijao preto");
-
-		
-		ItemCardapio i3 = new ItemCardapio();
-		i3.setDescricao("Hortalica");
-
-		
-		opcoes.adicioneOpcao(i1);
-		opcoes2.adicioneOpcao(i2);
-		opcoes3.adicioneOpcao(i3);
-		
-		
-		//FIXME invocar via rest o servidor e construir cardapios
-		Cardapio c1 = new Cardapio();
-
-		c1.setDescricao("Segunda-Feira");
-		c1.adicionaGrupo(opcoes);
-		c1.adicionaGrupo(opcoes2);
-		c1.adicionaGrupo(opcoes3);
-		
-		Cardapio c2 = new Cardapio();
-
-		c2.setDescricao("Terça-Feira");
-		c2.adicionaGrupo(opcoes);
-		c2.adicionaGrupo(opcoes2);
-		c2.adicionaGrupo(opcoes3);
-		
-		Cardapio c3 = new Cardapio();
-
-		c3.setDescricao("Quarta-Feira");
-		c3.adicionaGrupo(opcoes);
-		c3.adicionaGrupo(opcoes2);
-		c3.adicionaGrupo(opcoes3);
-		
-		return Arrays.asList(c1, c2, c3);
-		
 	}
 
 	@Deprecated

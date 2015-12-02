@@ -19,8 +19,38 @@ public class GrupoAlimentarTest {
         grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao2");
 
-        Collection<ItemCardapio> opcoes = grupo.getOpcoes();
+        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
         Assert.assertEquals(2, opcoes.size());
+    }
+
+    @Test
+    public void deveRemoverTodasAsOpcoes() {
+
+        GrupoAlimentar grupo = new GrupoAlimentar();
+        grupo.adicioneOpcao("Opcao1");
+        grupo.adicioneOpcao("Opcao2");
+
+        grupo.limpa();
+        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
+        Assert.assertEquals(0, opcoes.size());
+    }
+
+    @Test
+    public void deveRemoverOpcaoCardapioExistente() {
+
+        GrupoAlimentar grupo = new GrupoAlimentar();
+        grupo.adicioneOpcao("Opcao1");
+        grupo.adicioneOpcao("Opcao2");
+
+
+        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
+        OpcaoCardapio opcao1 = opcoes.iterator().next();
+        grupo.removaOpcao(opcao1);
+
+        opcoes = grupo.getOpcoes();
+
+        Assert.assertEquals(1, opcoes.size());
+        Assert.assertEquals("Opcao2", opcoes.iterator().next().getNome());
     }
 
     @Test
@@ -34,7 +64,7 @@ public class GrupoAlimentarTest {
         grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao2");
 
-        Collection<ItemCardapio> opcoes = grupo.getOpcoes();
+        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
         Assert.assertEquals(2, opcoes.size());
     }
 
@@ -46,12 +76,12 @@ public class GrupoAlimentarTest {
         grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao3");
 
-        Collection<ItemCardapio> opcoes = grupo.getOpcoes();
-        Iterator<ItemCardapio> iterator = opcoes.iterator();
+        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
+        Iterator<OpcaoCardapio> iterator = opcoes.iterator();
 
-        Assert.assertEquals("Opcao1", iterator.next().getDescricao());
-        Assert.assertEquals("Opcao2", iterator.next().getDescricao());
-        Assert.assertEquals("Opcao3", iterator.next().getDescricao());
+        Assert.assertEquals("Opcao1", iterator.next().getNome());
+        Assert.assertEquals("Opcao2", iterator.next().getNome());
+        Assert.assertEquals("Opcao3", iterator.next().getNome());
     }
 
 }

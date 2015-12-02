@@ -8,7 +8,7 @@ import android.util.Log;
 
 import br.com.camiloporto.marmitex.android.OpcaoCardapioListFragment.OpcaoCardapioListFragmentListener;
 import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
-import br.com.camiloporto.marmitex.android.model.ItemCardapio;
+import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
 
 public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioListFragmentListener {
 	
@@ -49,19 +49,19 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 	
 	@Override
 	public void onNewItemAdded(String descricaoItem) {
-		ItemCardapio itemCardapio = grupoOpcao.adicioneOpcao(descricaoItem);
+		OpcaoCardapio opcaoCardapio = grupoOpcao.adicioneOpcao(descricaoItem);
 	}
 
 	@Override
-	public void onItemUpdated(ItemCardapio item) {
+	public void onItemUpdated(OpcaoCardapio item) {
 		Log.i(TAG, "atualizando item: " + item);
 		//TODO ver como salvar esse item. Salvar individualmente ou salvar o cardapio todo?
 	}
 
 	@Override
-	public void onItemDeleted(ItemCardapio item) {
+	public void onItemDeleted(OpcaoCardapio item) {
 		Log.i(TAG, "removendo item: " + item);
-		grupoOpcao.removeItem(item);
+		grupoOpcao.removaOpcao(item);
 	}
 
 	@Override

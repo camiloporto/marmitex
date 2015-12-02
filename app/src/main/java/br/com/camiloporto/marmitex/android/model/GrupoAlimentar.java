@@ -4,32 +4,27 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
-public class GrupoAlimentar implements Serializable {
+public class GrupoAlimentar implements Serializable, Comparable<GrupoAlimentar> {
 
 
 	private String descricao;
 	
-	private Set<ItemCardapio> opcoes = new HashSet<ItemCardapio>();
+	private Set<OpcaoCardapio> opcoes = new TreeSet<OpcaoCardapio>();
 
 	public GrupoAlimentar() {
 
 	}
 
-	@Deprecated
-	public void adicioneOpcao(ItemCardapio item) {
-
-		opcoes.add(item);
-	}
-
-	public ItemCardapio adicioneOpcao(String descricao) {
-		ItemCardapio newItem = new ItemCardapio();
-		newItem.setDescricao(descricao);
+	public OpcaoCardapio adicioneOpcao(String descricao) {
+		OpcaoCardapio newItem = new OpcaoCardapio();
+		newItem.setNome(descricao);
 		opcoes.add(newItem);
 		return newItem;
 	}
 
-	public boolean removeItem(ItemCardapio item) {
+	public boolean removaOpcao(OpcaoCardapio item) {
 		return opcoes.remove(item);
 	}
 
@@ -42,7 +37,7 @@ public class GrupoAlimentar implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public Collection<ItemCardapio> getOpcoes() {
+	public Collection<OpcaoCardapio> getOpcoes() {
 		return opcoes;
 	}
 
@@ -62,4 +57,12 @@ public class GrupoAlimentar implements Serializable {
 		return descricao.hashCode();
 	}
 
+	@Override
+	public int compareTo(GrupoAlimentar grupoAlimentar) {
+		return descricao.compareTo(grupoAlimentar.getDescricao());
+	}
+
+	public void limpa() {
+		opcoes.clear();
+	}
 }
