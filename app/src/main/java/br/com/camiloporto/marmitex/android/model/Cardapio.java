@@ -78,5 +78,11 @@ public class Cardapio implements Serializable {
 		return descricao.hashCode();
 	}
 
+	public GrupoAlimentar findGrupoDeOpcoes(String id) {
+		for (GrupoAlimentar g : gruposItems) {
+			if(g.getId().equals(id)) return g;
+		}
+		return null;
+	}
 }
 

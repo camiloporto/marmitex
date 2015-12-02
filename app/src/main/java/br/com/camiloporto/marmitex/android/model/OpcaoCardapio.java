@@ -1,13 +1,16 @@
 package br.com.camiloporto.marmitex.android.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class OpcaoCardapio implements Serializable, Comparable<OpcaoCardapio> {
 
 	private String nome;
-	
+	private String id;
+
 	public OpcaoCardapio() {
 		super();
+		id = UUID.randomUUID().toString();
 	}
 
 	public String getNome() {
@@ -37,5 +40,9 @@ public class OpcaoCardapio implements Serializable, Comparable<OpcaoCardapio> {
 	@Override
 	public int compareTo(OpcaoCardapio opcaoCardapio) {
 		return nome.compareTo(opcaoCardapio.getNome());
+	}
+
+	public String getId() {
+		return id;
 	}
 }

@@ -22,7 +22,27 @@ public class CardapioTest {
         List<GrupoAlimentar> gruposDeOpcoes = c.getGruposDeOpcoes();
         Assert.assertEquals(3, gruposDeOpcoes.size());
     }
-    
+
+    @Test
+    public void deveEncontrarGrupoPeloId() {
+        Cardapio c = new Cardapio();
+        GrupoAlimentar proteina = c.adicioneGrupoDeOpcoes("Proteina");
+        c.adicioneGrupoDeOpcoes("Acompanhamentos");
+        c.adicioneGrupoDeOpcoes("Saladas");
+
+        GrupoAlimentar queried = c.findGrupoDeOpcoes(proteina.getId());
+        Assert.assertEquals(proteina.getDescricao(), queried.getDescricao());
+
+    }
+
+    @Test
+    public void aoAdicionarGrupoDeOpcoesDeveGerarId() {
+        Cardapio c = new Cardapio();
+        GrupoAlimentar created = c.adicioneGrupoDeOpcoes("Proteina");
+
+        Assert.assertNotNull(created.getId());
+    }
+
 
     @Test
     public void deveRemoverGrupoDeOpcoes() {

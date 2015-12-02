@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
 public class GrupoAlimentar implements Serializable, Comparable<GrupoAlimentar> {
 
@@ -12,9 +13,10 @@ public class GrupoAlimentar implements Serializable, Comparable<GrupoAlimentar> 
 	private String descricao;
 	
 	private Set<OpcaoCardapio> opcoes = new TreeSet<OpcaoCardapio>();
+	private String id;
 
 	public GrupoAlimentar() {
-
+		id = UUID.randomUUID().toString();
 	}
 
 	public OpcaoCardapio adicioneOpcao(String descricao) {
@@ -64,5 +66,16 @@ public class GrupoAlimentar implements Serializable, Comparable<GrupoAlimentar> 
 
 	public void limpa() {
 		opcoes.clear();
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public OpcaoCardapio findOpcaoCardapioPeloId(String id) {
+		for (OpcaoCardapio o : opcoes) {
+			if(o.getId().equals(id)) return o;
+		}
+		return null;
 	}
 }
