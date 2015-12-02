@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import br.com.camiloporto.marmitex.android.GrupoOpcaoListFragment.GrupoOpcaoListFragmentListener;
 import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
+import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 
 public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoListFragmentListener {
 
@@ -40,14 +40,14 @@ public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoLi
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == 0) {
-			GrupoItems grupo = (GrupoItems) data.getExtras().get(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
+			GrupoAlimentar grupo = (GrupoAlimentar) data.getExtras().get(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
 			cardapio.adicionaGrupo(grupo);
 			grupoOpcaoListFragment.notifyDataSetChanged();
 		}
 	}
 
 	@Override
-	public void onEditGroupItemsRequested(GrupoItems grupo) {
+	public void onEditGroupItemsRequested(GrupoAlimentar grupo) {
 		Intent i = new Intent(this, OpcaoCardapioActivity.class);
 		i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, grupo);
 		startActivityForResult(i, 0);
@@ -59,7 +59,7 @@ public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoLi
 	}
 
 	@Override
-	public void onItemDeleted(GrupoItems grupo) {
+	public void onItemDeleted(GrupoAlimentar grupo) {
 		cardapio.removeGrupo(grupo);
 	}
 

@@ -21,13 +21,13 @@ public class Marmitaria implements Serializable {
 	private String endereco;
 	private String login;
 	private String senha;
+
+	@SerializedName("_id")
 	private String id;
 
 	@SerializedName("_rev")
 	private String revision;
 
-	@SerializedName("_id")
-	private final UUID uuid;
 	private String funcionamento;
 
 //	private Map<UUID, Cardapio> cardapios = new LinkedHashMap<UUID, Cardapio>();
@@ -35,7 +35,8 @@ public class Marmitaria implements Serializable {
 	
 	public Marmitaria(String mNome, String mTelefone, String endereco) {
 		super();
-		this.uuid = UUID.randomUUID();
+
+		id = UUID.randomUUID().toString();
 		this.nome = mNome;
 		this.telefone = mTelefone;
 		this.endereco = endereco;
@@ -99,10 +100,6 @@ public class Marmitaria implements Serializable {
 
 	public String getId() {
 		return id;
-	}
-
-	public UUID getUuid() {
-		return uuid;
 	}
 
 	public void setId(String mId) {

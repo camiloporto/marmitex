@@ -1,7 +1,7 @@
 package br.com.camiloporto.marmitex.android.provider.service;
 
 import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
+import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 import br.com.camiloporto.marmitex.android.model.ItemCardapio;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
@@ -54,10 +54,10 @@ public class MarmitariaBuilder {
 
         public class GrupoItemsBuilder {
 
-            private GrupoItems grupoItems;
+            private GrupoAlimentar grupoItems;
 
             public GrupoItemsBuilder() {
-                this.grupoItems = new GrupoItems();
+                this.grupoItems = new GrupoAlimentar();
             }
 
             public GrupoItemsBuilder adicioneGrupo(String nomeGrupo) {
@@ -67,7 +67,7 @@ public class MarmitariaBuilder {
 
             public GrupoItemsBuilder comOpcao(String opcaoGrupo) {
                 ItemCardapio i = new ItemCardapio();
-                grupoItems.newItem(opcaoGrupo);
+                grupoItems.adicioneOpcao(opcaoGrupo);
                 return this;
             }
 

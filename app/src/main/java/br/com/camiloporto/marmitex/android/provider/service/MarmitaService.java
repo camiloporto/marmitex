@@ -5,32 +5,44 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
-import android.util.Log;
+
 import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
+import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 import br.com.camiloporto.marmitex.android.model.ItemCardapio;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.repository.MarmitariaRepository;
 
 public class MarmitaService {
 	
 	private static final String TAG = "MarmitaService";
-	
+
+	@Deprecated
 	private static MarmitaService marmitaService;
 
+	@Deprecated
 	private Context context;
+
+	@Deprecated
 	private RestService restService;
+	@Deprecated
 	private URL serverEndPoint;
 
-	private MarmitaService(Context context, RestService restService) {
+	private MarmitariaRepository marmitariaRepository;
+
+	@Deprecated
+	public MarmitaService(Context context, RestService restService) {
 		super();
 		this.context = context;
 		this.restService = restService;
 	}
-	
+
+	public MarmitaService(MarmitariaRepository marmitariaRepository) {
+
+		this.marmitariaRepository = marmitariaRepository;
+	}
+
+	@Deprecated
 	public static MarmitaService getInstance(Context context) {
 		if(marmitaService == null) {
 			marmitaService = new MarmitaService(
@@ -41,10 +53,10 @@ public class MarmitaService {
 	}
 
 	public void save(Marmitaria m) {
-		new MarmitariaJSONHelper(context)
-				.persistMarmitaria(m);
+		marmitariaRepository.save(m);
 	}
 
+	@Deprecated
 	//FIXME ver como recuperar marmitaria cadastrada no dispositivo. recuperar via REST ou Localmente
 	public Marmitaria readMarmitaria() {
 
@@ -58,18 +70,18 @@ public class MarmitaService {
 
 		return m;
 	}
-	
+	@Deprecated
 	public List<Cardapio> list() {
 		
-		GrupoItems opcoes = new GrupoItems();
+		GrupoAlimentar opcoes = new GrupoAlimentar();
 		opcoes.setDescricao("carnes");
 
 		
-		GrupoItems opcoes2 = new GrupoItems();
+		GrupoAlimentar opcoes2 = new GrupoAlimentar();
 		opcoes2.setDescricao("acompanhamentos");
 
 		
-		GrupoItems opcoes3 = new GrupoItems();
+		GrupoAlimentar opcoes3 = new GrupoAlimentar();
 		opcoes3.setDescricao("saladas");
 
 		
@@ -85,9 +97,9 @@ public class MarmitaService {
 		i3.setDescricao("Hortalica");
 
 		
-		opcoes.newItem(i1);
-		opcoes2.newItem(i2);
-		opcoes3.newItem(i3);
+		opcoes.adicioneOpcao(i1);
+		opcoes2.adicioneOpcao(i2);
+		opcoes3.adicioneOpcao(i3);
 		
 		
 		//FIXME invocar via rest o servidor e construir cardapios
@@ -116,6 +128,7 @@ public class MarmitaService {
 		
 	}
 
+	@Deprecated
 	public Marmitaria persist(Marmitaria m) {
 		String idMarmitaria = getAuthenticatedUserId();
 		try {
@@ -132,5 +145,15 @@ public class MarmitaService {
 
 	public String getAuthenticatedUserId() {
 		return "61f9fdea-0690-4b9c-a541-985a2a50be69";
+	}
+
+	public Marmitaria create(String nome, String fone, String endereco) {
+		Marmitaria m = new Marmitaria(nome, endereco, fone);
+		Marmitaria saved = marmitariaRepository.save(m);
+		return saved;
+	}
+
+	public Marmitaria find(String id) {
+		return marmitariaRepository.find(id);
 	}
 }

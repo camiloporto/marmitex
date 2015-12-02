@@ -15,7 +15,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
+import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 import br.com.camiloporto.marmitex.android.model.ItemCardapio;
 
 public class OpcaoCardapioListFragment extends ListFragment {
@@ -23,7 +23,7 @@ public class OpcaoCardapioListFragment extends ListFragment {
 	public static final String ARG_GRUPO_OPCAO = "br.com.camiloporto.marmitex.android.GRUPO_ITEM";
 	private static final String TAG = OpcaoCardapioListFragment.class.getName();
 	
-	private GrupoItems grupoOpcao;
+	private GrupoAlimentar grupoOpcao;
 	
 	private EditText inputItem;
 	private Button addButton;
@@ -32,7 +32,7 @@ public class OpcaoCardapioListFragment extends ListFragment {
 	private OpcaoCardapioListFragment() {
 	}
 
-	public static OpcaoCardapioListFragment newInstance(GrupoItems grupoOpcao) {
+	public static OpcaoCardapioListFragment newInstance(GrupoAlimentar grupoOpcao) {
 		Bundle args = new Bundle();
 		args.putSerializable(ARG_GRUPO_OPCAO, grupoOpcao);
 		OpcaoCardapioListFragment fragment = new OpcaoCardapioListFragment();
@@ -43,11 +43,11 @@ public class OpcaoCardapioListFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		grupoOpcao = (GrupoItems) getArguments().getSerializable(
+		grupoOpcao = (GrupoAlimentar) getArguments().getSerializable(
 				ARG_GRUPO_OPCAO);
 		if (grupoOpcao != null) {
 			getActivity().setTitle(grupoOpcao.getDescricao());
-			setListAdapter(new OpcaoListAdapter(grupoOpcao.getItems()));
+			setListAdapter(new OpcaoListAdapter(grupoOpcao.getOpcoes()));
 		}
 	}
 	
@@ -76,7 +76,7 @@ public class OpcaoCardapioListFragment extends ListFragment {
 		((OpcaoCardapioListFragmentListener) getActivity()).onNewItemAdded(itemDescricao);
 		ArrayAdapter listAdapter = (OpcaoListAdapter) getListAdapter();
 		listAdapter.clear();
-		listAdapter.addAll(grupoOpcao.getItems());
+		listAdapter.addAll(grupoOpcao.getOpcoes());
 		listAdapter.notifyDataSetChanged();
 	}
 	
@@ -84,7 +84,7 @@ public class OpcaoCardapioListFragment extends ListFragment {
 		public void onNewItemAdded(String itemDescricao);
 		public void onItemUpdated(ItemCardapio item);
 		public void onItemDeleted(ItemCardapio item);
-		public void onItemGroupUpdated(GrupoItems groupItems);
+		public void onItemGroupUpdated(GrupoAlimentar groupItems);
 	}
 	
 	private class OpcaoListAdapter extends ArrayAdapter<ItemCardapio> {
@@ -148,10 +148,10 @@ public class OpcaoCardapioListFragment extends ListFragment {
 
 	}
 
-	public void setGrupoOpcoes(GrupoItems grupoOpcao) {
+	public void setGrupoOpcoes(GrupoAlimentar grupoOpcao) {
 		this.grupoOpcao = grupoOpcao;
 		((OpcaoListAdapter) getListAdapter()).clear();
-		((OpcaoListAdapter) getListAdapter()).addAll(grupoOpcao.getItems());
+		((OpcaoListAdapter) getListAdapter()).addAll(grupoOpcao.getOpcoes());
 	}
 
 }

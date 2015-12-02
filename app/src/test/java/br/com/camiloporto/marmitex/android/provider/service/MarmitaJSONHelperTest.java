@@ -1,13 +1,5 @@
 package br.com.camiloporto.marmitex.android.provider.service;
 
-import android.content.Context;
-import android.test.AndroidTestCase;
-import android.test.InstrumentationTestCase;
-import android.test.InstrumentationTestRunner;
-import android.test.mock.MockApplication;
-import android.test.mock.MockContext;
-import android.util.Log;
-
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -19,10 +11,8 @@ import java.net.MalformedURLException;
 
 import br.com.camiloporto.marmitex.android.BuildConfig;
 import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
+import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by camiloporto on 08/11/15.
@@ -37,9 +27,9 @@ public class MarmitaJSONHelperTest {
 
         Marmitaria m = new Marmitaria("camilo", "12345", "tereza campos");
         Cardapio cardapio = m.createCardapio("Segunda-Feira");
-        GrupoItems carnes = cardapio.addGrupo("Carnes");
-        carnes.newItem("Patinho");
-        carnes.newItem("Frango Grelhado");
+        GrupoAlimentar carnes = cardapio.addGrupo("Carnes");
+        carnes.adicioneOpcao("Patinho");
+        carnes.adicioneOpcao("Frango Grelhado");
 
 
         CouldantResponse result = new MarmitariaJSONHelper(null)
@@ -72,7 +62,7 @@ public class MarmitaJSONHelperTest {
         CouldantResponse result = new MarmitariaJSONHelper(null)
                 .persistRemote(m);
 
-        String idMarmitaria = m.getUuid().toString();
+        String idMarmitaria = m.getId();
         Marmitaria retrieved = new MarmitariaJSONHelper(null)
                 .getMarmitaria(idMarmitaria);
 
@@ -103,7 +93,7 @@ public class MarmitaJSONHelperTest {
         new MarmitariaJSONHelper(null)
                 .persistRemote(m);
 
-        String idMarmitaria = m.getUuid().toString();
+        String idMarmitaria = m.getId();
         Marmitaria retrieved = new MarmitariaJSONHelper(null)
                 .getMarmitaria(idMarmitaria);
 

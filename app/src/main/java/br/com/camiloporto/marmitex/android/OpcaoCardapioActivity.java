@@ -7,14 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 
 import br.com.camiloporto.marmitex.android.OpcaoCardapioListFragment.OpcaoCardapioListFragmentListener;
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
+import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 import br.com.camiloporto.marmitex.android.model.ItemCardapio;
 
 public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioListFragmentListener {
 	
 	private static final String TAG = OpcaoCardapioActivity.class.getName();
 	
-	private GrupoItems grupoOpcao;
+	private GrupoAlimentar grupoOpcao;
 	private OpcaoCardapioListFragment opcoesFragment;
 
 	public OpcaoCardapioListFragment getOpcoesFragment() {
@@ -27,7 +27,7 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 		setContentView(R.layout.activity_cardapio_opcoes);
 		FragmentManager fm = getFragmentManager();
 		opcoesFragment = (OpcaoCardapioListFragment) fm.findFragmentById(R.id.cardapio_opcoes_fragmentContainer);
-		grupoOpcao = (GrupoItems) getIntent().getSerializableExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
+		grupoOpcao = (GrupoAlimentar) getIntent().getSerializableExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
 
 		if (opcoesFragment == null) {
 			opcoesFragment = OpcaoCardapioListFragment.newInstance(grupoOpcao);
@@ -49,7 +49,7 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 	
 	@Override
 	public void onNewItemAdded(String descricaoItem) {
-		ItemCardapio itemCardapio = grupoOpcao.newItem(descricaoItem);
+		ItemCardapio itemCardapio = grupoOpcao.adicioneOpcao(descricaoItem);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 	}
 
 	@Override
-	public void onItemGroupUpdated(GrupoItems groupItems) {
+	public void onItemGroupUpdated(GrupoAlimentar groupItems) {
 		// TODO Auto-generated method stub
 		
 	}

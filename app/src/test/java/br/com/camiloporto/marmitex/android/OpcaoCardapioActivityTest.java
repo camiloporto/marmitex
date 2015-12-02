@@ -1,7 +1,6 @@
 package br.com.camiloporto.marmitex.android;
 
 import android.content.Intent;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -14,12 +13,8 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-import org.robolectric.util.ActivityController;
 
-import java.util.ArrayList;
-
-import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
+import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitariaBuilder;
 
@@ -35,9 +30,9 @@ public class OpcaoCardapioActivityTest {
 
         GrupoOpcaoCardapioActivity grupoOpcaoCardapioActivity = Robolectric.setupActivity(GrupoOpcaoCardapioActivity.class);
 
-        GrupoItems grupoItems = new GrupoItems();
-        grupoItems.newItem("Feijao");
-        grupoItems.newItem("Arroz");
+        GrupoAlimentar grupoItems = new GrupoAlimentar();
+        grupoItems.adicioneOpcao("Feijao");
+        grupoItems.adicioneOpcao("Arroz");
         Intent i = new Intent(grupoOpcaoCardapioActivity, OpcaoCardapioActivity.class);
         i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, grupoItems);
 

@@ -3,7 +3,6 @@ package br.com.camiloporto.marmitex.android;
 import java.util.List;
 
 import android.app.ListFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -12,9 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+
 import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
 public class CardapioListFragment extends ListFragment {

@@ -1,10 +1,8 @@
 package br.com.camiloporto.marmitex.android;
 
 import android.app.ListFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,14 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.List;
 
 import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoItems;
-import br.com.camiloporto.marmitex.android.model.ItemCardapio;
+import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 
 public class GrupoOpcaoListFragment extends ListFragment {
 	
@@ -84,11 +79,11 @@ public class GrupoOpcaoListFragment extends ListFragment {
 	public void notifyDataSetChanged() {
 		GrupoOpcaoListAdapter listAdapter = (GrupoOpcaoListAdapter) getListAdapter();
 		listAdapter.clear();
-		List<GrupoItems> items = cardapio.getGruposItems();
+		List<GrupoAlimentar> items = cardapio.getGruposItems();
 		listAdapter.addAll(items);
 	}
 
-	private class GrupoOpcaoListAdapter extends ArrayAdapter<GrupoItems> {
+	private class GrupoOpcaoListAdapter extends ArrayAdapter<GrupoAlimentar> {
 
 		public GrupoOpcaoListAdapter(Cardapio cardapio) {
 
@@ -102,7 +97,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_cardapio_grupo_opcao, null);
 			}
 			
-			GrupoItems item = getItem(position);
+			GrupoAlimentar item = getItem(position);
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_grupo_opcao_item_list_descricao_input);
 			inputDescricao.setText(item.getDescricao());
@@ -112,7 +107,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 					if(!hasFocus) {
 						Editable newValue = ((EditText) view).getText();
 						if(getCount() > 0) {
-							GrupoItems gItem = getItem(position);
+							GrupoAlimentar gItem = getItem(position);
 							if (gItem != null) {
 								gItem.setDescricao(newValue.toString());
 							}
@@ -132,7 +127,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 				@Override
 				public void onClick(View v) {
-					GrupoItems item = getItem(position);
+					GrupoAlimentar item = getItem(position);
 					((GrupoOpcaoListFragmentListener)getActivity()).onItemDeleted(item);
 					remove(item);
 					notifyDataSetChanged();
@@ -144,7 +139,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 			editButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					GrupoItems item = getItem(position);
+					GrupoAlimentar item = getItem(position);
 					((GrupoOpcaoListFragmentListener) getActivity()).onEditGroupItemsRequested(item);
 
 				}
@@ -156,11 +151,11 @@ public class GrupoOpcaoListFragment extends ListFragment {
 	}
 	
 	public interface GrupoOpcaoListFragmentListener {
-		public void onEditGroupItemsRequested(GrupoItems grupo);
+		public void onEditGroupItemsRequested(GrupoAlimentar grupo);
 
 		void onNewGroupAdded(String descricao);
 //		public void onItemUpdated(ItemCardapio item);
-		public void onItemDeleted(GrupoItems grupo);
+		public void onItemDeleted(GrupoAlimentar grupo);
 //		public void onItemGroupUpdated(GrupoItems groupItems);
 	}
 	

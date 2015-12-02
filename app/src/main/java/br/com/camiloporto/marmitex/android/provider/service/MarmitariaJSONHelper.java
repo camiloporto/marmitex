@@ -41,7 +41,7 @@ public class MarmitariaJSONHelper {
     }
 
     public CouldantResponse persistRemote(Marmitaria m) throws MalformedURLException {
-        URL endPOint = new URL("https://camiloporto.cloudant.com/marmitex-dev/" + m.getUuid());
+        URL endPOint = new URL("https://camiloporto.cloudant.com/marmitex-dev/" + m.getId());
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -51,7 +51,7 @@ public class MarmitariaJSONHelper {
         HttpEntity<Marmitaria> entity = new HttpEntity<Marmitaria>(m, httpHeaders);
 
         ResponseEntity<CouldantResponse> responseEntity = restTemplate.exchange(
-                "https://camiloporto.cloudant.com/marmitex-dev/" + m.getUuid(),
+                "https://camiloporto.cloudant.com/marmitex-dev/" + m.getId(),
                 HttpMethod.PUT,
                 entity,
                 CouldantResponse.class

@@ -3,15 +3,8 @@ package br.com.camiloporto.marmitex.android.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class Cardapio implements Serializable {
 
@@ -19,27 +12,27 @@ public class Cardapio implements Serializable {
 	
 	private boolean disponivel;
 	
-	private Set<GrupoItems> gruposItems = new HashSet<GrupoItems>();
+	private Set<GrupoAlimentar> gruposItems = new HashSet<GrupoAlimentar>();
 
 
 	public Cardapio() {
 
 	}
 
-	public GrupoItems addGrupo(String descricao) {
-		GrupoItems grupoItems = new GrupoItems();
+	public GrupoAlimentar addGrupo(String descricao) {
+		GrupoAlimentar grupoItems = new GrupoAlimentar();
 		grupoItems.setDescricao(descricao);
 		gruposItems.add(grupoItems);
 		return grupoItems;
 	}
 	
-	public GrupoItems adicionaGrupo(GrupoItems grupo) {
+	public GrupoAlimentar adicionaGrupo(GrupoAlimentar grupo) {
 		gruposItems.remove(grupo);
 		gruposItems.add(grupo);
 		return grupo;
 	}
 	
-	public boolean removeGrupo(GrupoItems grupoItems) {
+	public boolean removeGrupo(GrupoAlimentar grupoItems) {
 		return gruposItems.remove(grupoItems);
 	}
 	
@@ -64,8 +57,8 @@ public class Cardapio implements Serializable {
 		return disponivel;
 	}
 
-	public List<GrupoItems> getGruposItems() {
-		return new ArrayList<GrupoItems>(gruposItems);
+	public List<GrupoAlimentar> getGruposItems() {
+		return new ArrayList<GrupoAlimentar>(gruposItems);
 	}
 
 	@Override
