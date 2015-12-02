@@ -2,16 +2,12 @@ package br.com.camiloporto.marmitex.android.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 
 public class Marmitaria implements Serializable {
@@ -30,8 +26,7 @@ public class Marmitaria implements Serializable {
 
 	private String funcionamento;
 
-//	private Map<UUID, Cardapio> cardapios = new LinkedHashMap<UUID, Cardapio>();
-	private Set<Cardapio> cardapios = new HashSet<Cardapio>();
+	private Set<Cardapio> cardapios = new TreeSet<Cardapio>();
 	
 	public Marmitaria(String mNome, String mTelefone, String endereco) {
 		super();
@@ -44,7 +39,7 @@ public class Marmitaria implements Serializable {
 
 	public Cardapio createCardapio(String descricao) {
 		Cardapio cardapio = new Cardapio();
-		cardapio.setDescricao(descricao);
+		cardapio.setNome(descricao);
 		cardapios.add(cardapio);
 		return cardapio;
 	}
@@ -137,5 +132,12 @@ public class Marmitaria implements Serializable {
 
 	public void setRevision(String revision) {
 		this.revision = revision;
+	}
+
+	public Cardapio findCardapioPeloId(String id) {
+		for (Cardapio c  : cardapios) {
+			if(c.getId().equals(id)) return c;
+		}
+		return null;
 	}
 }

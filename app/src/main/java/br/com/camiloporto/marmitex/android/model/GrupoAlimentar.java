@@ -2,7 +2,6 @@ package br.com.camiloporto.marmitex.android.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -10,7 +9,7 @@ import java.util.UUID;
 public class GrupoAlimentar implements Serializable, Comparable<GrupoAlimentar> {
 
 
-	private String descricao;
+	private String nome;
 	
 	private Set<OpcaoCardapio> opcoes = new TreeSet<OpcaoCardapio>();
 	private String id;
@@ -31,12 +30,12 @@ public class GrupoAlimentar implements Serializable, Comparable<GrupoAlimentar> 
 	}
 
 
-	public String getDescricao() {
-		return descricao;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Collection<OpcaoCardapio> getOpcoes() {
@@ -50,18 +49,18 @@ public class GrupoAlimentar implements Serializable, Comparable<GrupoAlimentar> 
 
 		GrupoAlimentar that = (GrupoAlimentar) o;
 
-		return descricao.equals(that.descricao);
+		return nome.equals(that.nome);
 
 	}
 
 	@Override
 	public int hashCode() {
-		return descricao.hashCode();
+		return nome.hashCode();
 	}
 
 	@Override
 	public int compareTo(GrupoAlimentar grupoAlimentar) {
-		return descricao.compareTo(grupoAlimentar.getDescricao());
+		return nome.compareTo(grupoAlimentar.getNome());
 	}
 
 	public void limpa() {

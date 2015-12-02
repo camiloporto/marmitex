@@ -65,13 +65,13 @@ public class CardapioListFragment extends ListFragment {
 			Cardapio item = getItem(position);
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_item_list_descricao_input);
-			inputDescricao.setText(item.getDescricao());
+			inputDescricao.setText(item.getNome());
 			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 				@Override
 				public void onFocusChange(View view, boolean hasFocus) {
 					if (!hasFocus) {
 						Editable newValue = ((EditText) view).getText();
-						getItem(position).setDescricao(newValue.toString());
+						getItem(position).setNome(newValue.toString());
 					}
 				}
 			});

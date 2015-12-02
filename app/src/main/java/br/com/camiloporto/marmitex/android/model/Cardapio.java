@@ -2,39 +2,41 @@ package br.com.camiloporto.marmitex.android.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
-public class Cardapio implements Serializable {
+public class Cardapio implements Serializable, Comparable<Cardapio> {
 
-	private String descricao;
+	private String id;
+
+	private String nome;
 	
 	private boolean disponivel;
 	
-	private Set<GrupoAlimentar> gruposItems = new TreeSet<GrupoAlimentar>();
+	private Set<GrupoAlimentar> gruposDeOpcoes = new TreeSet<GrupoAlimentar>();
 
 
 	public Cardapio() {
-
+		id = UUID.randomUUID().toString();
 	}
 
 	public GrupoAlimentar adicioneGrupoDeOpcoes(String descricao) {
 		GrupoAlimentar grupoItems = new GrupoAlimentar();
-		grupoItems.setDescricao(descricao);
-		gruposItems.add(grupoItems);
+		grupoItems.setNome(descricao);
+		gruposDeOpcoes.add(grupoItems);
 		return grupoItems;
 	}
 	
 	public GrupoAlimentar adicionaGrupo(GrupoAlimentar grupo) {
-		gruposItems.remove(grupo);
-		gruposItems.add(grupo);
+		gruposDeOpcoes.remove(grupo);
+		gruposDeOpcoes.add(grupo);
 		return grupo;
 	}
 	
 	public boolean removeGrupo(GrupoAlimentar grupoItems) {
-		return gruposItems.remove(grupoItems);
+		return gruposDeOpcoes.remove(grupoItems);
 	}
 	
 	public void disponibilizaCardapio() {
@@ -45,12 +47,12 @@ public class Cardapio implements Serializable {
 		this.disponivel = false;
 	}
 	
-	public String getDescricao() {
-		return descricao;
+	public String getNome() {
+		return nome;
 	}
 	
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 
@@ -59,7 +61,11 @@ public class Cardapio implements Serializable {
 	}
 
 	public List<GrupoAlimentar> getGruposDeOpcoes() {
-		return new ArrayList<GrupoAlimentar>(gruposItems);
+		return new ArrayList<GrupoAlimentar>(gruposDeOpcoes);
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	@Override
@@ -69,20 +75,25 @@ public class Cardapio implements Serializable {
 
 		Cardapio cardapio = (Cardapio) o;
 
-		return descricao.equals(cardapio.descricao);
+		return nome.equals(cardapio.nome);
 
 	}
 
 	@Override
 	public int hashCode() {
-		return descricao.hashCode();
+		return nome.hashCode();
 	}
 
 	public GrupoAlimentar findGrupoDeOpcoes(String id) {
-		for (GrupoAlimentar g : gruposItems) {
+		for (GrupoAlimentar g : gruposDeOpcoes) {
 			if(g.getId().equals(id)) return g;
 		}
 		return null;
+	}
+
+	@Override
+	public int compareTo(Cardapio cardapio) {
+		return nome.compareTo(cardapio.getNome());
 	}
 }
 

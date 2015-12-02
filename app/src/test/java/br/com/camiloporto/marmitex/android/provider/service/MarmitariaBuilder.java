@@ -36,7 +36,7 @@ public class MarmitariaBuilder {
         }
 
         public CardapioBuilder criaCardapio(String nomeCardapio) {
-            cardapio.setDescricao(nomeCardapio);
+            cardapio.setNome(nomeCardapio);
             return this;
         }
 
@@ -61,7 +61,7 @@ public class MarmitariaBuilder {
             }
 
             public GrupoItemsBuilder adicioneGrupo(String nomeGrupo) {
-                grupoItems.setDescricao(nomeGrupo);
+                grupoItems.setNome(nomeGrupo);
                 return this;
             }
 

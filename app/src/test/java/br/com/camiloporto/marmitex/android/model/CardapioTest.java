@@ -31,7 +31,7 @@ public class CardapioTest {
         c.adicioneGrupoDeOpcoes("Saladas");
 
         GrupoAlimentar queried = c.findGrupoDeOpcoes(proteina.getId());
-        Assert.assertEquals(proteina.getDescricao(), queried.getDescricao());
+        Assert.assertEquals(proteina.getNome(), queried.getNome());
 
     }
 
@@ -61,8 +61,8 @@ public class CardapioTest {
         Assert.assertEquals(2, gruposDeOpcoes.size());
 
         iterator = gruposDeOpcoes.iterator();
-        Assert.assertEquals("Proteina", iterator.next().getDescricao());
-        Assert.assertEquals("Saladas", iterator.next().getDescricao());
+        Assert.assertEquals("Proteina", iterator.next().getNome());
+        Assert.assertEquals("Saladas", iterator.next().getNome());
     }
 
     @Test
@@ -74,9 +74,9 @@ public class CardapioTest {
 
         List<GrupoAlimentar> gruposDeOpcoes = c.getGruposDeOpcoes();
         Iterator<GrupoAlimentar> iterator = gruposDeOpcoes.iterator();
-        Assert.assertEquals("Acompanhamentos", iterator.next().getDescricao());
-        Assert.assertEquals("Proteina", iterator.next().getDescricao());
-        Assert.assertEquals("Saladas", iterator.next().getDescricao());
+        Assert.assertEquals("Acompanhamentos", iterator.next().getNome());
+        Assert.assertEquals("Proteina", iterator.next().getNome());
+        Assert.assertEquals("Saladas", iterator.next().getNome());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class CardapioTest {
         Assert.assertEquals(3, gruposDeOpcoes.size());
 
         GrupoAlimentar grupo = gruposDeOpcoes.iterator().next();
-        Assert.assertEquals("Acompanhamentos", grupo.getDescricao());
+        Assert.assertEquals("Acompanhamentos", grupo.getNome());
         Assert.assertEquals(1, grupo.getOpcoes().size());
     }
 }

@@ -42,7 +42,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 		cardapio = (Cardapio) getArguments().getSerializable(ARG_NAME_CARDAPIO);
 		if(cardapio != null) {
-			getActivity().setTitle(cardapio.getDescricao());
+			getActivity().setTitle(cardapio.getNome());
 			setListAdapter(new GrupoOpcaoListAdapter(cardapio));
 		}
 	}
@@ -100,7 +100,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 			GrupoAlimentar item = getItem(position);
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_grupo_opcao_item_list_descricao_input);
-			inputDescricao.setText(item.getDescricao());
+			inputDescricao.setText(item.getNome());
 			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 				@Override
 				public void onFocusChange(View view, boolean hasFocus) {
@@ -109,7 +109,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 						if(getCount() > 0) {
 							GrupoAlimentar gItem = getItem(position);
 							if (gItem != null) {
-								gItem.setDescricao(newValue.toString());
+								gItem.setNome(newValue.toString());
 							}
 						}
 					}

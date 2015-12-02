@@ -46,7 +46,7 @@ public class OpcaoCardapioListFragment extends ListFragment {
 		grupoOpcao = (GrupoAlimentar) getArguments().getSerializable(
 				ARG_GRUPO_OPCAO);
 		if (grupoOpcao != null) {
-			getActivity().setTitle(grupoOpcao.getDescricao());
+			getActivity().setTitle(grupoOpcao.getNome());
 			setListAdapter(new OpcaoListAdapter(grupoOpcao.getOpcoes()));
 		}
 	}
