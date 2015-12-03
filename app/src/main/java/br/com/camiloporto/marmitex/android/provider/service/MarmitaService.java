@@ -91,7 +91,7 @@ public class MarmitaService {
 	}
 
 	public Marmitaria create(String nome, String fone, String endereco) {
-		Marmitaria m = new Marmitaria(nome, endereco, fone);
+		Marmitaria m = new Marmitaria(nome, fone, endereco);
 		Marmitaria saved = marmitariaRepository.save(m);
 		return saved;
 	}

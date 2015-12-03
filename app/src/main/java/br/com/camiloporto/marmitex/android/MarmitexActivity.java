@@ -16,8 +16,8 @@ public class MarmitexActivity extends Activity {
 	private static final String TAG = "MarmitexActivity";
 
 	private Marmitaria marmitaria;
-	private MarmitaService marmitariaService;
 	private Button cardapios;
+	private Button novaMarmitariaButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +32,12 @@ public class MarmitexActivity extends Activity {
 		 * 4. Caso já tenha uma marmitaria criada, apresentar opção de Editar cardapios/marmitaria
 		 */
 
-		//FIXME tornar essa leitura assincrona. Mostar na UI uma Spin enquanto a leitura eh feita.
-//		marmitariaService = MarmitaService.getInstance(MarmitexActivity.this);
-//		marmitaria = marmitariaService.readMarmitaria();
-		new LoadMarmitariaAsyncTask().execute();
+
+//		new LoadMarmitariaAsyncTask().execute();
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_marmitex);
-		Button novaMarmitaria = (Button) findViewById(R.id.btnNovaMarmitaria);
+		novaMarmitariaButton = (Button) findViewById(R.id.btnNovaMarmitaria);
 		cardapios = (Button) findViewById(R.id.btnCardapios);
 		cardapios.setOnClickListener(new View.OnClickListener() {
 
@@ -53,8 +51,8 @@ public class MarmitexActivity extends Activity {
 		});
 		updateCardapiosButtonStatus();
 		
-		novaMarmitaria.setOnClickListener(new View.OnClickListener() {
-			
+		novaMarmitariaButton.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(MarmitexActivity.this, NovaMarmitariaActivity.class);
