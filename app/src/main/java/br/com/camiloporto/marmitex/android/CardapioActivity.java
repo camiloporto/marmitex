@@ -59,8 +59,11 @@ public class CardapioActivity extends Activity implements CardapioListFragment.C
 		startActivityForResult(i, 0);
 	}
 
-//	@Override
+	@Override
 	public void onCardapioDeleted(Cardapio c) {
-//		marmitaria.deleteCardapio(c);
+		MarmitexApplication application = (MarmitexApplication) getApplication();
+		Marmitaria active = application.getActiveMarmitaria();
+		active.deleteCardapio(c);
+		cardapioListFragment.updateUI();
 	}
 }

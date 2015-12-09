@@ -97,11 +97,7 @@ public class MarmitaService {
 	}
 
 	public Marmitaria find(String id) {
-		Marmitaria marmitaria = new Marmitaria("gerada", "555", "jagua");
-		marmitaria.createCardapio("cardapio1");
-		marmitaria.createCardapio("cardapio 22");
+		return marmitariaRepository.find(id);
 
-//		return marmitariaRepository.find(id);
-		return marmitaria;
 	}
 }

@@ -21,6 +21,7 @@ public class CardapioListFragment extends ListFragment {
 
 	public interface CardapioListFragmentCallbacks {
 
+		void onCardapioDeleted(Cardapio cardapio);
 	}
 	
 	private static final String TAG = "CardapioListFragment";
@@ -79,6 +80,7 @@ public class CardapioListFragment extends ListFragment {
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_cardapio, null);
 			}
 
+			
 			Cardapio item = getItem(position);
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_item_list_descricao_input);
@@ -104,9 +106,9 @@ public class CardapioListFragment extends ListFragment {
 				@Override
 				public void onClick(View v) {
 					Cardapio item = getItem(position);
-					((CardapioListFragmentListener)getActivity()).onCardapioDeleted(item);
-					remove(item);
-					CardapioListFragment.this.updateUI();
+					mCallbacks.onCardapioDeleted(item);
+//					remove(item);
+//					CardapioListFragment.this.updateUI();
 					Log.i(TAG, "removendo cardapio " + item);
 				}
 

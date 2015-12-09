@@ -20,6 +20,17 @@ public class InMemoryMarmitariaRepository implements MarmitariaRepository {
 
     @Override
     public Marmitaria find(String id) {
+        if(id.equals("123")) {
+            Marmitaria gerada = database.get(id);
+            if(gerada == null) {
+                gerada = new Marmitaria("gerada", "555", "jagua");
+                gerada.createCardapio("cardapio1");
+                gerada.createCardapio("cardapio 22");
+                save(gerada);
+
+            }
+            return gerada;
+        }
         return database.get(id);
     }
 }
