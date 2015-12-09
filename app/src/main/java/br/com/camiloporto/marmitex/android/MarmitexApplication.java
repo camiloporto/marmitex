@@ -68,11 +68,40 @@ public class MarmitexApplication extends Application {
         return activeMarmitaria;
     }
 
-    public interface OnMarmitariaCreatedCallback {
+    public void loadMarmitariaOfLoggedUser(final OnMarmitariaLoaded callback) {
+        AsyncTask<String, Void, Marmitaria> task = new AsyncTask<String, Void, Marmitaria>() {
+
+            @Override
+            protected Marmitaria doInBackground(String... params) {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                String id = params[0];
+                return marmitaService.find(id);
+            }
+
+            @Override
+            protected void onPostExecute(Marmitaria marmitaria) {
+                setActiveMarmitaria(marmitaria);
+                callback.onMarmitariaLoaded();
+            }
+        };
+        //// FIXME: 08/12/15 Recuperar contexto do usuario e pegar id da marmitaria persistida. Ou procurar marmitaria por usuarioId
+        String id = "123";
+        task.execute(id);
+    }
+
+    public static interface OnMarmitariaCreatedCallback {
         void onMarmitariaCreated();
     }
 
-    public interface OnMarmitariaUpdatedCallback {
+    public static interface OnMarmitariaLoaded {
+        void onMarmitariaLoaded();
+    }
+
+    public static interface OnMarmitariaUpdatedCallback {
         void onMarmitariaUpdated();
     }
 }
