@@ -2,10 +2,12 @@ package br.com.camiloporto.marmitex.android;
 
 import java.util.List;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,37 +18,52 @@ import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
 public class CardapioListFragment extends ListFragment {
+
+	public interface CardapioListFragmentCallbacks {
+
+	}
 	
 	private static final String TAG = "CardapioListFragment";
-	public static final String ARG_NAME_MARMITARIA = "br.com.camiloporto.marmitex.android.CardapioListFragment.MARMITARIA";
+
+	private CardapioListFragmentCallbacks mCallbacks;
+
+
 	private Marmitaria marmitaria;
-
-	@Deprecated
-	private List<Cardapio> cardapios;
-
-	public static CardapioListFragment newFragment(Marmitaria marmitaria) {
-		Bundle args = new Bundle();
-		args.putSerializable(ARG_NAME_MARMITARIA, marmitaria);
-		CardapioListFragment cardapioListFragment = new CardapioListFragment();
-		cardapioListFragment.setArguments(args);
-		return cardapioListFragment;
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		marmitaria = (Marmitaria) getArguments().getSerializable(ARG_NAME_MARMITARIA);
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (CardapioListFragmentCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException("Class" + activity.getClass().getName() + " must implement " +
+					CardapioListFragmentCallbacks.class.getName());
+		}
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View view = super.onCreateView(inflater, container, savedInstanceState);
+
+		updateUI();
+
+		return view;
+	}
+
+	public void updateUI() {
 		if(marmitaria != null) {
 			getActivity().setTitle(marmitaria.getNome());
 			setListAdapter(new CardapioListAdapter(marmitaria));
 		}
 	}
 
-
-	public void notifyDataSetChanged() {
-		CardapioListAdapter listAdapter = (CardapioListAdapter) getListAdapter();
-		listAdapter.clear();
-		listAdapter.addAll(marmitaria.getCardapios());
+	public void setMarmitaria(Marmitaria marmitaria) {
+		this.marmitaria = marmitaria;
 	}
 
 
@@ -89,7 +106,7 @@ public class CardapioListFragment extends ListFragment {
 					Cardapio item = getItem(position);
 					((CardapioListFragmentListener)getActivity()).onCardapioDeleted(item);
 					remove(item);
-					CardapioListFragment.this.notifyDataSetChanged();
+					CardapioListFragment.this.updateUI();
 					Log.i(TAG, "removendo cardapio " + item);
 				}
 

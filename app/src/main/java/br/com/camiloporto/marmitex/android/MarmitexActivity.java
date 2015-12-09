@@ -70,7 +70,7 @@ public class MarmitexActivity extends Activity implements MarmitexApplication.On
 		application.loadMarmitariaOfLoggedUser(this);
 		carregando = ProgressDialog.show(this, "Carregando", "Carregando Marmitaria....");
 	}
-	
+
 	private void updateUI() {
 		MarmitexApplication application = (MarmitexApplication) getApplication();
 		Marmitaria active = application.getActiveMarmitaria();

@@ -73,11 +73,6 @@ public class MarmitexApplication extends Application {
 
             @Override
             protected Marmitaria doInBackground(String... params) {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 String id = params[0];
                 return marmitaService.find(id);
             }

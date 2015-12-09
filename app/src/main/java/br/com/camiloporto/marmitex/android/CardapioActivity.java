@@ -7,18 +7,21 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Transition;
 import android.view.View;
 import android.widget.Button;
 
-public class CardapioActivity extends Activity implements CardapioListFragment.CardapioListFragmentListener {
+public class CardapioActivity extends Activity implements CardapioListFragment.CardapioListFragmentCallbacks {
 
 	private CardapioListFragment cardapioListFragment;
-	private Marmitaria marmitaria;
+//	private Marmitaria marmitaria;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cardapio);
+
+		//// FIXME: 08/12/15 Colocar esse Button como parte do Fragment?
 		Button novoCardapio = (Button) findViewById(R.id.cardapio_novo);
 		novoCardapio.setOnClickListener(new View.OnClickListener() {
 			
@@ -32,45 +35,32 @@ public class CardapioActivity extends Activity implements CardapioListFragment.C
 		FragmentManager fm = getFragmentManager();
 		cardapioListFragment = (CardapioListFragment) fm.findFragmentById(R.id.cardapio_fragmentContainer);
 		if(cardapioListFragment == null) {
-			marmitaria = (Marmitaria) getIntent().getSerializableExtra(CardapioListFragment.ARG_NAME_MARMITARIA);
-			cardapioListFragment = CardapioListFragment.newFragment(marmitaria);
+
+			cardapioListFragment = new CardapioListFragment();
 			fm.beginTransaction()
 				.add(R.id.cardapio_fragmentContainer, cardapioListFragment)
 				.commit();
+
+			MarmitexApplication application = (MarmitexApplication) getApplication();
+			Marmitaria active = application.getActiveMarmitaria();
+			cardapioListFragment.setMarmitaria(active);
 		}
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == 0) {
-			Cardapio cardapio = (Cardapio) data.getExtras().get(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
-			marmitaria.saveCardapio(cardapio);
-			cardapioListFragment.notifyDataSetChanged();
-		}
-	}
-
-	@Override
-	public void onBackPressed() {
-		Intent i = new Intent();
-		i.putExtra(CardapioListFragment.ARG_NAME_MARMITARIA, this.marmitaria);
-		setResult(Activity.RESULT_OK, i);
-		super.onBackPressed();
-	}
-
-	@Override
+//	@Override
 	public void onCardapioAdded(Cardapio c) {
 		//FIXME implementar metodo
 	}
 
-	@Override
+//	@Override
 	public void onCardapioRequestForEdition(Cardapio c) {
 		Intent i = new Intent(this, GrupoOpcaoCardapioActivity.class);
 		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, c);
 		startActivityForResult(i, 0);
 	}
 
-	@Override
+//	@Override
 	public void onCardapioDeleted(Cardapio c) {
-		marmitaria.deleteCardapio(c);
+//		marmitaria.deleteCardapio(c);
 	}
 }
