@@ -23,7 +23,7 @@ import br.com.camiloporto.marmitex.android.provider.service.MarmitariaBuilder;
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class)
-public class OpcaoCardapioActivityTest {
+public class OpcaoCardapioListActivityTest {
 
     @Test
     public void deveListarOpcoesDoCarpdaio() {

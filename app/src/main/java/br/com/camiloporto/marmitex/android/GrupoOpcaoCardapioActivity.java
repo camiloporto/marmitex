@@ -9,7 +9,7 @@ import br.com.camiloporto.marmitex.android.GrupoOpcaoListFragment.GrupoOpcaoList
 import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 
-public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoListFragmentListener {
+public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity implements GrupoOpcaoListFragmentListener {
 
 	private Cardapio cardapio;
 	private GrupoOpcaoListFragment grupoOpcaoListFragment;
@@ -22,29 +22,30 @@ public class GrupoOpcaoCardapioActivity extends Activity implements GrupoOpcaoLi
 		grupoOpcaoListFragment = (GrupoOpcaoListFragment) fm.findFragmentById(R.id.cardapio_novo_fragmentContainer);
 
 		if (grupoOpcaoListFragment == null) {
-			cardapio = (Cardapio) getIntent().getSerializableExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
+			String idCardapio = getIntent().getStringExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
+			cardapio = getActiveMarmitaria().findCardapioPeloId(idCardapio);
 			grupoOpcaoListFragment = GrupoOpcaoListFragment.newInstance(cardapio);
 			fm.beginTransaction().add(R.id.cardapio_novo_fragmentContainer, grupoOpcaoListFragment)
 					.commit();
 		}
 	}
 
-	@Override
-	public void onBackPressed() {
-		Intent i = new Intent();
-		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, this.cardapio);
-		setResult(Activity.RESULT_OK, i);
-		super.onBackPressed();
-	}
+//	@Override
+//	public void onBackPressed() {
+//		Intent i = new Intent();
+//		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, this.cardapio);
+//		setResult(Activity.RESULT_OK, i);
+//		super.onBackPressed();
+//	}
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == 0) {
-			GrupoAlimentar grupo = (GrupoAlimentar) data.getExtras().get(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
-			cardapio.adicionaGrupo(grupo);
-			grupoOpcaoListFragment.notifyDataSetChanged();
-		}
-	}
+//	@Override
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		if(requestCode == 0) {
+//			GrupoAlimentar grupo = (GrupoAlimentar) data.getExtras().get(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
+//			cardapio.adicionaGrupo(grupo);
+//			grupoOpcaoListFragment.notifyDataSetChanged();
+//		}
+//	}
 
 	@Override
 	public void onEditGroupItemsRequested(GrupoAlimentar grupo) {

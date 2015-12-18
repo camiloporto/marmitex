@@ -44,7 +44,7 @@ public class MarmitexActivity extends Activity implements MarmitexApplication.On
 
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(MarmitexActivity.this, CardapioActivity.class);
+				Intent i = new Intent(MarmitexActivity.this, CardapioListActivity.class);
 				startActivity(i);
 			}
 		});

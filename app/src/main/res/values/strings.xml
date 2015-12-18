@@ -23,6 +23,7 @@
     <string name="cardapio_opcao">Opções de Grupo</string>
     <string name="opcao_cardapio_novo_item_hint">Informe nova opção</string>
     <string name="grupo_opcao_cardapio_novo_item_hint">Novo Grupo</string>
+    <string name="cardapio_list_novo_item_hint">Nome do Cardápio</string>
 
 
 </resources>

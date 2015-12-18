@@ -20,13 +20,17 @@ import br.com.camiloporto.marmitex.android.model.Marmitaria;
 public class CardapioListFragment extends ListFragment {
 
 	public interface CardapioListFragmentCallbacks {
-
+		void onCardapioCreated(String nomeCardapio);
 		void onCardapioDeleted(Cardapio cardapio);
+		void onCardapioRequestForEdition(Cardapio c);
 	}
 	
 	private static final String TAG = "CardapioListFragment";
 
 	private CardapioListFragmentCallbacks mCallbacks;
+
+	private EditText inputItem;
+	private Button addButton;
 
 
 	private Marmitaria marmitaria;
@@ -49,11 +53,27 @@ public class CardapioListFragment extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = super.onCreateView(inflater, container, savedInstanceState);
+		View v = inflater.inflate(R.layout.fragment_cardapiolist, null);
+
+		inputItem = (EditText) v.findViewById(R.id.cardapio_list_novo_item_input);
+		addButton = (Button) v.findViewById(R.id.cardapio_list_add);
+		addButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				newCardapioCreated(inputItem.getText().toString());
+				inputItem.setText(null);
+			}
+
+		});
 
 		updateUI();
 
-		return view;
+		return v;
+	}
+
+	private void newCardapioCreated(String nomeCardapio) {
+		mCallbacks.onCardapioCreated(nomeCardapio);
 	}
 
 	public void updateUI() {
@@ -80,7 +100,8 @@ public class CardapioListFragment extends ListFragment {
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_cardapio, null);
 			}
 
-			
+			//// FIXME: 08/12/15 Colocar a edicao de todas as informacoes de um cardapio na tela de edicao de cardapio. Mostar nome do cardapio e categorias.
+			// tornar o EditText da view um Label ou um Button que ao clicar vai pra edicao do cardapio.
 			Cardapio item = getItem(position);
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_item_list_descricao_input);
@@ -107,30 +128,21 @@ public class CardapioListFragment extends ListFragment {
 				public void onClick(View v) {
 					Cardapio item = getItem(position);
 					mCallbacks.onCardapioDeleted(item);
-//					remove(item);
-//					CardapioListFragment.this.updateUI();
-					Log.i(TAG, "removendo cardapio " + item);
 				}
 
 			});
+
 
 			editButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					Cardapio item = getItem(position);
-					((CardapioListFragmentListener) getActivity()).onCardapioRequestForEdition(item);
-
+					mCallbacks.onCardapioRequestForEdition(item);
 				}
 			});
 
 			return convertView;
 		}
-	}
-
-	interface CardapioListFragmentListener {
-		public void onCardapioAdded(Cardapio c);
-		public void onCardapioRequestForEdition(Cardapio c);
-		public void onCardapioDeleted(Cardapio c);
 	}
 
 }
