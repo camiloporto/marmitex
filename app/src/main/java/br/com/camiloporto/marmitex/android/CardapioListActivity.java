@@ -6,8 +6,6 @@ import br.com.camiloporto.marmitex.android.model.Marmitaria;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 public class CardapioListActivity extends AbstractMarmitexActivity implements CardapioListFragment.CardapioListFragmentCallbacks {
 
@@ -33,6 +31,12 @@ public class CardapioListActivity extends AbstractMarmitexActivity implements Ca
 	}
 
 	@Override
+	public void onBackPressed() {
+		getMarmitexApplication().updateActiveMarmitaria(this);
+		super.onBackPressed();
+	}
+
+	@Override
 	public void onCardapioCreated(String nomeCardapio) {
 		getActiveMarmitaria().createCardapio(nomeCardapio);
 		cardapioListFragment.updateUI();
@@ -51,4 +55,6 @@ public class CardapioListActivity extends AbstractMarmitexActivity implements Ca
 		active.deleteCardapio(c);
 		cardapioListFragment.updateUI();
 	}
+
+
 }

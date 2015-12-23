@@ -9,10 +9,19 @@ import br.com.camiloporto.marmitex.android.GrupoOpcaoListFragment.GrupoOpcaoList
 import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 
-public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity implements GrupoOpcaoListFragmentListener {
+public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity implements GrupoOpcaoListFragment.GrupoOpcaoListFragmentCallbacks {
 
 	private Cardapio cardapio;
 	private GrupoOpcaoListFragment grupoOpcaoListFragment;
+
+	//// FIXME: 17/12/15 Refatorar essa classe. Fazer interacao com fragment semelhante ao CardapioListActivity
+	/*
+	* Fazer o fragment exigir que a classe implement o callbac no 'onAttach()'
+	* Apos a execuaco de cada calback, solicitar ao fragment se atualizar (frag.updateUI())
+	* Na criacao do fragment, criar com construtor default e depois da um setCardapio(caradpio) invocando updateUI()
+	* remover metodo creator statico do fragment
+	* Ajustar a requisicao para edico de grupo.
+	 */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,44 +33,31 @@ public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity impleme
 		if (grupoOpcaoListFragment == null) {
 			String idCardapio = getIntent().getStringExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
 			cardapio = getActiveMarmitaria().findCardapioPeloId(idCardapio);
-			grupoOpcaoListFragment = GrupoOpcaoListFragment.newInstance(cardapio);
+			grupoOpcaoListFragment = new GrupoOpcaoListFragment();
 			fm.beginTransaction().add(R.id.cardapio_novo_fragmentContainer, grupoOpcaoListFragment)
 					.commit();
+			grupoOpcaoListFragment.setCardapio(cardapio);
 		}
-	}
 
-//	@Override
-//	public void onBackPressed() {
-//		Intent i = new Intent();
-//		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, this.cardapio);
-//		setResult(Activity.RESULT_OK, i);
-//		super.onBackPressed();
-//	}
-	
-//	@Override
-//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		if(requestCode == 0) {
-//			GrupoAlimentar grupo = (GrupoAlimentar) data.getExtras().get(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
-//			cardapio.adicionaGrupo(grupo);
-//			grupoOpcaoListFragment.notifyDataSetChanged();
-//		}
-//	}
-
-	@Override
-	public void onEditGroupItemsRequested(GrupoAlimentar grupo) {
-		Intent i = new Intent(this, OpcaoCardapioActivity.class);
-		i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, grupo);
-		startActivityForResult(i, 0);
 	}
 
 	@Override
-	public void onNewGroupAdded(String descricao) {
+	public void onGrupoAlimentarDeleted(GrupoAlimentar grupoAlimentar) {
+		cardapio.removeGrupo(grupoAlimentar);
+		grupoOpcaoListFragment.updateUI();
+	}
+
+	@Override
+	public void onGrupoAlimentarCreated(String descricao) {
 		cardapio.adicioneGrupoDeOpcoes(descricao);
+		grupoOpcaoListFragment.updateUI();
 	}
 
 	@Override
-	public void onItemDeleted(GrupoAlimentar grupo) {
-		cardapio.removeGrupo(grupo);
+	public void onGrupoAlimentarRequestForEdition(GrupoAlimentar item) {
+		Intent i = new Intent(this, OpcaoCardapioActivity.class);
+		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, cardapio.getId());
+		i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, item.getId());
+		startActivity(i);
 	}
-
 }

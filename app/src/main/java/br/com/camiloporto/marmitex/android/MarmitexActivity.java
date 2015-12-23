@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
-public class MarmitexActivity extends Activity implements MarmitexApplication.OnMarmitariaLoaded {
+public class MarmitexActivity extends AbstractMarmitexActivity implements MarmitexApplication.OnMarmitariaLoaded {
 
 	private static final String TAG = "MarmitexActivity";
 
@@ -72,8 +72,7 @@ public class MarmitexActivity extends Activity implements MarmitexApplication.On
 	}
 
 	private void updateUI() {
-		MarmitexApplication application = (MarmitexApplication) getApplication();
-		Marmitaria active = application.getActiveMarmitaria();
+		Marmitaria active = getActiveMarmitaria();
 
 		if(active != null) {
 			this.novaMarmitariaButton.setText(active.getNome());
@@ -81,7 +80,7 @@ public class MarmitexActivity extends Activity implements MarmitexApplication.On
 			this.novaMarmitariaButton.setText(R.string.marmitex_nova);
 		}
 
-		cardapios.setEnabled(application.getActiveMarmitaria() != null);
+		cardapios.setEnabled(active != null);
 	}
 
 	@Override

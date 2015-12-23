@@ -1,5 +1,6 @@
 package br.com.camiloporto.marmitex.android;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,32 +19,38 @@ import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 
 public class GrupoOpcaoListFragment extends ListFragment {
+
+	public interface GrupoOpcaoListFragmentCallbacks {
+
+		void onGrupoAlimentarDeleted(GrupoAlimentar grupoAlimentar);
+
+		void onGrupoAlimentarCreated(String descricao);
+
+		void onGrupoAlimentarRequestForEdition(GrupoAlimentar item);
+	}
 	
 	public static final String ARG_NAME_CARDAPIO = "br.com.camiloporto.marmitex.android.NovoCardapioFragment.CARDAPIO";
 	private static final String TAG = GrupoOpcaoListFragment.class.getName();
+
+	private GrupoOpcaoListFragmentCallbacks mCallbacks;
+
 	private Cardapio cardapio;
-	private LinearLayout containerGrupoOpcoes;
 	private EditText inputItem;
 	private Button addButton;
-
-	private GrupoOpcaoListFragment() {
-	}
-	
-	public static GrupoOpcaoListFragment newInstance(Cardapio c) {
-		Bundle args = new Bundle();
-		args.putSerializable(ARG_NAME_CARDAPIO, c);
-		GrupoOpcaoListFragment cardapioFragment = new GrupoOpcaoListFragment();
-		cardapioFragment.setArguments(args);
-		return cardapioFragment;
-	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		cardapio = (Cardapio) getArguments().getSerializable(ARG_NAME_CARDAPIO);
-		if(cardapio != null) {
-			getActivity().setTitle(cardapio.getNome());
-			setListAdapter(new GrupoOpcaoListAdapter(cardapio));
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (GrupoOpcaoListFragmentCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException("Class" + activity.getClass().getName() + " must implement " +
+					GrupoOpcaoListFragmentCallbacks.class.getName());
 		}
 	}
 
@@ -58,29 +65,34 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 			@Override
 			public void onClick(View v) {
-
 				newGroupAdded(inputItem.getText().toString());
 				inputItem.setText(null);
 			}
 
 		});
 
+		updateUI();
+
 		return v;
 	}
 
-	private void newGroupAdded(String descricao) {
-		((GrupoOpcaoListFragmentListener) getActivity()).onNewGroupAdded(descricao);
-		ArrayAdapter listAdapter = (GrupoOpcaoListAdapter) getListAdapter();
-		listAdapter.clear();
-		listAdapter.addAll(cardapio.getGruposDeOpcoes());
-		listAdapter.notifyDataSetChanged();
+	public void updateUI() {
+		if(cardapio != null) {
+			getActivity().setTitle(cardapio.getNome());
+			setListAdapter(new GrupoOpcaoListAdapter(cardapio));
+		}
 	}
 
-	public void notifyDataSetChanged() {
-		GrupoOpcaoListAdapter listAdapter = (GrupoOpcaoListAdapter) getListAdapter();
-		listAdapter.clear();
-		List<GrupoAlimentar> items = cardapio.getGruposDeOpcoes();
-		listAdapter.addAll(items);
+	private void newGroupAdded(String descricao) {
+		mCallbacks.onGrupoAlimentarCreated(descricao);
+	}
+
+	public void setCardapio(Cardapio cardapio) {
+		this.cardapio = cardapio;
+	}
+
+	public Cardapio getCardapio() {
+		return cardapio;
 	}
 
 	private class GrupoOpcaoListAdapter extends ArrayAdapter<GrupoAlimentar> {
@@ -106,12 +118,8 @@ public class GrupoOpcaoListFragment extends ListFragment {
 				public void onFocusChange(View view, boolean hasFocus) {
 					if(!hasFocus) {
 						Editable newValue = ((EditText) view).getText();
-						if(getCount() > 0) {
-							GrupoAlimentar gItem = getItem(position);
-							if (gItem != null) {
-								gItem.setNome(newValue.toString());
-							}
-						}
+						GrupoAlimentar gItem = getItem(position);
+						gItem.setNome(newValue.toString());
 					}
 				}
 			});
@@ -128,10 +136,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 				@Override
 				public void onClick(View v) {
 					GrupoAlimentar item = getItem(position);
-					((GrupoOpcaoListFragmentListener)getActivity()).onItemDeleted(item);
-					remove(item);
-					notifyDataSetChanged();
-					Log.i(TAG, "removendo grupo " + item);
+					mCallbacks.onGrupoAlimentarDeleted(item);
 				}
 
 			});
@@ -140,7 +145,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 				@Override
 				public void onClick(View view) {
 					GrupoAlimentar item = getItem(position);
-					((GrupoOpcaoListFragmentListener) getActivity()).onEditGroupItemsRequested(item);
+					mCallbacks.onGrupoAlimentarRequestForEdition(item);
 
 				}
 			});

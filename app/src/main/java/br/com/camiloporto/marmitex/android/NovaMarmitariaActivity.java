@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-public class NovaMarmitariaActivity extends Activity implements NovaMarmitariaFragmentCallbacks, MarmitexApplication.OnMarmitariaCreatedCallback, MarmitexApplication.OnMarmitariaUpdatedCallback {
+public class NovaMarmitariaActivity extends AbstractMarmitexActivity implements NovaMarmitariaFragmentCallbacks {
 	
 	private static final String TAG = "NovaMarmitariaActivity";
 	private NovaMarmitariaFragment novaMarmitariaFragment;
@@ -26,8 +26,7 @@ public class NovaMarmitariaActivity extends Activity implements NovaMarmitariaFr
 				.add(R.id.fragmentContainer, novaMarmitariaFragment)
 				.commit();
 		}
-		MarmitexApplication application = (MarmitexApplication) getApplication();
-		Marmitaria active = application.getActiveMarmitaria();
+		Marmitaria active = getActiveMarmitaria();
 		novaMarmitariaFragment.setMarmitaria(active);
 
 	}
@@ -39,7 +38,7 @@ public class NovaMarmitariaActivity extends Activity implements NovaMarmitariaFr
 		String endereco = novaMarmitariaFragment.getEndereco().getText().toString();
 
 		MarmitexApplication application = (MarmitexApplication) getApplication();
-		Marmitaria active = application.getActiveMarmitaria();
+		Marmitaria active = getActiveMarmitaria();
 		if(active == null) {
 			application.createMarmitaria(nome, fone, endereco, this);
 		} else {
@@ -53,19 +52,4 @@ public class NovaMarmitariaActivity extends Activity implements NovaMarmitariaFr
 
 	}
 
-	public void setNovaMarmitariaActionResponse(String result) {
-		Log.i(TAG, "resposta da acao NovaMarmitaria: " + result);
-	}
-
-	@Override
-	public void onMarmitariaCreated() {
-		Toast.makeText(this, "Marmitaria Criada", Toast.LENGTH_LONG)
-				.show();
-	}
-
-	@Override
-	public void onMarmitariaUpdated() {
-		Toast.makeText(this, "Marmitaria Atualizada", Toast.LENGTH_LONG)
-				.show();
-	}
 }
