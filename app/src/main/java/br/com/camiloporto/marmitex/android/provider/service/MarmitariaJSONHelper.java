@@ -1,7 +1,6 @@
 package br.com.camiloporto.marmitex.android.provider.service;
 
 import android.content.Context;
-import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;

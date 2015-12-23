@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by camiloporto on 01/12/15.

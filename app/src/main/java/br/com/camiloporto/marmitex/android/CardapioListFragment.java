@@ -1,12 +1,9 @@
 package br.com.camiloporto.marmitex.android;
 
-import java.util.List;
-
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

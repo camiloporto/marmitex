@@ -2,8 +2,8 @@ package br.com.camiloporto.marmitex.android.provider.service;
 
 import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
-import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
 
 /**
  * Created by camiloporto on 17/11/15.

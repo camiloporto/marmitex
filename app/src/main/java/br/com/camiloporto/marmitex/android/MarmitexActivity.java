@@ -1,6 +1,5 @@
 package br.com.camiloporto.marmitex.android;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;

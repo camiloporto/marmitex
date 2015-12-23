@@ -6,9 +6,7 @@ import org.junit.Test;
 
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitaService;
-import br.com.camiloporto.marmitex.android.provider.service.MarmitariaBuilder;
 import br.com.camiloporto.marmitex.android.repository.InMemoryMarmitariaRepository;
-import br.com.camiloporto.marmitex.android.repository.MarmitariaRepository;
 
 /**
  * Created by camiloporto on 01/12/15.

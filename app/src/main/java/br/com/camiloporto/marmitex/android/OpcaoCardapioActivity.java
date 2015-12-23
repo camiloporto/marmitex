@@ -1,16 +1,13 @@
 package br.com.camiloporto.marmitex.android;
 
-import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import br.com.camiloporto.marmitex.android.OpcaoCardapioListFragment.OpcaoCardapioListFragmentListener;
+import br.com.camiloporto.marmitex.android.model.Cardapio;
 import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
 
-public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioListFragmentListener {
+public class OpcaoCardapioActivity extends AbstractMarmitexActivity implements OpcaoCardapioListFragment.OpcaoCardapioListFragmentCallbacks {
 	
 	private static final String TAG = OpcaoCardapioActivity.class.getName();
 	
@@ -27,47 +24,33 @@ public class OpcaoCardapioActivity extends Activity implements OpcaoCardapioList
 		setContentView(R.layout.activity_cardapio_opcoes);
 		FragmentManager fm = getFragmentManager();
 		opcoesFragment = (OpcaoCardapioListFragment) fm.findFragmentById(R.id.cardapio_opcoes_fragmentContainer);
-		grupoOpcao = (GrupoAlimentar) getIntent().getSerializableExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
+
+		//// FIXME: 22/12/15 Refatorar onde fica essas constatnes. Unificar local
+		String idCardapio = getIntent().getStringExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
+		String idGrupoAlimentar = getIntent().getStringExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
+		Cardapio cardapio = getActiveMarmitaria().findCardapioPeloId(idCardapio);
+		grupoOpcao = cardapio.findGrupoDeOpcoes(idGrupoAlimentar);
 
 		if (opcoesFragment == null) {
-			opcoesFragment = OpcaoCardapioListFragment.newInstance(grupoOpcao);
+			opcoesFragment = new OpcaoCardapioListFragment();
 			fm.beginTransaction().add(R.id.cardapio_opcoes_fragmentContainer, opcoesFragment)
 					.commit();
+			opcoesFragment.setGrupoOpcoes(grupoOpcao);
 		} else {
 			opcoesFragment.setGrupoOpcoes(grupoOpcao);
 		}
 		
 	}
-	
+
 	@Override
-	public void onBackPressed() {
-		Intent i = new Intent();
-		i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, this.grupoOpcao);
-		setResult(Activity.RESULT_OK, i);
-		super.onBackPressed();
-	}
-	
-	@Override
-	public void onNewItemAdded(String descricaoItem) {
-		OpcaoCardapio opcaoCardapio = grupoOpcao.adicioneOpcao(descricaoItem);
+	public void onNewItemCreated(String descricao) {
+		grupoOpcao.adicioneOpcao(descricao);
+		opcoesFragment.updateUI();
 	}
 
 	@Override
-	public void onItemUpdated(OpcaoCardapio item) {
-		Log.i(TAG, "atualizando item: " + item);
-		//TODO ver como salvar esse item. Salvar individualmente ou salvar o cardapio todo?
+	public void onOpcaoCardapioDeleted(OpcaoCardapio opcaoCardapio) {
+		grupoOpcao.removaOpcao(opcaoCardapio);
+		opcoesFragment.updateUI();
 	}
-
-	@Override
-	public void onItemDeleted(OpcaoCardapio item) {
-		Log.i(TAG, "removendo item: " + item);
-		grupoOpcao.removaOpcao(item);
-	}
-
-	@Override
-	public void onItemGroupUpdated(GrupoAlimentar groupItems) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

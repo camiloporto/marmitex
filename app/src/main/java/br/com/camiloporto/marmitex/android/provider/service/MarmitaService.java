@@ -1,15 +1,10 @@
 package br.com.camiloporto.marmitex.android.provider.service;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-
 import android.content.Context;
 
-import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
-import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 import br.com.camiloporto.marmitex.android.repository.MarmitariaRepository;
 

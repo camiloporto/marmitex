@@ -1,13 +1,10 @@
 package br.com.camiloporto.marmitex.android;
 
-import br.com.camiloporto.marmitex.android.NovaMarmitariaFragment.NovaMarmitariaFragmentCallbacks;
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
-
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
+
+import br.com.camiloporto.marmitex.android.NovaMarmitariaFragment.NovaMarmitariaFragmentCallbacks;
+import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
 public class NovaMarmitariaActivity extends AbstractMarmitexActivity implements NovaMarmitariaFragmentCallbacks {
 	

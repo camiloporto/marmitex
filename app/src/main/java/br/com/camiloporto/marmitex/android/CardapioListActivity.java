@@ -1,11 +1,11 @@
 package br.com.camiloporto.marmitex.android;
 
-import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
-
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+
+import br.com.camiloporto.marmitex.android.model.Cardapio;
+import br.com.camiloporto.marmitex.android.model.Marmitaria;
 
 public class CardapioListActivity extends AbstractMarmitexActivity implements CardapioListFragment.CardapioListFragmentCallbacks {
 

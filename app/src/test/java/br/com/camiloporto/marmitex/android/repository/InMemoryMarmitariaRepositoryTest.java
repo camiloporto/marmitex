@@ -3,7 +3,6 @@ package br.com.camiloporto.marmitex.android.repository;
 import junit.framework.Assert;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitariaBuilder;
