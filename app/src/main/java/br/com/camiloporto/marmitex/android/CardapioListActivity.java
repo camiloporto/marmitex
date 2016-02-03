@@ -45,7 +45,7 @@ public class CardapioListActivity extends AbstractMarmitexActivity implements Ca
 	@Override
 	public void onCardapioRequestForEdition(Cardapio c) {
 		Intent i = new Intent(this, GrupoOpcaoCardapioActivity.class);
-		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, c.getId());
+		i.putExtra(GrupoOpcaoCardapioActivity.ARG_NAME_CARDAPIO, c.getId());
 		startActivity(i);
 	}
 

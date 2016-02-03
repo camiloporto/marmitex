@@ -34,7 +34,7 @@ public class OpcaoCardapioListActivityTest {
         grupoItems.adicioneOpcao("Feijao");
         grupoItems.adicioneOpcao("Arroz");
         Intent i = new Intent(grupoOpcaoCardapioActivity, OpcaoCardapioActivity.class);
-        i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, grupoItems);
+        i.putExtra(OpcaoCardapioActivity.ARG_GRUPO_OPCAO, grupoItems);
 
         OpcaoCardapioActivity opcaoCardapioActivity = Robolectric.buildActivity(OpcaoCardapioActivity.class)
                 .withIntent(i)
@@ -74,7 +74,7 @@ public class OpcaoCardapioListActivityTest {
 
         Intent i = new Intent(
                 RuntimeEnvironment.application, GrupoOpcaoCardapioActivity.class);
-        i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, m.getCardapios().get(0));
+        i.putExtra(GrupoOpcaoCardapioActivity.ARG_NAME_CARDAPIO, m.getCardapios().get(0));
 
         GrupoOpcaoCardapioActivity grupoOpcaoCardapioActivity = Robolectric.buildActivity(GrupoOpcaoCardapioActivity.class)
                 .withIntent(i)

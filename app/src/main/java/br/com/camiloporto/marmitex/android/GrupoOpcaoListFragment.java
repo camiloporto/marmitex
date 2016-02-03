@@ -24,8 +24,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 		void onGrupoAlimentarRequestForEdition(GrupoAlimentar item);
 	}
-	
-	public static final String ARG_NAME_CARDAPIO = "br.com.camiloporto.marmitex.android.NovoCardapioFragment.CARDAPIO";
+
 	private static final String TAG = GrupoOpcaoListFragment.class.getName();
 
 	private GrupoOpcaoListFragmentCallbacks mCallbacks;

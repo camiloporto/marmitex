@@ -61,53 +61,6 @@ public class MarmitariaJSONHelper {
     }
 
 
-    //FIXME tornar essas Operacoes Asincronas
-    public void persistMarmitaria(Marmitaria m) {
-        final Gson gson = new Gson();
-        String json = gson.toJson(m);
-        Log.i("JSONHeper", "json gerado: " + json);
-        final String fileName = m.getLogin() + ".json";
-        FileOutputStream fos = null;
-        try {
-            fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            fos.write(json.getBytes());
-        } catch (IOException e) {
-            Log.e("MarmitariaJSONHelper", e.toString());
-        } finally {
-            try {
-                if(fos != null) {
-                    fos.close();
-                }
-            } catch (IOException e) {
-                Log.e("MarmitariaJSONHelper", e.toString());
-            }
-        }
-
-
-    }
-
-    public Marmitaria readMarmitaria(String userId) {
-        FileInputStream fis = null;
-        Marmitaria m = null;
-        try {
-            fis = context.openFileInput(userId + ".json");
-            Reader reader = new InputStreamReader(fis);
-            Gson gson = new Gson();
-            m = gson.fromJson(reader, Marmitaria.class);
-            Log.i("JSONHeper", "marmitaria recuperada: " + m.getLogin());
-
-        } catch (IOException e) {
-            //do nothing
-        } finally {
-            if(fis != null) try {
-                fis.close();
-            } catch (IOException e) {
-                //impossivel fechar stream
-            }
-        }
-        return m;
-    }
-
     public Marmitaria getMarmitaria(String idMarmitaria) {
         String url = "https://camiloporto.cloudant.com/marmitex-dev/" + idMarmitaria;
         RestTemplate restTemplate = new RestTemplate();

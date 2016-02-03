@@ -10,6 +10,9 @@ import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
 public class OpcaoCardapioActivity extends AbstractMarmitexActivity implements OpcaoCardapioListFragment.OpcaoCardapioListFragmentCallbacks {
 	
 	private static final String TAG = OpcaoCardapioActivity.class.getName();
+
+	public static final String ARG_NAME_CARDAPIO = "br.com.camiloporto.marmitex.android.NovoCardapioFragment.CARDAPIO";
+	public static final String ARG_GRUPO_OPCAO = "br.com.camiloporto.marmitex.android.GRUPO_ITEM";
 	
 	private GrupoAlimentar grupoOpcao;
 	private OpcaoCardapioListFragment opcoesFragment;
@@ -25,9 +28,8 @@ public class OpcaoCardapioActivity extends AbstractMarmitexActivity implements O
 		FragmentManager fm = getFragmentManager();
 		opcoesFragment = (OpcaoCardapioListFragment) fm.findFragmentById(R.id.cardapio_opcoes_fragmentContainer);
 
-		//// FIXME: 22/12/15 Refatorar onde fica essas constatnes. Unificar local
-		String idCardapio = getIntent().getStringExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
-		String idGrupoAlimentar = getIntent().getStringExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO);
+		String idCardapio = getIntent().getStringExtra(ARG_NAME_CARDAPIO);
+		String idGrupoAlimentar = getIntent().getStringExtra(ARG_GRUPO_OPCAO);
 		Cardapio cardapio = getActiveMarmitaria().findCardapioPeloId(idCardapio);
 		grupoOpcao = cardapio.findGrupoDeOpcoes(idGrupoAlimentar);
 

@@ -18,7 +18,6 @@ import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
 
 public class OpcaoCardapioListFragment extends ListFragment {
 
-	public static final String ARG_GRUPO_OPCAO = "br.com.camiloporto.marmitex.android.GRUPO_ITEM";
 	private static final String TAG = OpcaoCardapioListFragment.class.getName();
 
 	public interface OpcaoCardapioListFragmentCallbacks {

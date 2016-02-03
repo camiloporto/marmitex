@@ -9,6 +9,8 @@ import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
 
 public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity implements GrupoOpcaoListFragment.GrupoOpcaoListFragmentCallbacks {
 
+	public static final String ARG_NAME_CARDAPIO = "br.com.camiloporto.marmitex.android.NovoCardapioFragment.CARDAPIO";
+
 	private Cardapio cardapio;
 	private GrupoOpcaoListFragment grupoOpcaoListFragment;
 
@@ -20,8 +22,7 @@ public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity impleme
 		grupoOpcaoListFragment = (GrupoOpcaoListFragment) fm.findFragmentById(R.id.cardapio_novo_fragmentContainer);
 
 		if (grupoOpcaoListFragment == null) {
-			//// FIXME: 22/12/15 Refatorar onde fica essas constatnes. Unificar local
-			String idCardapio = getIntent().getStringExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO);
+			String idCardapio = getIntent().getStringExtra(ARG_NAME_CARDAPIO);
 			cardapio = getActiveMarmitaria().findCardapioPeloId(idCardapio);
 			grupoOpcaoListFragment = new GrupoOpcaoListFragment();
 			fm.beginTransaction().add(R.id.cardapio_novo_fragmentContainer, grupoOpcaoListFragment)
@@ -46,8 +47,8 @@ public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity impleme
 	@Override
 	public void onGrupoAlimentarRequestForEdition(GrupoAlimentar item) {
 		Intent i = new Intent(this, OpcaoCardapioActivity.class);
-		i.putExtra(GrupoOpcaoListFragment.ARG_NAME_CARDAPIO, cardapio.getId());
-		i.putExtra(OpcaoCardapioListFragment.ARG_GRUPO_OPCAO, item.getId());
+		i.putExtra(OpcaoCardapioActivity.ARG_NAME_CARDAPIO, cardapio.getId());
+		i.putExtra(OpcaoCardapioActivity.ARG_GRUPO_OPCAO, item.getId());
 		startActivity(i);
 	}
 }
