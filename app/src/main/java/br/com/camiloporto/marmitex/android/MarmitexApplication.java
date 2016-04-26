@@ -4,7 +4,9 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Profile;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitaService;
+import br.com.camiloporto.marmitex.android.provider.service.ProfileService;
 import br.com.camiloporto.marmitex.android.repository.InMemoryMarmitariaRepository;
 
 /**
@@ -13,6 +15,7 @@ import br.com.camiloporto.marmitex.android.repository.InMemoryMarmitariaReposito
 public class MarmitexApplication extends Application {
 
     private MarmitaService marmitaService;
+    private ProfileService profileService;
     private Marmitaria activeMarmitaria;
 
     @Override
@@ -20,7 +23,26 @@ public class MarmitexApplication extends Application {
         marmitaService = new MarmitaService(
                 new InMemoryMarmitariaRepository()
         );
+        profileService = new ProfileService(this);
         super.onCreate();
+    }
+
+    public void createNewProfile(Profile profile, final OnProfileCreatedCallback callback) {
+        AsyncTask<Profile, Void, Profile> task = new AsyncTask<Profile, Void, Profile>() {
+
+            @Override
+            protected Profile doInBackground(Profile... params) {
+                Profile profile = params[0];
+                profileService.create(profile);
+                return profile;
+            }
+
+            @Override
+            protected void onPostExecute(Profile profile) {
+                callback.onProfileCreated(profile);
+            }
+        };
+        task.execute(profile);
     }
 
     public void updateActiveMarmitaria(final OnMarmitariaUpdatedCallback callback) {
@@ -98,5 +120,9 @@ public class MarmitexApplication extends Application {
 
     public static interface OnMarmitariaUpdatedCallback {
         void onMarmitariaUpdated();
+    }
+
+    public static interface OnProfileCreatedCallback {
+        void onProfileCreated(Profile profile);
     }
 }
