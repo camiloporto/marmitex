@@ -55,30 +55,6 @@ public class ProfileService {
     public void create(Profile profile) {
 
         RestTemplate restTemplate = criaRestTemplate();
-//        restTemplate.setErrorHandler(new DefaultResponseErrorHandler(){
-//            @Override
-//            public void handleError(ClientHttpResponse response) throws IOException {
-//                String json = readString(response.getBody());
-//                Map map = new Gson().fromJson(json, Map.class);
-//                throw new RuntimeException("Could not create profile: " + map.toString());
-//            }
-//
-//            private String readString(InputStream body) throws IOException {
-//                ByteArrayOutputStream out = new ByteArrayOutputStream();
-//                try {
-//                    while (body.available() > 0) {
-//                        int next = body.read();
-//                        System.out.println("reading byte " + next + ". of " + body.available() + " available");
-//                        out.write(body.read());
-//                    }
-//                    return out.toString();
-//                }
-//                finally {
-//                    if(out != null)
-//                        out.close();
-//                }
-//            }
-//        });
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -108,18 +84,12 @@ public class ProfileService {
 
     }
 
-    private void checkResponse(ResponseEntity<Map<String, String>> responseEntity) {
-        if(!responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-            throw new RuntimeException("Could not create profile " + responseEntity.toString());
-        }
-    }
-
     private RestTemplate criaRestTemplate() {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
 
         //FIXME create proxy only on local environment.
-        Proxy proxy= new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 3128));
-        requestFactory.setProxy(proxy);
+        //Proxy proxy= new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 3128));
+//        requestFactory.setProxy(proxy);
 
         return new RestTemplate(requestFactory);
     }

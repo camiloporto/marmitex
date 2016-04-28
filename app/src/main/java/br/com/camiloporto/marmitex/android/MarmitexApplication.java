@@ -32,6 +32,7 @@ public class MarmitexApplication extends Application {
 
             @Override
             protected Profile doInBackground(Profile... params) {
+                //FIXME return an operation status report. idicating errors or not..
                 Profile profile = params[0];
                 profileService.create(profile);
                 return profile;

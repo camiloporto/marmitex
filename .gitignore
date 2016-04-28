@@ -3,3 +3,5 @@
 app/build/
 build/
 app/app.iml
+marmitex.iml
+local.properties

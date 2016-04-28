@@ -195,17 +195,13 @@ public class LoginActivity extends AbstractMarmitexActivity implements MarmitexA
     public void onProfileCreated(Profile profile) {
         mAuthTask = null;
         showProgress(false);
-        boolean success = profile.getId() != null;
-        if (success) {
-            //FIXME navigate do MainScreen
+
             Toast.makeText(
                     this, "Profile Created Successful: " + profile.getId(), Toast.LENGTH_SHORT)
                     .show();
+        //FIXME navigate do MarmitexActivity. Store user context on App (after sign in, login and get access token?)
 //            finish();
-        } else {
-            mPasswordView.setError(getString(R.string.error_incorrect_password));
-            mPasswordView.requestFocus();
-        }
+
     }
 
     private interface ProfileQuery {
