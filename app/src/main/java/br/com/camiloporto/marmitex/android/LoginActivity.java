@@ -3,49 +3,25 @@ package br.com.camiloporto.marmitex.android;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import br.com.camiloporto.marmitex.android.event.LoginFinishedEvent;
 import br.com.camiloporto.marmitex.android.model.Profile;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AbstractMarmitexActivity implements MarmitexApplication.OnProfileCreatedCallback {
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mAuthTask = null;
+public class LoginActivity extends AbstractMarmitexActivity implements MarmitexApplication.OnProfileCreatedCallback, MarmitexApplication.OnLoginFinishedCallback {
 
     // UI references.
     private EditText mEmailView;
@@ -59,7 +35,6 @@ public class LoginActivity extends AbstractMarmitexActivity implements MarmitexA
         setContentView(R.layout.activity_login);
 
         //FIXME simplify this Activity
-        //FIXME debug profile creation...see proxy settings
         // Set up the login form.
         mEmailView = (EditText) findViewById(R.id.email);
 
@@ -68,18 +43,27 @@ public class LoginActivity extends AbstractMarmitexActivity implements MarmitexA
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    login();
                     return true;
                 }
                 return false;
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button mEmailSignInButton = (Button) findViewById(R.id.sign_up_button);
+        //FIXME navigate to NewProfile/Lunch Box Seller Activity
+//        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                login();
+//            }
+//        });
+
+        Button mLoginInButton = (Button) findViewById(R.id.login_button);
+        mLoginInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                login();
             }
         });
 
@@ -94,10 +78,7 @@ public class LoginActivity extends AbstractMarmitexActivity implements MarmitexA
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    public void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+    public void login() {
 
         // Reset errors.
         mEmailView.setError(null);
@@ -111,8 +92,8 @@ public class LoginActivity extends AbstractMarmitexActivity implements MarmitexA
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -136,21 +117,18 @@ public class LoginActivity extends AbstractMarmitexActivity implements MarmitexA
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            Profile p = new Profile(email, password);
-            getMarmitexApplication().createNewProfile(p, this);
-//            mAuthTask = new UserLoginTask(email, password);
-//            mAuthTask.execute((Void) null);
+
+            //FIXME move this code to create new profile task
+            getMarmitexApplication().login(email, password, this);
+
+//            Profile p = new Profile(email, password);
+//            getMarmitexApplication().createNewProfile(p, this);
         }
     }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
     }
 
     /**
@@ -193,83 +171,24 @@ public class LoginActivity extends AbstractMarmitexActivity implements MarmitexA
 
     @Override
     public void onProfileCreated(Profile profile) {
-        mAuthTask = null;
-        showProgress(false);
 
             Toast.makeText(
                     this, "Profile Created Successful: " + profile.getId(), Toast.LENGTH_SHORT)
                     .show();
         //FIXME navigate do MarmitexActivity. Store user context on App (after sign in, login and get access token?)
-//            finish();
 
     }
 
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
+    @Override
+    public void onLoginFinished(LoginFinishedEvent event) {
 
-        int ADDRESS = 0;
-        int IS_PRIMARY = 1;
+        finish();
+        Toast.makeText(
+                this, "Login Status: " + event.isSuccess(), Toast.LENGTH_SHORT)
+                .show();
+        //FIXME navigate do MarmitexActivity. Store user context on App (after sign in, login and get access token?)
+
     }
 
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
 }
 

@@ -3,11 +3,13 @@ package br.com.camiloporto.marmitex.android;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import br.com.camiloporto.marmitex.android.event.LoginFinishedEvent;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 import br.com.camiloporto.marmitex.android.model.Profile;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitaService;
 import br.com.camiloporto.marmitex.android.provider.service.ProfileService;
 import br.com.camiloporto.marmitex.android.repository.InMemoryMarmitariaRepository;
+import br.com.camiloporto.marmitex.android.service.MarmitexException;
 
 /**
  * Created by camiloporto on 02/12/15.
@@ -111,6 +113,31 @@ public class MarmitexApplication extends Application {
         task.execute(id);
     }
 
+    public void login(String email, String password, final OnLoginFinishedCallback callback) {
+        AsyncTask<String, Void, LoginFinishedEvent> task = new AsyncTask<String, Void, LoginFinishedEvent>() {
+
+            @Override
+            protected LoginFinishedEvent doInBackground(String... params) {
+                String username = params[0];
+                String password = params[1];
+                try {
+                    String accessToken = profileService.login(username, password);
+                    //FIXME Store AccessToken somewhere
+                    boolean success = accessToken != null;
+                    return new LoginFinishedEvent(success);
+                } catch (MarmitexException e) {
+                    return new LoginFinishedEvent(e);
+                }
+            }
+
+            @Override
+            protected void onPostExecute(LoginFinishedEvent event) {
+                callback.onLoginFinished(event);
+            }
+        };
+        task.execute(email, password);
+    }
+
     public static interface OnMarmitariaCreatedCallback {
         void onMarmitariaCreated();
     }
@@ -125,5 +152,9 @@ public class MarmitexApplication extends Application {
 
     public static interface OnProfileCreatedCallback {
         void onProfileCreated(Profile profile);
+    }
+
+    public static interface OnLoginFinishedCallback {
+        void onLoginFinished(LoginFinishedEvent event);
     }
 }

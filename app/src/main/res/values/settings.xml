@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="oauth_client_id">marmitex-mobile-client</string>
+    <string name="oauth_client_secret">marmitex-mobile-secret</string>
+    <string name="marmitex_profile_endpoint">https://marmitex-profile-service-dev.herokuapp.com</string>
+</resources>

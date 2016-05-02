@@ -7,7 +7,12 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.List;
 import java.util.Random;
 
@@ -23,14 +28,31 @@ import br.com.camiloporto.marmitex.android.provider.service.ProfileService;
 @Config(constants = BuildConfig.class, application = MarmitexApplication.class)
 public class ProfileServiceTest {
 
+    private RestTemplate restTemplate;
+
+
+    public ProfileServiceTest() {
+        restTemplate = criaRestTemplate();
+    }
+
     @Test
     public void shouldCreateNewProfile() {
 
         ProfileService profileService = new ProfileService(RuntimeEnvironment.application);
+        profileService.setRestTemplate(restTemplate);
         Profile profile = new Profile();
         profile.setLogin(randomString() + "@email.com.uk");
         profile.setPass("secret");
         profileService.create(profile);
+    }
+
+    @Test
+    public void shouldLoginExistentuser() {
+
+        ProfileService profileService = new ProfileService(RuntimeEnvironment.application);
+        profileService.setRestTemplate(restTemplate);
+        String accessToken = profileService.login("camiloporto@email.com", "1234567");
+        Assert.assertNotNull(accessToken);
     }
 
     @Test
@@ -59,5 +81,16 @@ public class ProfileServiceTest {
             randomStringBuilder.append(tempChar);
         }
         return randomStringBuilder.toString();
+    }
+
+    private RestTemplate criaRestTemplate() {
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+
+        //FIXME create proxy only on local environment.
+        Proxy proxy= new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 3128));
+        requestFactory.setProxy(proxy);
+        RestTemplate rt = new RestTemplate(requestFactory);
+
+        return rt;
     }
 }
