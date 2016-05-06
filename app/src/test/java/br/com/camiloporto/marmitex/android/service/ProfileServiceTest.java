@@ -1,5 +1,8 @@
 package br.com.camiloporto.marmitex.android.service;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -8,7 +11,6 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.InetSocketAddress;
@@ -19,7 +21,6 @@ import java.util.Random;
 import br.com.camiloporto.marmitex.android.BuildConfig;
 import br.com.camiloporto.marmitex.android.MarmitexApplication;
 import br.com.camiloporto.marmitex.android.model.Profile;
-import br.com.camiloporto.marmitex.android.provider.service.ProfileService;
 
 /**
  * Created by ur42 on 25/04/2016.
@@ -51,8 +52,31 @@ public class ProfileServiceTest {
 
         ProfileService profileService = new ProfileService(RuntimeEnvironment.application);
         profileService.setRestTemplate(restTemplate);
-        String accessToken = profileService.login("camiloporto@email.com", "1234567");
+        String username = "camiloporto@email.com";
+        String accessToken = profileService.login(username, "1234567");
         Assert.assertNotNull(accessToken);
+        checkAccessTokenIsOnSharedPreferences(accessToken, username);
+    }
+
+    @Test
+    public void shouldThrowsExceptionIfLoginFail() {
+
+        ProfileService profileService = new ProfileService(RuntimeEnvironment.application);
+        profileService.setRestTemplate(restTemplate);
+        String username = "camiloporto@email.com";
+
+        try {
+            profileService.login(username, "WrongPass");
+            Assert.fail("it should raised exception");
+        }catch (MarmitexException e) {}
+    }
+
+    private void checkAccessTokenIsOnSharedPreferences(String expectedAccessToken, String username) {
+        SharedPreferences prefs =
+                RuntimeEnvironment.application
+                        .getSharedPreferences("access_tokens", Context.MODE_PRIVATE);
+        String actualAccessToken = prefs.getString(username, null);
+        Assert.assertEquals(expectedAccessToken, actualAccessToken);
     }
 
     @Test

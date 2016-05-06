@@ -118,9 +118,9 @@ public class LoginActivity extends AbstractMarmitexActivity implements MarmitexA
             // perform the user login attempt.
             showProgress(true);
 
-            //FIXME move this code to create new profile task
             getMarmitexApplication().login(email, password, this);
 
+            //FIXME move this code to create new profile task
 //            Profile p = new Profile(email, password);
 //            getMarmitexApplication().createNewProfile(p, this);
         }

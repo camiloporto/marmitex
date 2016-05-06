@@ -23,7 +23,6 @@ public class MarmitexActivity extends AbstractMarmitexActivity implements Marmit
 		/*
 		 * FIXME
 		 * Iniciar essa atividade fazendo os seguinte:
-		 * 1. Autenticar usuario (tentar ver se credenciais estao persistidas ou solicitar login)
 		 * 2. Verificar se usuario autenticado ja criou uma Marmitaria
 		 * 3. Caso seja 1o acesso, enviar para uma Tela que o auxile a criar a marmitaria,
 		 * incluindo a criacao de cardapios

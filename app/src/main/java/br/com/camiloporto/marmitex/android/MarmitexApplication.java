@@ -7,7 +7,7 @@ import br.com.camiloporto.marmitex.android.event.LoginFinishedEvent;
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
 import br.com.camiloporto.marmitex.android.model.Profile;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitaService;
-import br.com.camiloporto.marmitex.android.provider.service.ProfileService;
+import br.com.camiloporto.marmitex.android.service.ProfileService;
 import br.com.camiloporto.marmitex.android.repository.InMemoryMarmitariaRepository;
 import br.com.camiloporto.marmitex.android.service.MarmitexException;
 
@@ -19,6 +19,7 @@ public class MarmitexApplication extends Application {
     private MarmitaService marmitaService;
     private ProfileService profileService;
     private Marmitaria activeMarmitaria;
+    private String loggedUser;
 
     @Override
     public void onCreate() {
@@ -108,9 +109,16 @@ public class MarmitexApplication extends Application {
                 callback.onMarmitariaLoaded();
             }
         };
-        //// FIXME: 08/12/15 Recuperar contexto do usuario e pegar id da marmitaria persistida. Ou procurar marmitaria por usuarioId
-        String id = "123";
-        task.execute(id);
+
+        if(hasLoggedUser()) {
+            task.execute(loggedUser);
+        } else {
+            //FIXME sinalize AuthenticationRequired to OperationResult. Create OpResult to callback
+        }
+    }
+
+    private boolean hasLoggedUser() {
+        return loggedUser != null;
     }
 
     public void login(String email, String password, final OnLoginFinishedCallback callback) {
@@ -122,8 +130,10 @@ public class MarmitexApplication extends Application {
                 String password = params[1];
                 try {
                     String accessToken = profileService.login(username, password);
-                    //FIXME Store AccessToken somewhere
                     boolean success = accessToken != null;
+                    if(success) {
+                        MarmitexApplication.this.loggedUser = new String(username);
+                    }
                     return new LoginFinishedEvent(success);
                 } catch (MarmitexException e) {
                     return new LoginFinishedEvent(e);

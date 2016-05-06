@@ -1,6 +1,7 @@
-package br.com.camiloporto.marmitex.android.provider.service;
+package br.com.camiloporto.marmitex.android.service;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 
 import com.google.gson.Gson;
@@ -128,6 +129,7 @@ public class ProfileService {
 
             Map<String, String> body = responseEntity.getBody();
             String accessToken = body.get("access_token");
+            saveAccessToken(username, accessToken);
             return accessToken;
         } catch (HttpClientErrorException e) {
             String error = e.getResponseBodyAsString();
@@ -144,5 +146,14 @@ public class ProfileService {
 
     public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
+    }
+
+    private void saveAccessToken(String username, String accessToken) {
+        SecurityContext.setAcessToken(accessToken);
+        SharedPreferences prefs =
+                context.getSharedPreferences("access_tokens", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(username, accessToken);
+        editor.commit();
     }
 }
