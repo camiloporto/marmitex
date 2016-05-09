@@ -80,6 +80,7 @@ public class MarmitaService {
 			String error = e.getResponseBodyAsString();
 			//FIXME could fail deserialization. create fallback
 			Map map = new Gson().fromJson(error, Map.class);
+			//FIXME Better Serialize this result. Error may not be from Application. but from OAuth..
 			List<String> errorMsg = (List<String>) map.get("errors");
 			throw new MarmitexException(errorMsg);
 		}

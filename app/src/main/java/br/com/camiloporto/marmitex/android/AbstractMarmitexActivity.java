@@ -1,6 +1,7 @@
 package br.com.camiloporto.marmitex.android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.widget.Toast;
 
 import br.com.camiloporto.marmitex.android.model.Marmitaria;
@@ -30,5 +31,10 @@ public class AbstractMarmitexActivity extends Activity implements MarmitexApplic
     public void onMarmitariaCreated() {
         Toast.makeText(this, "Marmitaria Criada", Toast.LENGTH_LONG)
                 .show();
+    }
+
+    protected void catchAuthenticationRequiredException(AuthenticationRequiredException e) {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
     }
 }

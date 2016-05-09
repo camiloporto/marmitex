@@ -31,19 +31,24 @@ public class MarmitexApplication extends Application {
     }
 
     public void createNewProfile(Profile profile, final OnProfileCreatedCallback callback) {
-        AsyncTask<Profile, Void, Profile> task = new AsyncTask<Profile, Void, Profile>() {
+        AsyncTask<Profile, Void, ProfileCreatedEvent> task = new AsyncTask<Profile, Void, ProfileCreatedEvent>() {
 
             @Override
-            protected Profile doInBackground(Profile... params) {
-                //FIXME return an operation status report. idicating errors or not..
-                Profile profile = params[0];
-                profileService.create(profile);
-                return profile;
+            protected ProfileCreatedEvent doInBackground(Profile... params) {
+                try {
+                    Profile profile = params[0];
+                    profileService.create(profile);
+                    ProfileCreatedEvent event = new ProfileCreatedEvent();
+                    event.setCreatedProfile(profile);
+                    return event;
+                } catch (MarmitexException e) {
+                    return new ProfileCreatedEvent(e);
+                }
             }
 
             @Override
-            protected void onPostExecute(Profile profile) {
-                callback.onProfileCreated(profile);
+            protected void onPostExecute(ProfileCreatedEvent event) {
+                callback.onProfileCreated(event);
             }
         };
         task.execute(profile);
@@ -110,10 +115,15 @@ public class MarmitexApplication extends Application {
             }
         };
 
+        String principal = getPrincipal();
+        task.execute(principal);
+    }
+
+    private String getPrincipal() {
         if(hasLoggedUser()) {
-            task.execute(loggedUser);
+            return this.loggedUser;
         } else {
-            //FIXME sinalize AuthenticationRequired to OperationResult. Create OpResult to callback
+            throw new AuthenticationRequiredException();
         }
     }
 
@@ -161,7 +171,7 @@ public class MarmitexApplication extends Application {
     }
 
     public static interface OnProfileCreatedCallback {
-        void onProfileCreated(Profile profile);
+        void onProfileCreated(ProfileCreatedEvent event);
     }
 
     public static interface OnLoginFinishedCallback {

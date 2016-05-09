@@ -52,6 +52,7 @@ public class MarmitariaServiceTest {
 
     }
 
+    //FIXME change this test. use REST Enpoint instead
 //    @Test
     public void devePersistirMarmitaria() {
         MarmitaService marmitaService = new MarmitaService(new InMemoryMarmitariaRepository());

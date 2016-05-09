@@ -33,7 +33,7 @@ public class MarmitexActivity extends AbstractMarmitexActivity implements Marmit
 
 		super.onCreate(savedInstanceState);
 		//Passar contexto do usuario logado??
-		carregaMarmitariaExistente();
+		loadLoggedUserLunchBoxSeller();
 
 		setContentView(R.layout.activity_marmitex);
 		novaMarmitariaButton = (Button) findViewById(R.id.btnNovaMarmitaria);
@@ -63,10 +63,10 @@ public class MarmitexActivity extends AbstractMarmitexActivity implements Marmit
 		updateUI();
 	}
 
-	private void carregaMarmitariaExistente() {
+	private void loadLoggedUserLunchBoxSeller() {
+		carregando = ProgressDialog.show(this, "Carregando", "Carregando Marmitaria....");
 		MarmitexApplication application = (MarmitexApplication) getApplication();
 		application.loadMarmitariaOfLoggedUser(this);
-		carregando = ProgressDialog.show(this, "Carregando", "Carregando Marmitaria....");
 	}
 
 	private void updateUI() {
