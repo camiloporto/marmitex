@@ -4,16 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Seller;
 
 /**
  * Created by camiloporto on 17/12/15.
  */
 public class AbstractMarmitexActivity extends Activity implements MarmitexApplication.OnMarmitariaUpdatedCallback, MarmitexApplication.OnMarmitariaCreatedCallback {
 
-    protected Marmitaria getActiveMarmitaria() {
+    protected Seller getActiveMarmitaria() {
         MarmitexApplication app = (MarmitexApplication) getApplication();
-        Marmitaria activeMarmitaria = app.getActiveMarmitaria();
+        Seller activeMarmitaria = app.getActiveMarmitaria();
         return activeMarmitaria;
     }
 

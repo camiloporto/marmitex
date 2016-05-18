@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Seller;
 
 public class MarmitexActivity extends AbstractMarmitexActivity implements MarmitexApplication.OnMarmitariaLoaded {
 
@@ -32,7 +32,6 @@ public class MarmitexActivity extends AbstractMarmitexActivity implements Marmit
 
 
 		super.onCreate(savedInstanceState);
-		//Passar contexto do usuario logado??
 		loadLoggedUserLunchBoxSeller();
 
 		setContentView(R.layout.activity_marmitex);
@@ -70,10 +69,10 @@ public class MarmitexActivity extends AbstractMarmitexActivity implements Marmit
 	}
 
 	private void updateUI() {
-		Marmitaria active = getActiveMarmitaria();
+		Seller active = getActiveMarmitaria();
 
 		if(active != null) {
-			this.novaMarmitariaButton.setText(active.getNome());
+			this.novaMarmitariaButton.setText(active.getName());
 		} else {
 			this.novaMarmitariaButton.setText(R.string.marmitex_nova);
 		}

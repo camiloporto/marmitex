@@ -14,8 +14,8 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.MenuCategory;
+import br.com.camiloporto.marmitex.android.model.Seller;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitariaBuilder;
 
 /**
@@ -30,7 +30,7 @@ public class OpcaoCardapioListActivityTest {
 
         GrupoOpcaoCardapioActivity grupoOpcaoCardapioActivity = Robolectric.setupActivity(GrupoOpcaoCardapioActivity.class);
 
-        GrupoAlimentar grupoItems = new GrupoAlimentar();
+        MenuCategory grupoItems = new MenuCategory("name");
         grupoItems.adicioneOpcao("Feijao");
         grupoItems.adicioneOpcao("Arroz");
         Intent i = new Intent(grupoOpcaoCardapioActivity, OpcaoCardapioActivity.class);
@@ -54,7 +54,7 @@ public class OpcaoCardapioListActivityTest {
     @Test
     public void deveAtualizarEstadoListaItemsCardapio() {
 
-        Marmitaria m = new MarmitariaBuilder()
+        Seller m = new MarmitariaBuilder()
                 .newMarmitaria("camilo", "12345", "tereza campos")
                 .criaCardapio("Segunda-Feira")
                 .adicioneGrupo("Carnes")
@@ -74,7 +74,7 @@ public class OpcaoCardapioListActivityTest {
 
         Intent i = new Intent(
                 RuntimeEnvironment.application, GrupoOpcaoCardapioActivity.class);
-        i.putExtra(GrupoOpcaoCardapioActivity.ARG_NAME_CARDAPIO, m.getCardapios().get(0));
+        i.putExtra(GrupoOpcaoCardapioActivity.ARG_NAME_CARDAPIO, m.getMenus().get(0));
 
         GrupoOpcaoCardapioActivity grupoOpcaoCardapioActivity = Robolectric.buildActivity(GrupoOpcaoCardapioActivity.class)
                 .withIntent(i)

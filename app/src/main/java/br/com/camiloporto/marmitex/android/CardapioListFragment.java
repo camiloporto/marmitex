@@ -11,15 +11,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
-import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Menu;
+import br.com.camiloporto.marmitex.android.model.Seller;
 
 public class CardapioListFragment extends ListFragment {
 
 	public interface CardapioListFragmentCallbacks {
 		void onCardapioCreated(String nomeCardapio);
-		void onCardapioDeleted(Cardapio cardapio);
-		void onCardapioRequestForEdition(Cardapio c);
+		void onCardapioDeleted(Menu cardapio);
+		void onCardapioRequestForEdition(Menu c);
 	}
 	
 	private static final String TAG = "CardapioListFragment";
@@ -30,7 +30,7 @@ public class CardapioListFragment extends ListFragment {
 	private Button addButton;
 
 
-	private Marmitaria marmitaria;
+	private Seller marmitaria;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,20 +75,20 @@ public class CardapioListFragment extends ListFragment {
 
 	public void updateUI() {
 		if(marmitaria != null) {
-			getActivity().setTitle(marmitaria.getNome());
+			getActivity().setTitle(marmitaria.getName());
 			setListAdapter(new CardapioListAdapter(marmitaria));
 		}
 	}
 
-	public void setMarmitaria(Marmitaria marmitaria) {
+	public void setMarmitaria(Seller marmitaria) {
 		this.marmitaria = marmitaria;
 	}
 
 
-	private class CardapioListAdapter extends ArrayAdapter<Cardapio> {
+	private class CardapioListAdapter extends ArrayAdapter<Menu> {
 		
-		public CardapioListAdapter(Marmitaria marmitaria) {
-			super(getActivity(), R.layout.list_item_cardapio, marmitaria.getCardapios());
+		public CardapioListAdapter(Seller marmitaria) {
+			super(getActivity(), R.layout.list_item_cardapio, marmitaria.getMenus());
 		}
 
 		@Override
@@ -99,16 +99,16 @@ public class CardapioListFragment extends ListFragment {
 
 			//// FIXME: 08/12/15 Colocar a edicao de todas as informacoes de um cardapio na tela de edicao de cardapio. Mostar nome do cardapio e categorias.
 			// tornar o EditText da view um Label ou um Button que ao clicar vai pra edicao do cardapio.
-			Cardapio item = getItem(position);
+			Menu item = getItem(position);
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_item_list_descricao_input);
-			inputDescricao.setText(item.getNome());
+			inputDescricao.setText(item.getName());
 			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 				@Override
 				public void onFocusChange(View view, boolean hasFocus) {
 					if (!hasFocus) {
 						Editable newValue = ((EditText) view).getText();
-						getItem(position).setNome(newValue.toString());
+						getItem(position).setName(newValue.toString());
 					}
 				}
 			});
@@ -123,7 +123,7 @@ public class CardapioListFragment extends ListFragment {
 
 				@Override
 				public void onClick(View v) {
-					Cardapio item = getItem(position);
+					Menu item = getItem(position);
 					mCallbacks.onCardapioDeleted(item);
 				}
 
@@ -133,7 +133,7 @@ public class CardapioListFragment extends ListFragment {
 			editButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Cardapio item = getItem(position);
+					Menu item = getItem(position);
 					mCallbacks.onCardapioRequestForEdition(item);
 				}
 			});

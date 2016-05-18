@@ -4,7 +4,7 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 
 import br.com.camiloporto.marmitex.android.NovaMarmitariaFragment.NovaMarmitariaFragmentCallbacks;
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Seller;
 
 public class NovaMarmitariaActivity extends AbstractMarmitexActivity implements NovaMarmitariaFragmentCallbacks {
 	
@@ -23,25 +23,26 @@ public class NovaMarmitariaActivity extends AbstractMarmitexActivity implements 
 				.add(R.id.fragmentContainer, novaMarmitariaFragment)
 				.commit();
 		}
-		Marmitaria active = getActiveMarmitaria();
+		Seller active = getActiveMarmitaria();
 		novaMarmitariaFragment.setMarmitaria(active);
 
 	}
 
 	@Override
 	public void saveButtonClicked() {
+		//FIXME ajustar logica ao novo backend (estrutura do objeto mudou..)
 		String nome = novaMarmitariaFragment.getNome().getText().toString();
 		String fone = novaMarmitariaFragment.getTelefone().getText().toString();
 		String endereco = novaMarmitariaFragment.getEndereco().getText().toString();
 
 		MarmitexApplication application = (MarmitexApplication) getApplication();
-		Marmitaria active = getActiveMarmitaria();
+		Seller active = getActiveMarmitaria();
 		if(active == null) {
 			application.createMarmitaria(nome, fone, endereco, this);
 		} else {
-			active.setNome(nome);
-			active.setTelefone(fone);
-			active.setEndereco(endereco);
+			active.setName(nome);
+			active.setPhone(fone);
+			active.setAddress(endereco);
 			//FIXME atualizar demais dados
 			application.updateActiveMarmitaria(this);
 		}

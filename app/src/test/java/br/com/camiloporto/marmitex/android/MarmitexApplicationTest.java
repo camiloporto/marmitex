@@ -8,7 +8,7 @@ import org.robolectric.annotation.Config;
  * Created by camiloporto on 01/12/15.
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class)
+@Config(constants = BuildConfig.class, application = MarmitexApplication.class)
 public class MarmitexApplicationTest {
 
     //// FIXME: Criar Uma classe que extenda ApplicationContext e faça a interacao entre GUI e MarmitariaService e sirva para compartilhar informacao usada pelas Actiities

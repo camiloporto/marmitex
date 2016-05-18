@@ -11,25 +11,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
-import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
+import br.com.camiloporto.marmitex.android.model.Menu;
+import br.com.camiloporto.marmitex.android.model.MenuCategory;
 
 public class GrupoOpcaoListFragment extends ListFragment {
 
 	public interface GrupoOpcaoListFragmentCallbacks {
 
-		void onGrupoAlimentarDeleted(GrupoAlimentar grupoAlimentar);
+		void onGrupoAlimentarDeleted(MenuCategory grupoAlimentar);
 
 		void onGrupoAlimentarCreated(String descricao);
 
-		void onGrupoAlimentarRequestForEdition(GrupoAlimentar item);
+		void onGrupoAlimentarRequestForEdition(MenuCategory item);
 	}
 
 	private static final String TAG = GrupoOpcaoListFragment.class.getName();
 
 	private GrupoOpcaoListFragmentCallbacks mCallbacks;
 
-	private Cardapio cardapio;
+	private Menu cardapio;
 	private EditText inputItem;
 	private Button addButton;
 	
@@ -73,7 +73,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 	public void updateUI() {
 		if(cardapio != null) {
-			getActivity().setTitle(cardapio.getNome());
+			getActivity().setTitle(cardapio.getName());
 			setListAdapter(new GrupoOpcaoListAdapter(cardapio));
 		}
 	}
@@ -82,19 +82,19 @@ public class GrupoOpcaoListFragment extends ListFragment {
 		mCallbacks.onGrupoAlimentarCreated(descricao);
 	}
 
-	public void setCardapio(Cardapio cardapio) {
+	public void setCardapio(Menu cardapio) {
 		this.cardapio = cardapio;
 	}
 
-	public Cardapio getCardapio() {
+	public Menu getCardapio() {
 		return cardapio;
 	}
 
-	private class GrupoOpcaoListAdapter extends ArrayAdapter<GrupoAlimentar> {
+	private class GrupoOpcaoListAdapter extends ArrayAdapter<MenuCategory> {
 
-		public GrupoOpcaoListAdapter(Cardapio cardapio) {
+		public GrupoOpcaoListAdapter(Menu cardapio) {
 
-			super(getActivity(), 0, cardapio.getGruposDeOpcoes());
+			super(getActivity(), 0, cardapio.getCategories());
 
 		}
 
@@ -104,17 +104,17 @@ public class GrupoOpcaoListFragment extends ListFragment {
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_cardapio_grupo_opcao, null);
 			}
 			
-			GrupoAlimentar item = getItem(position);
+			MenuCategory item = getItem(position);
 			final EditText inputDescricao = (EditText) convertView
 					.findViewById(R.id.cardapio_grupo_opcao_item_list_descricao_input);
-			inputDescricao.setText(item.getNome());
+			inputDescricao.setText(item.getName());
 			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 				@Override
 				public void onFocusChange(View view, boolean hasFocus) {
 					if(!hasFocus) {
 						Editable newValue = ((EditText) view).getText();
-						GrupoAlimentar gItem = getItem(position);
-						gItem.setNome(newValue.toString());
+						MenuCategory gItem = getItem(position);
+						gItem.setName(newValue.toString());
 					}
 				}
 			});
@@ -130,7 +130,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 				@Override
 				public void onClick(View v) {
-					GrupoAlimentar item = getItem(position);
+					MenuCategory item = getItem(position);
 					mCallbacks.onGrupoAlimentarDeleted(item);
 				}
 
@@ -139,7 +139,7 @@ public class GrupoOpcaoListFragment extends ListFragment {
 			editButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					GrupoAlimentar item = getItem(position);
+					MenuCategory item = getItem(position);
 					mCallbacks.onGrupoAlimentarRequestForEdition(item);
 
 				}
@@ -151,11 +151,11 @@ public class GrupoOpcaoListFragment extends ListFragment {
 	}
 	
 	public interface GrupoOpcaoListFragmentListener {
-		public void onEditGroupItemsRequested(GrupoAlimentar grupo);
+		public void onEditGroupItemsRequested(MenuCategory grupo);
 
 		void onNewGroupAdded(String descricao);
 //		public void onItemUpdated(ItemCardapio item);
-		public void onItemDeleted(GrupoAlimentar grupo);
+		public void onItemDeleted(MenuCategory grupo);
 //		public void onItemGroupUpdated(GrupoItems groupItems);
 	}
 	

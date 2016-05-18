@@ -1,19 +1,19 @@
 package br.com.camiloporto.marmitex.android.provider.service;
 
-import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
-import br.com.camiloporto.marmitex.android.model.OpcaoCardapio;
+import br.com.camiloporto.marmitex.android.model.Menu;
+import br.com.camiloporto.marmitex.android.model.MenuCategory;
+import br.com.camiloporto.marmitex.android.model.Seller;
+import br.com.camiloporto.marmitex.android.model.MenuOption;
 
 /**
  * Created by camiloporto on 17/11/15.
  */
 public class MarmitariaBuilder {
 
-    private Marmitaria marmitaria;
+    private Seller marmitaria;
 
     public MarmitariaBuilder newMarmitaria(String nomeMarmitaria, String telefone, String endereco) {
-        marmitaria = new Marmitaria(nomeMarmitaria, telefone, endereco);
+        marmitaria = new Seller(nomeMarmitaria, telefone, endereco);
         return this;
     }
 
@@ -23,20 +23,20 @@ public class MarmitariaBuilder {
         return b;
     }
 
-    public Marmitaria getMarmitaria() {
+    public Seller getMarmitaria() {
         return marmitaria;
     }
 
     public class CardapioBuilder {
 
-        Cardapio cardapio;
+        Menu cardapio;
 
         public CardapioBuilder() {
-            cardapio = new Cardapio();
+            cardapio = new Menu("Name");
         }
 
         public CardapioBuilder criaCardapio(String nomeCardapio) {
-            cardapio.setNome(nomeCardapio);
+            cardapio.setName(nomeCardapio);
             return this;
         }
 
@@ -54,19 +54,19 @@ public class MarmitariaBuilder {
 
         public class GrupoItemsBuilder {
 
-            private GrupoAlimentar grupoItems;
+            private MenuCategory grupoItems;
 
             public GrupoItemsBuilder() {
-                this.grupoItems = new GrupoAlimentar();
+                this.grupoItems = new MenuCategory("Name");
             }
 
             public GrupoItemsBuilder adicioneGrupo(String nomeGrupo) {
-                grupoItems.setNome(nomeGrupo);
+                grupoItems.setName(nomeGrupo);
                 return this;
             }
 
             public GrupoItemsBuilder comOpcao(String opcaoGrupo) {
-                OpcaoCardapio i = new OpcaoCardapio();
+                MenuOption i = new MenuOption("Name");
                 grupoItems.adicioneOpcao(opcaoGrupo);
                 return this;
             }

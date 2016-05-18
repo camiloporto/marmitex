@@ -4,7 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import br.com.camiloporto.marmitex.android.event.LoginFinishedEvent;
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Seller;
 import br.com.camiloporto.marmitex.android.model.Profile;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitaService;
 import br.com.camiloporto.marmitex.android.service.ProfileService;
@@ -18,14 +18,12 @@ public class MarmitexApplication extends Application {
 
     private MarmitaService marmitaService;
     private ProfileService profileService;
-    private Marmitaria activeMarmitaria;
+    private Seller activeMarmitaria;
     private String loggedUser;
 
     @Override
     public void onCreate() {
-        marmitaService = new MarmitaService(
-                new InMemoryMarmitariaRepository()
-        );
+        marmitaService = new MarmitaService(this);
         profileService = new ProfileService(this);
         super.onCreate();
     }
@@ -55,17 +53,17 @@ public class MarmitexApplication extends Application {
     }
 
     public void updateActiveMarmitaria(final OnMarmitariaUpdatedCallback callback) {
-        AsyncTask<Marmitaria, Void, Marmitaria> task = new AsyncTask<Marmitaria, Void, Marmitaria>() {
+        AsyncTask<Seller, Void, Seller> task = new AsyncTask<Seller, Void, Seller>() {
 
             @Override
-            protected Marmitaria doInBackground(Marmitaria... params) {
-                Marmitaria marmitaria = params[0];
+            protected Seller doInBackground(Seller... params) {
+                Seller marmitaria = params[0];
                 marmitaService.save(marmitaria);
                 return marmitaria;
             }
 
             @Override
-            protected void onPostExecute(Marmitaria marmitaria) {
+            protected void onPostExecute(Seller marmitaria) {
                 setActiveMarmitaria(marmitaria);
                 callback.onMarmitariaUpdated();
             }
@@ -73,17 +71,21 @@ public class MarmitexApplication extends Application {
         task.execute(activeMarmitaria);
     }
 
+    //FIXME retornar um objeto com status da operacao de criacao, sinalizando OK ou erro.
     public void createMarmitaria(String nome, String fone, String endereco, final OnMarmitariaCreatedCallback callback) {
-        AsyncTask<String, Void, Marmitaria> task = new AsyncTask<String, Void, Marmitaria>() {
+        AsyncTask<String, Void, Seller> task = new AsyncTask<String, Void, Seller>() {
 
             @Override
-            protected Marmitaria doInBackground(String... params) {
+            protected Seller doInBackground(String... params) {
 
-                return marmitaService.create(params[0], params[1], params[2]);
+                Seller seller = new Seller(params[0], params[1], params[2]);
+                seller.setProfileId(getPrincipal());
+                marmitaService.save(seller);
+                return seller;
             }
 
             @Override
-            protected void onPostExecute(Marmitaria marmitaria) {
+            protected void onPostExecute(Seller marmitaria) {
                 setActiveMarmitaria(marmitaria);
                 callback.onMarmitariaCreated();
             }
@@ -91,25 +93,25 @@ public class MarmitexApplication extends Application {
         task.execute(nome, fone, endereco);
     }
 
-    private void setActiveMarmitaria(Marmitaria marmitaria) {
+    private void setActiveMarmitaria(Seller marmitaria) {
         activeMarmitaria = marmitaria;
     }
 
-    public Marmitaria getActiveMarmitaria() {
+    public Seller getActiveMarmitaria() {
         return activeMarmitaria;
     }
 
     public void loadMarmitariaOfLoggedUser(final OnMarmitariaLoaded callback) {
-        AsyncTask<String, Void, Marmitaria> task = new AsyncTask<String, Void, Marmitaria>() {
+        AsyncTask<String, Void, Seller> task = new AsyncTask<String, Void, Seller>() {
 
             @Override
-            protected Marmitaria doInBackground(String... params) {
+            protected Seller doInBackground(String... params) {
                 String id = params[0];
                 return marmitaService.find(id);
             }
 
             @Override
-            protected void onPostExecute(Marmitaria marmitaria) {
+            protected void onPostExecute(Seller marmitaria) {
                 setActiveMarmitaria(marmitaria);
                 callback.onMarmitariaLoaded();
             }

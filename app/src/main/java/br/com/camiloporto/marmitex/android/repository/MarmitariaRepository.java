@@ -1,12 +1,12 @@
 package br.com.camiloporto.marmitex.android.repository;
 
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Seller;
 
 /**
  * Created by camiloporto on 01/12/15.
  */
 public interface MarmitariaRepository {
-    Marmitaria save(Marmitaria marmitaria);
+    Seller save(Seller marmitaria);
 
-    Marmitaria find(String id);
+    Seller find(String id);
 }

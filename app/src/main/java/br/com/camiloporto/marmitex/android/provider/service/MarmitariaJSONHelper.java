@@ -1,9 +1,6 @@
 package br.com.camiloporto.marmitex.android.provider.service;
 
 import android.content.Context;
-import android.util.Log;
-
-import com.google.gson.Gson;
 
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
@@ -14,16 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Seller;
 
 /**
  * Created by camiloporto on 28/10/15.
@@ -39,29 +31,31 @@ public class MarmitariaJSONHelper {
         this.context = context;
     }
 
-    public CouldantResponse persistRemote(Marmitaria m) throws MalformedURLException {
-        URL endPOint = new URL("https://camiloporto.cloudant.com/marmitex-dev/" + m.getId());
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        HttpBasicAuthentication httpBasicAuthentication = new HttpBasicAuthentication(key, pass);
-        httpHeaders.setAuthorization(httpBasicAuthentication);
-        HttpEntity<Marmitaria> entity = new HttpEntity<Marmitaria>(m, httpHeaders);
-
-        ResponseEntity<CouldantResponse> responseEntity = restTemplate.exchange(
-                "https://camiloporto.cloudant.com/marmitex-dev/" + m.getId(),
-                HttpMethod.PUT,
-                entity,
-                CouldantResponse.class
-        );
-
-        return responseEntity.getBody();
+    @Deprecated
+    public CouldantResponse persistRemote(Seller m) throws MalformedURLException {
+        throw new UnsupportedOperationException("@Deprecated Operation");
+//        URL endPOint = new URL("https://camiloporto.cloudant.com/marmitex-dev/" + m.getId());
+//        RestTemplate restTemplate = new RestTemplate();
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+//        httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//        HttpBasicAuthentication httpBasicAuthentication = new HttpBasicAuthentication(key, pass);
+//        httpHeaders.setAuthorization(httpBasicAuthentication);
+//        HttpEntity<Seller> entity = new HttpEntity<Seller>(m, httpHeaders);
+//
+//        ResponseEntity<CouldantResponse> responseEntity = restTemplate.exchange(
+//                "https://camiloporto.cloudant.com/marmitex-dev/" + m.getId(),
+//                HttpMethod.PUT,
+//                entity,
+//                CouldantResponse.class
+//        );
+//
+//        return responseEntity.getBody();
 
     }
 
 
-    public Marmitaria getMarmitaria(String idMarmitaria) {
+    public Seller getMarmitaria(String idMarmitaria) {
         String url = "https://camiloporto.cloudant.com/marmitex-dev/" + idMarmitaria;
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
@@ -69,13 +63,13 @@ public class MarmitariaJSONHelper {
         httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpBasicAuthentication httpBasicAuthentication = new HttpBasicAuthentication(key, pass);
         httpHeaders.setAuthorization(httpBasicAuthentication);
-        HttpEntity<Marmitaria> entity = new HttpEntity<Marmitaria>(httpHeaders);
+        HttpEntity<Seller> entity = new HttpEntity<Seller>(httpHeaders);
 
-        ResponseEntity<Marmitaria> responseEntity = restTemplate.exchange(
+        ResponseEntity<Seller> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 entity,
-                Marmitaria.class
+                Seller.class
         );
 
         return responseEntity.getBody();

@@ -4,14 +4,14 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 
-import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.GrupoAlimentar;
+import br.com.camiloporto.marmitex.android.model.Menu;
+import br.com.camiloporto.marmitex.android.model.MenuCategory;
 
 public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity implements GrupoOpcaoListFragment.GrupoOpcaoListFragmentCallbacks {
 
 	public static final String ARG_NAME_CARDAPIO = "br.com.camiloporto.marmitex.android.NovoCardapioFragment.CARDAPIO";
 
-	private Cardapio cardapio;
+	private Menu cardapio;
 	private GrupoOpcaoListFragment grupoOpcaoListFragment;
 
 	@Override
@@ -33,7 +33,7 @@ public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity impleme
 	}
 
 	@Override
-	public void onGrupoAlimentarDeleted(GrupoAlimentar grupoAlimentar) {
+	public void onGrupoAlimentarDeleted(MenuCategory grupoAlimentar) {
 		cardapio.removeGrupo(grupoAlimentar);
 		grupoOpcaoListFragment.updateUI();
 	}
@@ -45,10 +45,10 @@ public class GrupoOpcaoCardapioActivity extends AbstractMarmitexActivity impleme
 	}
 
 	@Override
-	public void onGrupoAlimentarRequestForEdition(GrupoAlimentar item) {
+	public void onGrupoAlimentarRequestForEdition(MenuCategory item) {
 		Intent i = new Intent(this, OpcaoCardapioActivity.class);
-		i.putExtra(OpcaoCardapioActivity.ARG_NAME_CARDAPIO, cardapio.getId());
-		i.putExtra(OpcaoCardapioActivity.ARG_GRUPO_OPCAO, item.getId());
+		i.putExtra(OpcaoCardapioActivity.ARG_NAME_CARDAPIO, cardapio.getName());
+		i.putExtra(OpcaoCardapioActivity.ARG_GRUPO_OPCAO, item.getName());
 		startActivity(i);
 	}
 }

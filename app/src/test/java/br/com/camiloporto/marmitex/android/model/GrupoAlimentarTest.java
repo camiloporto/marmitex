@@ -15,91 +15,91 @@ public class GrupoAlimentarTest {
     @Test
     public void deveAdicionarNovaOpcaoCardapio() {
 
-        GrupoAlimentar grupo = new GrupoAlimentar();
+        MenuCategory grupo = new MenuCategory("Name");
         grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao2");
 
-        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
+        Collection<MenuOption> opcoes = grupo.getOptions();
         Assert.assertEquals(2, opcoes.size());
     }
 
     @Test
     public void deveEncontrarOpcaoPeloId() {
 
-        GrupoAlimentar grupo = new GrupoAlimentar();
-        OpcaoCardapio opcao1 = grupo.adicioneOpcao("Opcao1");
+        MenuCategory grupo = new MenuCategory("Name");
+        MenuOption opcao1 = grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao2");
 
-        OpcaoCardapio queried = grupo.findOpcaoCardapioPeloId(opcao1.getId());
+        MenuOption queried = grupo.findOpcaoCardapioPeloId(opcao1.getName());
 
 
-        Assert.assertEquals(opcao1.getId(), queried.getId());
+        Assert.assertEquals(opcao1.getName(), queried.getName());
     }
 
     @Test
     public void deveAtualizarInformacoesOpcaoCardapio() {
 
-        GrupoAlimentar grupo = new GrupoAlimentar();
-        OpcaoCardapio opcao1 = grupo.adicioneOpcao("Opcao1");
+        MenuCategory grupo = new MenuCategory("Name");
+        MenuOption opcao1 = grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao2");
 
-        OpcaoCardapio queried = grupo.findOpcaoCardapioPeloId(opcao1.getId());
-        queried.setNome("NovoNome");
+        MenuOption queried = grupo.findOpcaoCardapioPeloId(opcao1.getName());
+        queried.setName("NovoNome");
 
-        OpcaoCardapio updated = grupo.findOpcaoCardapioPeloId(opcao1.getId());
+        MenuOption updated = grupo.findOpcaoCardapioPeloId(opcao1.getName());
 
-        Assert.assertEquals("NovoNome", updated.getNome());
+        Assert.assertEquals("NovoNome", updated.getName());
 
-        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
-        Iterator<OpcaoCardapio> iterator = opcoes.iterator();
+        Collection<MenuOption> opcoes = grupo.getOptions();
+        Iterator<MenuOption> iterator = opcoes.iterator();
 
-        Assert.assertEquals("NovoNome", iterator.next().getNome());
-        Assert.assertEquals("Opcao2", iterator.next().getNome());
+        Assert.assertEquals("NovoNome", iterator.next().getName());
+        Assert.assertEquals("Opcao2", iterator.next().getName());
     }
 
     @Test
     public void aoCriarOpcaoCardapioDeveGerarUmId() {
 
-        GrupoAlimentar grupo = new GrupoAlimentar();
-        OpcaoCardapio created = grupo.adicioneOpcao("Opcao1");
-        Assert.assertNotNull(created.getId());
+        MenuCategory grupo = new MenuCategory("Name");
+        MenuOption created = grupo.adicioneOpcao("Opcao1");
+        Assert.assertNotNull(created.getName());
 
     }
 
     @Test
     public void deveRemoverTodasAsOpcoes() {
 
-        GrupoAlimentar grupo = new GrupoAlimentar();
+        MenuCategory grupo = new MenuCategory("Name");
         grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao2");
 
         grupo.limpa();
-        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
+        Collection<MenuOption> opcoes = grupo.getOptions();
         Assert.assertEquals(0, opcoes.size());
     }
 
     @Test
     public void deveRemoverOpcaoCardapioExistente() {
 
-        GrupoAlimentar grupo = new GrupoAlimentar();
+        MenuCategory grupo = new MenuCategory("Name");
         grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao2");
 
 
-        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
-        OpcaoCardapio opcao1 = opcoes.iterator().next();
+        Collection<MenuOption> opcoes = grupo.getOptions();
+        MenuOption opcao1 = opcoes.iterator().next();
         grupo.removaOpcao(opcao1);
 
-        opcoes = grupo.getOpcoes();
+        opcoes = grupo.getOptions();
 
         Assert.assertEquals(1, opcoes.size());
-        Assert.assertEquals("Opcao2", opcoes.iterator().next().getNome());
+        Assert.assertEquals("Opcao2", opcoes.iterator().next().getName());
     }
 
     @Test
     public void aoInserirOpcaoJaExistenteOEfeitoDeveSerIgnorado() {
 
-        GrupoAlimentar grupo = new GrupoAlimentar();
+        MenuCategory grupo = new MenuCategory("Name");
         grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao2");
         grupo.adicioneOpcao("Opcao1");
@@ -107,24 +107,24 @@ public class GrupoAlimentarTest {
         grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao2");
 
-        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
+        Collection<MenuOption> opcoes = grupo.getOptions();
         Assert.assertEquals(2, opcoes.size());
     }
 
     @Test
     public void opcoesDevemSerOrdenadasPorNome() {
 
-        GrupoAlimentar grupo = new GrupoAlimentar();
+        MenuCategory grupo = new MenuCategory("Name");
         grupo.adicioneOpcao("Opcao2");
         grupo.adicioneOpcao("Opcao1");
         grupo.adicioneOpcao("Opcao3");
 
-        Collection<OpcaoCardapio> opcoes = grupo.getOpcoes();
-        Iterator<OpcaoCardapio> iterator = opcoes.iterator();
+        Collection<MenuOption> opcoes = grupo.getOptions();
+        Iterator<MenuOption> iterator = opcoes.iterator();
 
-        Assert.assertEquals("Opcao1", iterator.next().getNome());
-        Assert.assertEquals("Opcao2", iterator.next().getNome());
-        Assert.assertEquals("Opcao3", iterator.next().getNome());
+        Assert.assertEquals("Opcao1", iterator.next().getName());
+        Assert.assertEquals("Opcao2", iterator.next().getName());
+        Assert.assertEquals("Opcao3", iterator.next().getName());
     }
 
 }

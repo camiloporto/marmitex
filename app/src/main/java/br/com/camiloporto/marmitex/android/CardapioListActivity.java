@@ -4,8 +4,8 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 
-import br.com.camiloporto.marmitex.android.model.Cardapio;
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Menu;
+import br.com.camiloporto.marmitex.android.model.Seller;
 
 public class CardapioListActivity extends AbstractMarmitexActivity implements CardapioListFragment.CardapioListFragmentCallbacks {
 
@@ -25,7 +25,7 @@ public class CardapioListActivity extends AbstractMarmitexActivity implements Ca
 				.add(R.id.cardapio_list_fragmentContainer, cardapioListFragment)
 				.commit();
 
-			Marmitaria active = getActiveMarmitaria();
+			Seller active = getActiveMarmitaria();
 			cardapioListFragment.setMarmitaria(active);
 		}
 	}
@@ -43,15 +43,15 @@ public class CardapioListActivity extends AbstractMarmitexActivity implements Ca
 	}
 
 	@Override
-	public void onCardapioRequestForEdition(Cardapio c) {
+	public void onCardapioRequestForEdition(Menu c) {
 		Intent i = new Intent(this, GrupoOpcaoCardapioActivity.class);
-		i.putExtra(GrupoOpcaoCardapioActivity.ARG_NAME_CARDAPIO, c.getId());
+		i.putExtra(GrupoOpcaoCardapioActivity.ARG_NAME_CARDAPIO, c.getName());
 		startActivity(i);
 	}
 
 	@Override
-	public void onCardapioDeleted(Cardapio c) {
-		Marmitaria active = getActiveMarmitaria();
+	public void onCardapioDeleted(Menu c) {
+		Seller active = getActiveMarmitaria();
 		active.deleteCardapio(c);
 		cardapioListFragment.updateUI();
 	}

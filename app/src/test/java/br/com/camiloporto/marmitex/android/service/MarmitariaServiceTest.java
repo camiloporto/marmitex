@@ -4,25 +4,25 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.Arrays;
+import java.util.Random;
 
 import br.com.camiloporto.marmitex.android.BuildConfig;
 import br.com.camiloporto.marmitex.android.MarmitexApplication;
-import br.com.camiloporto.marmitex.android.R;
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Menu;
+import br.com.camiloporto.marmitex.android.model.MenuCategory;
+import br.com.camiloporto.marmitex.android.model.MenuOption;
+import br.com.camiloporto.marmitex.android.model.Profile;
+import br.com.camiloporto.marmitex.android.model.Seller;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitaService;
 import br.com.camiloporto.marmitex.android.repository.InMemoryMarmitariaRepository;
 
@@ -39,33 +39,101 @@ public class MarmitariaServiceTest {
         restTemplate = criaRestTemplate();
     }
 
-    //    @Test
+    @Test
     public void deveCriarNovaMarmitaria() {
-        MarmitaService marmitaService = new MarmitaService(new InMemoryMarmitariaRepository());
-        Marmitaria m = marmitaService.create("Espaco Sabor", "3245-6778", "Jaguarai, 4546");
 
-        Assert.assertNotNull(m.getId());
+        final String username = randomString() + "@email.com.uk";
+        final String pass = "secret";
+        ProfileService profileService = new ProfileService(RuntimeEnvironment.application);
+        profileService.setRestTemplate(restTemplate);
+        Profile profile = new Profile();
+        profile.setLogin(username);
+        profile.setPass(pass);
+        profileService.create(profile);
+        String access_token = profileService.login(username, pass);
 
-        Marmitaria queried = marmitaService.find(m.getId());
-        Assert.assertNotNull(queried);
-        Assert.assertEquals(m.getId(), queried.getId());
+        MarmitaService marmitaService = new MarmitaService(RuntimeEnvironment.application);
+        marmitaService.setRestTemplate(restTemplate);
+
+        Seller s = new Seller();
+        s.setName("Espaco e Sabor");
+        s.setAddress("Jaguarari, 1056, lagoa nova");
+        s.setProfileId(username);
+
+        MenuOption rice = new MenuOption("Rice");
+        MenuOption bean = new MenuOption("Bean");
+        MenuOption meat = new MenuOption("Meat");
+        MenuOption chicken = new MenuOption("Chicken");
+        MenuOption salad = new MenuOption("Green Salad");
+
+        MenuCategory carbo = new MenuCategory("Carbo");
+        carbo.setOptions(Arrays.asList(rice, bean));
+
+        MenuCategory protein = new MenuCategory("Protein");
+        protein.setOptions(Arrays.asList(meat, chicken));
+
+        MenuCategory veggs = new MenuCategory("Veggs");
+        veggs.setOptions(Arrays.asList(salad));
+
+
+        Menu mon = new Menu("Monday");
+        mon.setCategories(Arrays.asList(carbo, protein, veggs));
+
+        Menu tue = new Menu("Tuesday");
+        tue.setCategories(Arrays.asList(carbo, protein, veggs));
+
+        s.setMenus(Arrays.asList(mon, tue));
+
+        marmitaService.save(s);
+
+        Seller savedSeller = marmitaService.find(username);
+        Assert.assertNotNull(savedSeller);
 
     }
 
     //FIXME change this test. use REST Enpoint instead
 //    @Test
     public void devePersistirMarmitaria() {
-        MarmitaService marmitaService = new MarmitaService(new InMemoryMarmitariaRepository());
-        Marmitaria m = marmitaService.create("Espaco Sabor", "3245-6778", "Jaguarai, 4546");
+        MarmitaService marmitaService = new MarmitaService(RuntimeEnvironment.application);
+        Seller s = new Seller();
+        s.setName("Espaco e Sabor");
+        s.setAddress("Jaguarari, 1056, lagoa nova");
+        String profileId = "camiloporto@email.com";
+        s.setProfileId(profileId);
 
-        m.setEndereco("Novo Endereco");
-        m.setNome("Novo Nome");
+        MenuOption rice = new MenuOption("Rice");
+        MenuOption bean = new MenuOption("Bean");
+        MenuOption meat = new MenuOption("Meat");
+        MenuOption chicken = new MenuOption("Chicken");
+        MenuOption salad = new MenuOption("Green Salad");
 
-        marmitaService.save(m);
+        MenuCategory carbo = new MenuCategory("Carbo");
+        carbo.setOptions(Arrays.asList(rice, bean));
 
-        Marmitaria updated = marmitaService.find(m.getId());
-        Assert.assertEquals("Novo Endereco", updated.getEndereco());
-        Assert.assertEquals("Novo Nome", updated.getNome());
+        MenuCategory protein = new MenuCategory("Protein");
+        protein.setOptions(Arrays.asList(meat, chicken));
+
+        MenuCategory veggs = new MenuCategory("Veggs");
+        veggs.setOptions(Arrays.asList(salad));
+
+
+        Menu mon = new Menu("Monday");
+        mon.setCategories(Arrays.asList(carbo, protein, veggs));
+
+        Menu tue = new Menu("Tuesday");
+        tue.setCategories(Arrays.asList(carbo, protein, veggs));
+
+        s.setMenus(Arrays.asList(mon, tue));
+
+        //save
+        marmitaService.save(s);
+
+        s.setAddress("Novo Endereco");
+        s.setName("Novo Nome");
+
+        //update
+        marmitaService.save(s);
+
     }
 
     //FIXME pass this test
@@ -78,7 +146,7 @@ public class MarmitariaServiceTest {
 
         MarmitaService marmitaService = new MarmitaService(RuntimeEnvironment.application);
         marmitaService.setRestTemplate(restTemplate);
-        Marmitaria marmitaria = marmitaService.find(username);
+        Seller marmitaria = marmitaService.find(username);
         Assert.assertNotNull(marmitaria);
 
     }
@@ -92,5 +160,17 @@ public class MarmitariaServiceTest {
         RestTemplate rt = new RestTemplate(requestFactory);
 
         return rt;
+    }
+
+    public String randomString() {
+        Random generator = new Random();
+        StringBuilder randomStringBuilder = new StringBuilder();
+        int randomLength = generator.nextInt(10);
+        char tempChar;
+        for (int i = 0; i < randomLength; i++){
+            tempChar = (char) (generator.nextInt(20) + 97);
+            randomStringBuilder.append(tempChar);
+        }
+        return randomStringBuilder.toString();
     }
 }

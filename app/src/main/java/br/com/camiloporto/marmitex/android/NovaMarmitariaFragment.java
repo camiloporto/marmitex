@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import br.com.camiloporto.marmitex.android.model.Marmitaria;
+import br.com.camiloporto.marmitex.android.model.Seller;
 
 public class NovaMarmitariaFragment extends Fragment {
 	
@@ -17,13 +17,11 @@ public class NovaMarmitariaFragment extends Fragment {
 		void saveButtonClicked();
 	}
 	
-	private Marmitaria marmitaria;
+	private Seller marmitaria;
 	
 	private EditText nome;
 	private EditText endereco;
 	private EditText telefone;
-	private EditText login;
-	private EditText senha;
 	private EditText cpfOuCnpj;
 	private EditText horarioFuncionamento;
 	private Button saveButton;
@@ -53,8 +51,6 @@ public class NovaMarmitariaFragment extends Fragment {
 		nome = (EditText) v.findViewById(R.id.novamarmitaria_nome);
 		endereco = (EditText) v.findViewById(R.id.novamarmitaria_endereco);
 		telefone = (EditText) v.findViewById(R.id.novamarmitaria_telefone);
-		login = (EditText) v.findViewById(R.id.novamarmitaria_login);
-		senha = (EditText) v.findViewById(R.id.novamarmitaria_senha);
 		cpfOuCnpj = (EditText) v.findViewById(R.id.novamarmitaria_id);
 		horarioFuncionamento = (EditText) v.findViewById(R.id.novamarmitaria_funcionamento);
 
@@ -73,17 +69,18 @@ public class NovaMarmitariaFragment extends Fragment {
 
 	private void atualizaFormularioComMarmitariaAtivaSeExistir() {
 		if(marmitaria != null) {
-			nome.setText(marmitaria.getNome());
-			endereco.setText(marmitaria.getEndereco());
-			telefone.setText(marmitaria.getTelefone());
-			horarioFuncionamento.setText(marmitaria.getFuncionamento());
+			nome.setText(marmitaria.getName());
+			endereco.setText(marmitaria.getAddress());
+			telefone.setText(marmitaria.getPhone());
+			//FIXME refazer formulario com base no novo modelo de marmitaria (campos ajustados)
+//			horarioFuncionamento.setText(marmitaria.getFuncionamento());
 			//FIXME preencher demais dados.
 			// mudar nome de de campos de cpf/cnpj do modelo Marmitaria. Era id antes..
 		}
 	}
 
 
-	public void setMarmitaria(Marmitaria mNovaMarmitaria) {
+	public void setMarmitaria(Seller mNovaMarmitaria) {
 		this.marmitaria = mNovaMarmitaria;
 	}
 
@@ -101,13 +98,6 @@ public class NovaMarmitariaFragment extends Fragment {
 		return telefone;
 	}
 
-	public EditText getLogin() {
-		return login;
-	}
-
-	public EditText getSenha() {
-		return senha;
-	}
 
 	public EditText getCpfOuCnpj() {
 		return cpfOuCnpj;

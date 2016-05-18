@@ -14,76 +14,76 @@ public class CardapioTest {
 
     @Test
     public void deveAdicionarNovoGrupoDeOpcoes() {
-        Cardapio c = new Cardapio();
+        Menu c = new Menu("Name");
         c.adicioneGrupoDeOpcoes("Proteina");
         c.adicioneGrupoDeOpcoes("Acompanhamentos");
         c.adicioneGrupoDeOpcoes("Saladas");
 
-        List<GrupoAlimentar> gruposDeOpcoes = c.getGruposDeOpcoes();
+        List<MenuCategory> gruposDeOpcoes = c.getCategories();
         Assert.assertEquals(3, gruposDeOpcoes.size());
     }
 
     @Test
     public void deveEncontrarGrupoPeloId() {
-        Cardapio c = new Cardapio();
-        GrupoAlimentar proteina = c.adicioneGrupoDeOpcoes("Proteina");
+        Menu c = new Menu("Name");
+        MenuCategory proteina = c.adicioneGrupoDeOpcoes("Proteina");
         c.adicioneGrupoDeOpcoes("Acompanhamentos");
         c.adicioneGrupoDeOpcoes("Saladas");
 
-        GrupoAlimentar queried = c.findGrupoDeOpcoes(proteina.getId());
-        Assert.assertEquals(proteina.getNome(), queried.getNome());
+        MenuCategory queried = c.findGrupoDeOpcoes(proteina.getName());
+        Assert.assertEquals(proteina.getName(), queried.getName());
 
     }
 
     @Test
     public void aoAdicionarGrupoDeOpcoesDeveGerarId() {
-        Cardapio c = new Cardapio();
-        GrupoAlimentar created = c.adicioneGrupoDeOpcoes("Proteina");
+        Menu c = new Menu("Name");
+        MenuCategory created = c.adicioneGrupoDeOpcoes("Proteina");
 
-        Assert.assertNotNull(created.getId());
+        Assert.assertNotNull(created.getName());
     }
 
 
     @Test
     public void deveRemoverGrupoDeOpcoes() {
-        Cardapio c = new Cardapio();
+        Menu c = new Menu("Name");
         c.adicioneGrupoDeOpcoes("Proteina");
         c.adicioneGrupoDeOpcoes("Acompanhamentos");
         c.adicioneGrupoDeOpcoes("Saladas");
 
-        List<GrupoAlimentar> gruposDeOpcoes = c.getGruposDeOpcoes();
-        Iterator<GrupoAlimentar> iterator = gruposDeOpcoes.iterator();
-        GrupoAlimentar acompanhamentos = iterator.next();
+        List<MenuCategory> gruposDeOpcoes = c.getCategories();
+        Iterator<MenuCategory> iterator = gruposDeOpcoes.iterator();
+        MenuCategory acompanhamentos = iterator.next();
 
         c.removeGrupo(acompanhamentos);
 
-        gruposDeOpcoes = c.getGruposDeOpcoes();
+        gruposDeOpcoes = c.getCategories();
         Assert.assertEquals(2, gruposDeOpcoes.size());
 
         iterator = gruposDeOpcoes.iterator();
-        Assert.assertEquals("Proteina", iterator.next().getNome());
-        Assert.assertEquals("Saladas", iterator.next().getNome());
+        Assert.assertEquals("Proteina", iterator.next().getName());
+        Assert.assertEquals("Saladas", iterator.next().getName());
     }
 
     @Test
     public void gruposDevemSerOrdenadosPorNome() {
-        Cardapio c = new Cardapio();
+        Menu c = new Menu("Name");
         c.adicioneGrupoDeOpcoes("Proteina");
         c.adicioneGrupoDeOpcoes("Acompanhamentos");
         c.adicioneGrupoDeOpcoes("Saladas");
 
-        List<GrupoAlimentar> gruposDeOpcoes = c.getGruposDeOpcoes();
-        Iterator<GrupoAlimentar> iterator = gruposDeOpcoes.iterator();
-        Assert.assertEquals("Acompanhamentos", iterator.next().getNome());
-        Assert.assertEquals("Proteina", iterator.next().getNome());
-        Assert.assertEquals("Saladas", iterator.next().getNome());
+        List<MenuCategory> gruposDeOpcoes = c.getCategories();
+        Iterator<MenuCategory> iterator = gruposDeOpcoes.iterator();
+        Assert.assertEquals("Acompanhamentos", iterator.next().getName());
+        Assert.assertEquals("Proteina", iterator.next().getName());
+        Assert.assertEquals("Saladas", iterator.next().getName());
     }
 
     @Test
     public void adoAdicionarGrupoExistenteOEfeitoDeveSerIgnorado() {
-        Cardapio c = new Cardapio();
+        Menu c = new Menu("Name");
         c.adicioneGrupoDeOpcoes("Proteina");
-        GrupoAlimentar acompanhamentos = c.adicioneGrupoDeOpcoes("Acompanhamentos");
+        MenuCategory acompanhamentos = c.adicioneGrupoDeOpcoes("Acompanhamentos");
         acompanhamentos.adicioneOpcao("Feijao");
 
         c.adicioneGrupoDeOpcoes("Saladas");
@@ -91,11 +91,11 @@ public class CardapioTest {
         c.adicioneGrupoDeOpcoes("Acompanhamentos");
 
 
-        List<GrupoAlimentar> gruposDeOpcoes = c.getGruposDeOpcoes();
+        List<MenuCategory> gruposDeOpcoes = c.getCategories();
         Assert.assertEquals(3, gruposDeOpcoes.size());
 
-        GrupoAlimentar grupo = gruposDeOpcoes.iterator().next();
-        Assert.assertEquals("Acompanhamentos", grupo.getNome());
-        Assert.assertEquals(1, grupo.getOpcoes().size());
+        MenuCategory grupo = gruposDeOpcoes.iterator().next();
+        Assert.assertEquals("Acompanhamentos", grupo.getName());
+        Assert.assertEquals(1, grupo.getOptions().size());
     }
 }
