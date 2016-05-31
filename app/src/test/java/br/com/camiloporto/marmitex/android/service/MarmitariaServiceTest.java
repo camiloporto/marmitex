@@ -4,7 +4,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
@@ -23,8 +22,6 @@ import br.com.camiloporto.marmitex.android.model.MenuCategory;
 import br.com.camiloporto.marmitex.android.model.MenuOption;
 import br.com.camiloporto.marmitex.android.model.Profile;
 import br.com.camiloporto.marmitex.android.model.Seller;
-import br.com.camiloporto.marmitex.android.provider.service.MarmitaService;
-import br.com.camiloporto.marmitex.android.repository.InMemoryMarmitariaRepository;
 
 /**
  * Created by camiloporto on 01/12/15.

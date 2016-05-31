@@ -1,9 +1,4 @@
-package br.com.camiloporto.marmitex.android.provider.service;
-
-import br.com.camiloporto.marmitex.android.model.Menu;
-import br.com.camiloporto.marmitex.android.model.MenuCategory;
-import br.com.camiloporto.marmitex.android.model.Seller;
-import br.com.camiloporto.marmitex.android.model.MenuOption;
+package br.com.camiloporto.marmitex.android.model;
 
 /**
  * Created by camiloporto on 17/11/15.

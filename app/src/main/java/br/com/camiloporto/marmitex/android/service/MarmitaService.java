@@ -1,4 +1,4 @@
-package br.com.camiloporto.marmitex.android.provider.service;
+package br.com.camiloporto.marmitex.android.service;
 
 import android.content.Context;
 
@@ -20,9 +20,6 @@ import java.util.Map;
 
 import br.com.camiloporto.marmitex.android.R;
 import br.com.camiloporto.marmitex.android.model.Seller;
-import br.com.camiloporto.marmitex.android.repository.MarmitariaRepository;
-import br.com.camiloporto.marmitex.android.service.MarmitexException;
-import br.com.camiloporto.marmitex.android.service.SecurityContext;
 
 public class MarmitaService {
 	

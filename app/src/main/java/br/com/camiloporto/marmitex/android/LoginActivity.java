@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.camiloporto.marmitex.android.event.LoginFinishedEvent;
+import br.com.camiloporto.marmitex.android.event.ProfileCreatedEvent;
 import br.com.camiloporto.marmitex.android.model.Profile;
 
 /**

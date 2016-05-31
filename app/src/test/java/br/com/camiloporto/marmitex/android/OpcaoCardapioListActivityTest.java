@@ -16,7 +16,7 @@ import org.robolectric.annotation.Config;
 
 import br.com.camiloporto.marmitex.android.model.MenuCategory;
 import br.com.camiloporto.marmitex.android.model.Seller;
-import br.com.camiloporto.marmitex.android.provider.service.MarmitariaBuilder;
+import br.com.camiloporto.marmitex.android.model.MarmitariaBuilder;
 
 /**
  * Created by camiloporto on 26/11/15.

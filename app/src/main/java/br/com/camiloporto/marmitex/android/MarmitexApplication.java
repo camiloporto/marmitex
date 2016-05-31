@@ -4,10 +4,12 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import br.com.camiloporto.marmitex.android.event.LoginFinishedEvent;
+import br.com.camiloporto.marmitex.android.event.ProfileCreatedEvent;
 import br.com.camiloporto.marmitex.android.event.SellerUpdatedEvent;
 import br.com.camiloporto.marmitex.android.model.Seller;
 import br.com.camiloporto.marmitex.android.model.Profile;
-import br.com.camiloporto.marmitex.android.provider.service.MarmitaService;
+import br.com.camiloporto.marmitex.android.service.AuthenticationRequiredException;
+import br.com.camiloporto.marmitex.android.service.MarmitaService;
 import br.com.camiloporto.marmitex.android.service.ProfileService;
 import br.com.camiloporto.marmitex.android.service.MarmitexException;
 

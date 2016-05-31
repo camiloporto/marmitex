@@ -1,6 +1,5 @@
 package br.com.camiloporto.marmitex.android.event;
 
-import br.com.camiloporto.marmitex.android.AbstractMarmitexEvent;
 import br.com.camiloporto.marmitex.android.model.Seller;
 import br.com.camiloporto.marmitex.android.service.MarmitexException;
 

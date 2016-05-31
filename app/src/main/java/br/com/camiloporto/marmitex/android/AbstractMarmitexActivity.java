@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import br.com.camiloporto.marmitex.android.event.SellerUpdatedEvent;
 import br.com.camiloporto.marmitex.android.model.Seller;
+import br.com.camiloporto.marmitex.android.service.AuthenticationRequiredException;
 
 /**
  * Created by camiloporto on 17/12/15.
