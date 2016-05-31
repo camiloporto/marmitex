@@ -28,9 +28,6 @@ public class MarmitaService {
 	
 	private static final String TAG = "MarmitaService";
 
-
-	private MarmitariaRepository marmitariaRepository;
-
 	private Context context;
 	private RestTemplate restTemplate;
 

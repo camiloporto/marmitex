@@ -38,13 +38,13 @@ public class NovaMarmitariaActivity extends AbstractMarmitexActivity implements 
 		MarmitexApplication application = (MarmitexApplication) getApplication();
 		Seller active = getActiveMarmitaria();
 		if(active == null) {
-			application.createMarmitaria(nome, fone, endereco, this);
+			application.saveSeller(nome, fone, endereco, this);
 		} else {
 			active.setName(nome);
 			active.setPhone(fone);
 			active.setAddress(endereco);
 			//FIXME atualizar demais dados
-			application.updateActiveMarmitaria(this);
+			application.saveActiveSeller(this);
 		}
 
 

@@ -4,12 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 
+import br.com.camiloporto.marmitex.android.event.SellerUpdatedEvent;
 import br.com.camiloporto.marmitex.android.model.Seller;
 
 /**
  * Created by camiloporto on 17/12/15.
  */
-public class AbstractMarmitexActivity extends Activity implements MarmitexApplication.OnMarmitariaUpdatedCallback, MarmitexApplication.OnMarmitariaCreatedCallback {
+public class AbstractMarmitexActivity extends Activity implements MarmitexApplication.OnMarmitariaUpdatedCallback {
 
     protected Seller getActiveMarmitaria() {
         MarmitexApplication app = (MarmitexApplication) getApplication();
@@ -22,14 +23,14 @@ public class AbstractMarmitexActivity extends Activity implements MarmitexApplic
     }
 
     @Override
-    public void onMarmitariaUpdated() {
-        Toast.makeText(this, "Marmitaria Atualizada", Toast.LENGTH_LONG)
-                .show();
-    }
-
-    @Override
-    public void onMarmitariaCreated() {
-        Toast.makeText(this, "Marmitaria Criada", Toast.LENGTH_LONG)
+    public void onSellerUpdated(SellerUpdatedEvent evt) {
+        String msg = null;
+        if(evt.isSuccess()) {
+            msg = "Marmitaria Atualizada";
+        } else {
+            msg = "Ocorreu Erro!";
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_LONG)
                 .show();
     }
 

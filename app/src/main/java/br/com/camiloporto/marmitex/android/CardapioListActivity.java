@@ -32,7 +32,7 @@ public class CardapioListActivity extends AbstractMarmitexActivity implements Ca
 
 	@Override
 	public void onBackPressed() {
-		getMarmitexApplication().updateActiveMarmitaria(this);
+		getMarmitexApplication().saveActiveSeller(this);
 		super.onBackPressed();
 	}
 

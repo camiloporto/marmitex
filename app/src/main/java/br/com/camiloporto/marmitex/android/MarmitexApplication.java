@@ -4,11 +4,11 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import br.com.camiloporto.marmitex.android.event.LoginFinishedEvent;
+import br.com.camiloporto.marmitex.android.event.SellerUpdatedEvent;
 import br.com.camiloporto.marmitex.android.model.Seller;
 import br.com.camiloporto.marmitex.android.model.Profile;
 import br.com.camiloporto.marmitex.android.provider.service.MarmitaService;
 import br.com.camiloporto.marmitex.android.service.ProfileService;
-import br.com.camiloporto.marmitex.android.repository.InMemoryMarmitariaRepository;
 import br.com.camiloporto.marmitex.android.service.MarmitexException;
 
 /**
@@ -52,42 +52,55 @@ public class MarmitexApplication extends Application {
         task.execute(profile);
     }
 
-    public void updateActiveMarmitaria(final OnMarmitariaUpdatedCallback callback) {
-        AsyncTask<Seller, Void, Seller> task = new AsyncTask<Seller, Void, Seller>() {
+    public void saveActiveSeller(final OnMarmitariaUpdatedCallback callback) {
+        AsyncTask<Seller, Void, SellerUpdatedEvent> task = new AsyncTask<Seller, Void, SellerUpdatedEvent>() {
 
             @Override
-            protected Seller doInBackground(Seller... params) {
-                Seller marmitaria = params[0];
-                marmitaService.save(marmitaria);
-                return marmitaria;
+            protected SellerUpdatedEvent doInBackground(Seller... params) {
+
+                try {
+                    Seller seller = params[0];
+                    marmitaService.save(seller);
+                    SellerUpdatedEvent evt = new SellerUpdatedEvent(true);
+                    evt.setSeller(seller);
+                    return evt;
+                } catch (MarmitexException e) {
+                    return new SellerUpdatedEvent(e);
+                }
             }
 
             @Override
-            protected void onPostExecute(Seller marmitaria) {
-                setActiveMarmitaria(marmitaria);
-                callback.onMarmitariaUpdated();
+            protected void onPostExecute(SellerUpdatedEvent evt) {
+                setActiveMarmitaria(evt.getSeller());
+                callback.onSellerUpdated(evt);
             }
         };
         task.execute(activeMarmitaria);
     }
 
-    //FIXME retornar um objeto com status da operacao de criacao, sinalizando OK ou erro.
-    public void createMarmitaria(String nome, String fone, String endereco, final OnMarmitariaCreatedCallback callback) {
-        AsyncTask<String, Void, Seller> task = new AsyncTask<String, Void, Seller>() {
+    public void saveSeller(String nome, String fone, String endereco, final OnMarmitariaUpdatedCallback callback) {
+        AsyncTask<String, Void, SellerUpdatedEvent> task = new AsyncTask<String, Void, SellerUpdatedEvent>() {
 
             @Override
-            protected Seller doInBackground(String... params) {
+            protected SellerUpdatedEvent doInBackground(String... params) {
 
                 Seller seller = new Seller(params[0], params[1], params[2]);
                 seller.setProfileId(getPrincipal());
-                marmitaService.save(seller);
-                return seller;
+
+                try {
+                    marmitaService.save(seller);
+                    SellerUpdatedEvent evt = new SellerUpdatedEvent(true);
+                    evt.setSeller(seller);
+                    return evt;
+                } catch (MarmitexException e) {
+                    return new SellerUpdatedEvent(e);
+                }
             }
 
             @Override
-            protected void onPostExecute(Seller marmitaria) {
-                setActiveMarmitaria(marmitaria);
-                callback.onMarmitariaCreated();
+            protected void onPostExecute(SellerUpdatedEvent evt) {
+                setActiveMarmitaria(evt.getSeller());
+                callback.onSellerUpdated(evt);
             }
         };
         task.execute(nome, fone, endereco);
@@ -160,23 +173,19 @@ public class MarmitexApplication extends Application {
         task.execute(email, password);
     }
 
-    public static interface OnMarmitariaCreatedCallback {
-        void onMarmitariaCreated();
-    }
-
-    public static interface OnMarmitariaLoaded {
+    public interface OnMarmitariaLoaded {
         void onMarmitariaLoaded();
     }
 
-    public static interface OnMarmitariaUpdatedCallback {
-        void onMarmitariaUpdated();
+    public interface OnMarmitariaUpdatedCallback {
+        void onSellerUpdated(SellerUpdatedEvent evt);
     }
 
-    public static interface OnProfileCreatedCallback {
+    public interface OnProfileCreatedCallback {
         void onProfileCreated(ProfileCreatedEvent event);
     }
 
-    public static interface OnLoginFinishedCallback {
+    public interface OnLoginFinishedCallback {
         void onLoginFinished(LoginFinishedEvent event);
     }
 }
