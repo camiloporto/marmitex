@@ -12,11 +12,5 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/marmitex_nova"/>
-    
-    <Button android:id="@+id/btnCardapios" 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnNovaMarmitaria"
-        android:text="@string/marmitex_cardapio"/>
 
 </RelativeLayout>

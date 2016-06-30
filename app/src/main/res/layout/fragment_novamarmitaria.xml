@@ -37,8 +37,13 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="@string/novamarmitaria_funcionamento"/>
-    
-    <Button android:id="@+id/novamarmitaria_newButton" 
+
+    <Button android:id="@+id/btnCardapios"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/marmitex_cardapio"/>
+
+    <Button android:id="@+id/novamarmitaria_newButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/novamarmitaria_btn_save"/>

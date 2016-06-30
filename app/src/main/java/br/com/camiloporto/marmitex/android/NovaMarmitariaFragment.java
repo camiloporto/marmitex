@@ -2,6 +2,7 @@ package br.com.camiloporto.marmitex.android;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class NovaMarmitariaFragment extends Fragment {
 	private EditText cpfOuCnpj;
 	private EditText horarioFuncionamento;
 	private Button saveButton;
+	private Button editMenus;
 
 	private NovaMarmitariaFragmentCallbacks mCallbacks;
 
@@ -62,6 +64,16 @@ public class NovaMarmitariaFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				mCallbacks.saveButtonClicked();
+			}
+		});
+
+		editMenus = (Button) v.findViewById(R.id.btnCardapios);
+		editMenus.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getActivity(), CardapioListActivity.class);
+				startActivity(i);
 			}
 		});
 		return v;
