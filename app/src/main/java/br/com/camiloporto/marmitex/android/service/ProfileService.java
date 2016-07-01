@@ -79,15 +79,8 @@ public class ProfileService {
 
     private RestTemplate criaRestTemplate() {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-
-        //FIXME create proxy only on local environment.
-        Proxy proxy= new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 3128));
-        requestFactory.setProxy(proxy);
         RestTemplate rt = new RestTemplate(requestFactory);
         return rt;
-//        if(restTemplate == null)
-//            restTemplate = new RestTemplate();
-//        return restTemplate;
     }
 
     public String login(String username, String password) {

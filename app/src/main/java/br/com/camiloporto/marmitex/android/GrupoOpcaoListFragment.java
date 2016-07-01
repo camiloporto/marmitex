@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import br.com.camiloporto.marmitex.android.model.Menu;
 import br.com.camiloporto.marmitex.android.model.MenuCategory;
@@ -31,6 +32,8 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 	private Menu cardapio;
 	private EditText inputItem;
+	private EditText menuNameInput;
+	private EditText menuCommentsInput;
 	private Button addButton;
 	
 	@Override
@@ -56,11 +59,14 @@ public class GrupoOpcaoListFragment extends ListFragment {
 
 		inputItem = (EditText) v.findViewById(R.id.cardapio_grupo_opcoes_novo_item_input);
 		addButton = (Button) v.findViewById(R.id.cardapio_grupo_opcoes_add);
+		menuNameInput = (EditText) v.findViewById(R.id.cardapio_nome_input);
+		menuCommentsInput = (EditText) v.findViewById(R.id.cardapio_comments_input);
+
 		addButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-				newGroupAdded(inputItem.getText().toString());
+				public void onClick (View v){
+					newGroupAdded(inputItem.getText().toString());
 				inputItem.setText(null);
 			}
 
@@ -74,6 +80,28 @@ public class GrupoOpcaoListFragment extends ListFragment {
 	public void updateUI() {
 		if(cardapio != null) {
 			getActivity().setTitle(cardapio.getName());
+			menuNameInput.setText(cardapio.getName());
+			menuNameInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View view, boolean hasFocus) {
+					if (!hasFocus) {
+						Editable newValue = ((EditText) view).getText();
+						cardapio.setName(newValue.toString());
+					}
+				}
+			});
+
+			menuCommentsInput.setText(cardapio.getComments());
+			menuCommentsInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View view, boolean hasFocus) {
+					if (!hasFocus) {
+						Editable newValue = ((EditText) view).getText();
+						cardapio.setComments(newValue.toString());
+					}
+				}
+			});
+
 			setListAdapter(new GrupoOpcaoListAdapter(cardapio));
 		}
 	}
@@ -105,19 +133,20 @@ public class GrupoOpcaoListFragment extends ListFragment {
 			}
 			
 			MenuCategory item = getItem(position);
-			final EditText inputDescricao = (EditText) convertView
+			TextView inputDescricao = (TextView) convertView
 					.findViewById(R.id.cardapio_grupo_opcao_item_list_descricao_input);
 			inputDescricao.setText(item.getName());
-			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-				@Override
-				public void onFocusChange(View view, boolean hasFocus) {
-					if(!hasFocus) {
-						Editable newValue = ((EditText) view).getText();
-						MenuCategory gItem = getItem(position);
-						gItem.setName(newValue.toString());
-					}
-				}
-			});
+			//FIXME passar a atualizacao deste campo para a tela de edicao de Categorias
+//			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//				@Override
+//				public void onFocusChange(View view, boolean hasFocus) {
+//					if(!hasFocus) {
+//						Editable newValue = ((EditText) view).getText();
+//						MenuCategory gItem = getItem(position);
+//						gItem.setName(newValue.toString());
+//					}
+//				}
+//			});
 
 
 			final Button deleteButton = (Button) convertView

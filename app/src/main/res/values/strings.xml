@@ -24,6 +24,9 @@
     <string name="opcao_cardapio_novo_item_hint">Informe nova opção</string>
     <string name="grupo_opcao_cardapio_novo_item_hint">Novo Grupo</string>
     <string name="cardapio_list_novo_item_hint">Nome do Cardápio</string>
+    <string name="cardapio_comments_hint">Observações para o cardápio</string>
+    <string name="categoria_nome_hint">Nome do Grupo</string>
+    <string name="categoria_comments_hint">Observações sobre o grupo</string>
 
 
 </resources>

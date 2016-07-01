@@ -31,6 +31,8 @@ public class OpcaoCardapioListFragment extends ListFragment {
 	private OpcaoCardapioListFragmentCallbacks mCallback;
 	
 	private EditText inputItem;
+	private EditText inputCategoryName;
+	private EditText inputCategoryComments;
 	private Button addButton;
 
 	@Override
@@ -55,6 +57,8 @@ public class OpcaoCardapioListFragment extends ListFragment {
 		View v = inflater.inflate(R.layout.fragment_cardapio_opcao, null);
 		
 		inputItem = (EditText) v.findViewById(R.id.cardapio_opcoes_novo_item_input);
+		inputCategoryComments = (EditText) v.findViewById(R.id.categoria_comments_input);
+		inputCategoryName = (EditText) v.findViewById(R.id.categoria_nome_input);
 		addButton = (Button) v.findViewById(R.id.cardapio_opcoes_add);
 		addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -74,6 +78,29 @@ public class OpcaoCardapioListFragment extends ListFragment {
 	public void updateUI() {
 		if(grupoOpcao != null) {
 			getActivity().setTitle(grupoOpcao.getName());
+			inputCategoryName.setText(grupoOpcao.getName());
+			inputCategoryName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View view, boolean hasFocus) {
+					if (!hasFocus) {
+						Editable newValue = ((EditText) view).getText();
+						grupoOpcao.setName(newValue.toString());
+					}
+				}
+			});
+
+			inputCategoryComments.setText(grupoOpcao.getComments());
+			inputCategoryComments.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View view, boolean hasFocus) {
+					if (!hasFocus) {
+						Editable newValue = ((EditText) view).getText();
+						grupoOpcao.setComments(newValue.toString());
+					}
+				}
+			});
+
+
 			setListAdapter(new OpcaoListAdapter(grupoOpcao));
 		}
 	}

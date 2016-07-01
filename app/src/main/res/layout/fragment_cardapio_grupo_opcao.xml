@@ -4,6 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <EditText
+        android:id="@+id/cardapio_nome_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Nome do cardapio"/>
+
+    <EditText android:id="@+id/cardapio_comments_input"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="textMultiLine"
+        android:hint="@string/cardapio_comments_hint"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Grupos de Opções" />
+
     <ListView android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -24,9 +47,8 @@
         android:orientation="horizontal" >
 
         <EditText android:id="@+id/cardapio_grupo_opcoes_novo_item_input"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:inputType="text"
             android:hint="@string/grupo_opcao_cardapio_novo_item_hint"/>
 

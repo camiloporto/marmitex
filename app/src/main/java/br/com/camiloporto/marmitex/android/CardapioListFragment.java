@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import br.com.camiloporto.marmitex.android.model.Menu;
 import br.com.camiloporto.marmitex.android.model.Seller;
@@ -97,21 +98,10 @@ public class CardapioListFragment extends ListFragment {
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_cardapio, null);
 			}
 
-			//// FIXME: 08/12/15 Colocar a edicao de todas as informacoes de um cardapio na tela de edicao de cardapio. Mostar nome do cardapio e categorias.
-			// tornar o EditText da view um Label ou um Button que ao clicar vai pra edicao do cardapio.
 			Menu item = getItem(position);
-			final EditText inputDescricao = (EditText) convertView
+			final TextView inputDescricao = (TextView) convertView
 					.findViewById(R.id.cardapio_item_list_descricao_input);
 			inputDescricao.setText(item.getName());
-			inputDescricao.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-				@Override
-				public void onFocusChange(View view, boolean hasFocus) {
-					if (!hasFocus) {
-						Editable newValue = ((EditText) view).getText();
-						getItem(position).setName(newValue.toString());
-					}
-				}
-			});
 
 			final Button deleteButton = (Button) convertView
 					.findViewById(R.id.cardapio_item_list_removeButton);
